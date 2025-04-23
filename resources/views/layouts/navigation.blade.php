@@ -4,7 +4,7 @@
         <div class="flex justify-between h-16">
             <!-- Logo -->
             <div class="flex items-center">
-                <a href="{{ route('dashboard') }}">
+                <a href="{{ route('administracion') }}">
                     <x-application-logo class="block h-9 w-auto fill-current text-gray-200" />
                 </a>
             </div>
@@ -12,8 +12,8 @@
             <!-- Links in primary menu (including usuarios link and Videojuegos link) -->
             <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
                 <!-- usuarios link -->
-                <x-nav-link :href="route('administracion.index')" :active="request()->routeIs('administracion.index')" class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
-                    {{ __('usuarios') }}
+                <x-nav-link :href="route('administracion.usuarios.index')" :active="request()->routeIs('administracion.usuarios.index')" class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
+                    {{ __('Usuarios') }}
                 </x-nav-link>
 
               
@@ -81,7 +81,7 @@
 
             <div class="mt-3 space-y-1">
                 <!-- usuarios link for small screens -->
-                <x-responsive-nav-link :href="route('administracion.index')" :active="request()->routeIs('administracion.index')"
+                <x-responsive-nav-link :href="route('administracion.usuarios.index')" :active="request()->routeIs('administracion.usuarios.index')"
                     class="text-gray-300 text-center hover:text-white hover:bg-gray-700 hover:scale-105 transition-transform duration-200 bg-transparent focus:bg-transparent active:bg-transparent border-l-0 hover:border-l-0">
                     {{ __('Usuarios') }}
                 </x-responsive-nav-link>

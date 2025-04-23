@@ -23,7 +23,7 @@
 }}
 @endif
 -->
-<form action="{{ url('/usuarios/'.$usuario->id)}}" method="post" class="w-[500px] mx-auto p-6 bg-white shadow-md rounded-lg">
+<form action="{{ route('administracion.usuarios.update', $usuario->id) }}" method="post" class="w-[500px] mx-auto p-6 bg-white shadow-md rounded-lg">
     @csrf 
     @method('PATCH') <!-- Aquí pasas el método PATCH -->
 

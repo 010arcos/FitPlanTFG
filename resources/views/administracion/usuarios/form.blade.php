@@ -100,6 +100,6 @@
     <!-- Botones -->
     <div class="flex justify-between mt-4">
         <button type="submit" class="bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 transition duration-300">Guardar</button>
-        <a href="{{url('usuarios')}}" class="inline-block bg-gray-300 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-400 transition duration-300">Volver</a>
+        <a href="{{url('administracion/usuarios')}}" class="inline-block bg-gray-300 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-400 transition duration-300">Volver</a>
     </div>
 </form>

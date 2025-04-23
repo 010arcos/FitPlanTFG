@@ -17,7 +17,7 @@
 </div>
 @endif
 -->
-<form action="{{ url('/usuarios') }}"  method="post" class="w-[500px] mx-auto p-6 bg-white shadow-md rounded-lg">
+<form action="{{ route('administracion.usuarios.guardar') }}"  method="post" class="w-[500px] mx-auto p-6 bg-white shadow-md rounded-lg">
     @csrf 
     @include('administracion.usuarios.form', ['Modo' => 'crear'])
 

@@ -24,7 +24,7 @@
 
                 <!-- Botones de PDF -->
                 <div class="flex space-x-4">
-                    <a href="{{ route('usuarios.reportPDF') }}" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out shadow-md mt-2 mb-2">
+                    <a href="{{ route('administracion.usuarios.reportPDF') }}" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out shadow-md mt-2 mb-2">
                         Generar PDF
                     </a>
 
@@ -37,7 +37,7 @@
 
                 <!-- Formulario de búsqueda y botones de navegación -->
                 <div class="flex justify-between items-center mb-6">
-                    <form action="{{ route('usuarios.search') }}" method="GET" class="flex items-center space-x-4"> <!--action="{{ url('usuarios/search') }}" --->
+                    <form action="{{ route('administracion.usuarios.search') }}" method="GET" class="flex items-center space-x-4"> <!--action="{{ url('usuarios/search') }}" --->
                         <input
                             type="text"
                             name="search"
@@ -51,10 +51,10 @@
 
                     <!-- Botones de Listar y Agregar -->
                     <div class="flex space-x-4">
-                        <a href="{{ url('usuarios/') }}" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out shadow-md">
+                        <a href="{{ route('administracion.usuarios.index') }}" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out shadow-md">
                             Listar usuarios
                         </a>
-                        <a href="{{ url('usuarios/create') }}" class="bg-teal-500 text-white px-6 py-2 rounded-md hover:bg-teal-600 transition duration-300 ease-in-out shadow-md transform hover:scale-105">
+                        <a href="{{ route('administracion.usuarios.create') }}" class="bg-teal-500 text-white px-6 py-2 rounded-md hover:bg-teal-600 transition duration-300 ease-in-out shadow-md transform hover:scale-105">
                             Agregar usuario
                         </a>
                     </div>
@@ -74,6 +74,7 @@
                                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">Apellido</th>
                                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">Altura</th>
                                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">Peso</th>
+                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">Genero</th>
                                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase"> Alta </th>
                                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase"> Email </th>
                                 <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">  </th>
@@ -87,7 +88,8 @@
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->apellido }}</td>
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->altura }}</td>
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->peso }}</td>
-                                <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->activo }}</td>
+                                <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->genero }}</td>
+                                <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->activo == 1 ? 'Activo' : 'Inactivo' }}</td>
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->email }}</td>
                                
                                 
@@ -97,10 +99,10 @@
 
                                 <td class="px-6 py-4">
                                     <div class="flex space-x-2">
-                                        <a href="{{ url('usuarios/'.$usuario->id.'/edit') }}" class="bg-green-500 text-white hover:bg-green-600 transition duration-300 ease-in-out text-sm px-4 py-2 rounded-md shadow-md">
+                                        <a href="{{ route('administracion.usuarios.edit', $usuario->id) }}" class="bg-green-500 text-white hover:bg-green-600 transition duration-300 ease-in-out text-sm px-4 py-2 rounded-md shadow-md">
                                             Editar
                                         </a>
-                                        <form action="{{ url('usuarios/'.$usuario->id) }}" method="POST" class="inline">
+                                        <form action="{{ route('administracion.usuarios.destroy', $usuario->id) }}" method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="bg-red-500 text-white hover:bg-red-600 transition duration-300 ease-in-out text-sm px-4 py-2 rounded-md shadow-md" onclick="return confirm('¿Estás seguro de borrar?')">

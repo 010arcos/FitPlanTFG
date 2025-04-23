@@ -11,7 +11,6 @@ class Dieta extends Model
     protected $primaryKey = 'id_dieta';
 
     protected $fillable = [
-        'id_usuario',
         'nombre',
         'descripcion',
         'fecha_inicio',

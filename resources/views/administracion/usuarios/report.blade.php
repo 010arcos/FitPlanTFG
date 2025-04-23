@@ -17,8 +17,8 @@
                 <th>ID</th>
                 <th>Nombre</th>
                 <th>Género</th>
-                <th>Raza</th>
-                <th>Videojuego</th> 
+                <th>Peso</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -28,12 +28,7 @@
                     <td>{{ $usuario->name }}</td>
                     <td>{{ $usuario->genero }}</td>
                     <td>{{ $usuario->peso }}</td>
-                    <td>
-                        <!-- Mostrar los videojuegos asociados -->
-                        @foreach($usuario->videojuegos as $videojuego)
-                            {{ $videojuego->nombre }} @if(!$loop->last), @endif <!-- Separa los videojuegos con coma -->
-                        @endforeach
-                    </td>
+
                 </tr>
             @endforeach
         </tbody>

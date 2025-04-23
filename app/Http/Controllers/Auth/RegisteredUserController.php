@@ -42,19 +42,16 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-         // Asignar rol admin al primer usuario, si es el primer registro
-         $adminRole= Role::firstOrCreate(['name' => 'admin']);
+       
+         
          $userRole= Role::firstOrCreate(['name' => 'user']);
-         if (User::count() == 1) {
-            $user->assignRole($adminRole);  // Asigna el rol de admin al primer usuario
-        } else {
-            $user->assignRole($userRole);   // Asigna el rol de user a los siguientes usuarios
-        }
+         $user->assignRole($userRole); 
+
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('administracion', absolute: false));
     }
 }

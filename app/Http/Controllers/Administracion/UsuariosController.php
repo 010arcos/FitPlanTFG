@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Adminastracion;
+namespace App\Http\Controllers\Administracion;
 
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
 
@@ -19,17 +20,13 @@ class UsuariosController
         
     } 
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('administracion.usuarios.create');
+
+   public function create()
+   {
+         return view('administracion.usuarios.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
 
@@ -43,23 +40,13 @@ class UsuariosController
            
         ]);
         
-
-
         $datosUsuarios = $request->except('_token');
         User::insert($datosUsuarios);
-
-       
-        return redirect('usuarios')->with('Mensaje', 'Usuario agregado con exito'); //me redirecion al index y le envio una array asociaticvo
+        return redirect('administracion/usuarios')->with('Mensaje', 'Usuario agregado con exito'); //me redirecion al index y le envio una array asociaticvo
     }
 
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(User $usuarios)
-    {
-        
-    }
+    
 
     /**
      * Show the form for editing the specified resource.
@@ -108,7 +95,7 @@ class UsuariosController
         $usuario->update($datosUsuarios);
     
         // Redirigir con un mensaje de éxito
-        return redirect('usuarios')->with('Mensaje', 'Usuario actualizado con éxito');
+        return redirect('administracion/usuarios')->with('Mensaje', 'Usuario actualizado con éxito');
     }
 
     /**
@@ -118,7 +105,7 @@ class UsuariosController
     {
 
         User::destroy($id);
-        return redirect('Usuarios')->with('Mensaje', 'Usuario eliminado con exito');
+        return redirect('administracion/usuarios')->with('Mensaje', 'Usuario eliminado con exito');
     }
 
 
@@ -132,12 +119,25 @@ class UsuariosController
               ->orWhere('apellido', 'like', "%{$search}%")
               ->orWhere('email', 'like', "%{$search}%")
               ->orWhere('id', '=', $search);
-                 // ->orWhere('id', 'like', "%{$search}%"); 
+                
     }
 
    
     $usuarios = $query->paginate(5);
-    return view('administracion.usuarios.index', ['usuarios'=>$usuarios]); //como en el video
+    return view('administracion.usuarios.index', ['usuarios'=>$usuarios]); 
+}
+
+
+public function report()
+{
+    // Obtener todos los usuarios, por ejemplo con sus roles
+    $usuarios = User::where('id', '!=', 1)->get();
+
+    // Generar el PDF con la vista 'usuarios.report' y pasarle los datos
+    $pdf = Pdf::loadView('administracion.usuarios.report', compact('usuarios'));
+
+    // Devolver el PDF al navegador
+    return $pdf->stream('usuarios.pdf');
 }
 
 }

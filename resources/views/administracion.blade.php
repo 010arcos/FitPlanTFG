@@ -18,7 +18,7 @@
                     <!-- Contenedor de botones -->
                     <div class="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
                         <!-- Enlace a Usuarios -->
-                        <a href="{{ route('administracion.index') }}" class="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition duration-300 ease-in-out shadow-sm transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 text-center">
+                        <a href="{{ route('administracion.usuarios.index') }}" class="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition duration-300 ease-in-out shadow-sm transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 text-center">
                             Ver Usuarios
                         </a>
 
