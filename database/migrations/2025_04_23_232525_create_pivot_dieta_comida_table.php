@@ -17,6 +17,7 @@ return new class extends Migration
             $table->enum('tipo_comida', ['desayuno', 'almuerzo', 'comida', 'merienda', 'cena', 'postentreno', 'preentreno']);
             $table->primary(['id_dieta', 'id_comida']);
             $table->timestamps();
+            $table->softDeletes(); 
 
 
              // Definición de las claves foráneas

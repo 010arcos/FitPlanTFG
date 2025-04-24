@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Administracion\ComidasController;
 use App\Http\Controllers\Administracion\DietasController;
 use App\Http\Controllers\Administracion\UsuariosController;
 use App\Models\Dieta;
@@ -63,7 +64,14 @@ Route::middleware(['auth', 'verified'])->prefix('administracion')->name('adminis
 
     // Comidas
     Route::prefix('comidas')->name('comidas.')->group(function () {
-        // Agregá aquí tus rutas para comidas
+        Route::get('/', [ComidasController::class, 'index'])->name('index');
+        Route::get('create', [ComidasController::class, 'create'])->name('create');
+        Route::post('/', [ComidasController::class, 'store'])->name('guardar');
+        Route::get('search', [ComidasController::class, 'search'])->name('search');
+        Route::get('report', [ComidasController::class, 'report'])->name('reportPDF');
+        Route::get('{id}/edit', [ComidasController::class, 'edit'])->name('edit');
+        Route::put('{id}', [ComidasController::class, 'update'])->name('update');
+        Route::delete('{id}', [ComidasController::class, 'destroy'])->name('destroy');
     });
 
     

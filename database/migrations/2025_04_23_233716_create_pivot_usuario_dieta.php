@@ -35,6 +35,7 @@ return new class extends Migration
 
                  // Crear las columnas 'created_at' y 'updated_at'
             $table->timestamps(); 
+            $table->softDeletes(); 
         });
     }
 

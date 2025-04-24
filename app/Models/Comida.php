@@ -3,17 +3,19 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comida extends Model
 {
+    use SoftDeletes; 
     protected $table = 'comidas';
 
     protected $primaryKey = 'id_comida';
 
     protected $fillable = [
         'id_dieta',
-        'tipo_comida',
-        'descripcion',
+        'nombre',
+        'alimentos',
         'calorias',
         'macros',
     ];

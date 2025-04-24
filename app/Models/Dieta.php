@@ -3,9 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Dieta extends Model
 {
+    use SoftDeletes; 
     protected $table = 'dietas';
 
     protected $primaryKey = 'id_dieta';

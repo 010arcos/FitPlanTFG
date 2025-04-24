@@ -19,6 +19,11 @@
                     {{ __('Dietas') }}
                 </x-nav-link>
 
+                <x-nav-link :href="route('administracion.comidas.index')" :active="request()->routeIs('administracion.comidas.index')" class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
+                    {{ __('Comidas') }}
+                </x-nav-link>
+
+
               
 
                 <!-- Settings Dropdown -->

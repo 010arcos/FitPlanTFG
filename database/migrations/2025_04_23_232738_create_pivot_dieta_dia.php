@@ -16,6 +16,7 @@ return new class extends Migration
             $table->enum('dia_semana', ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']);
             $table->primary(['id_dieta', 'dia_semana']);
             $table->timestamps();
+            $table->softDeletes(); 
 
             $table->foreign('id_dieta')->references('id_dieta')->on('dietas')->onDelete('cascade');
         });

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->enum('zona', ['pecho', 'pierna', 'brazos', 'espalda', 'gluteos', 'hombros', 'abdomen']);
             $table->enum('tipo', ['fuerza', 'cardio', 'resistencia']);
             $table->timestamps();
+            $table->softDeletes(); 
         });
     }
 

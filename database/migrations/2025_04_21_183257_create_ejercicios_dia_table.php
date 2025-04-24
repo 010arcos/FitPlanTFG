@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('repeticiones');
             $table->integer('series');
             $table->timestamps();
+            $table->softDeletes(); 
 
             // Claves foráneas
             $table->foreign('id_rutina')
