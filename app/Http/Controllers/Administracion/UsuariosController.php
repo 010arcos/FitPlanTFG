@@ -9,12 +9,9 @@ use Illuminate\Http\Request;
 
 class UsuariosController 
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
-
         $datos['usuarios'] = User::where('id', '!=', 1)->paginate(5);
         return view('administracion.usuarios.index', $datos);
         
@@ -65,7 +62,7 @@ class UsuariosController
         $this->validateUser($request, $id);
 
         $datosUsuarios = $request->only([
-            'name', 'email', 'apellido', 'edad', 'altura', 'peso', 'genero', 'activo'
+            'name', 'email', 'password', 'apellido', 'edad', 'altura', 'peso', 'genero', 'activo'
         ]);
 
         $datosUsuarios['activo'] = $request->has('activo');
@@ -125,18 +122,20 @@ public function report()
         $rules = [
             "name" => "required|regex:/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/", // Permite letras, números y espacios.
             "email" => "required|email|unique:users,email,{$id}", // Valida correo único (excluye el actual en el update)
-            "apellido" => "nullable|string|max:255",
-            "edad" => "nullable|integer|min:0",
-            "altura" => "nullable|numeric|min:0",
-            "peso" => "nullable|numeric|min:0",
-            "genero" => "nullable|string",
-            "activo" => "nullable|boolean",
+            "password" => "required", // Requiere confirmación de contraseña
+            "apellido" => "required|string|max:255",
+            "edad" => "required|integer|min:0",
+            "altura" => "required|numeric|min:0",
+            "peso" => "required|numeric|min:0",
+            "genero" => "required|string",
+            "activo" => "required|boolean",
         ];
 
         $messages = [
             "required" => "El :attribute es requerido",
             "name.regex" => "El campo name debe contener solo letras, números y espacios.",
             "email.unique" => "El correo electrónico ya está registrado.",
+            "password.required" => "La contraseña es obligatoria.",
             "email.email" => "El correo electrónico debe ser válido.",
             "edad.integer" => "La edad debe ser un número entero.",
             "altura.numeric" => "La altura debe ser un número.",

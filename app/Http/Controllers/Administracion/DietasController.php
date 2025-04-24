@@ -1,0 +1,147 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Http\Controllers\Administracion;
+
+use App\Http\Controllers\Controller;
+use App\Models\Dieta;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Zataca\Foundation\Base\Http\ApiResponse;
+use Zataca\Trazer\Bus\CommandBus\Infrastructure\CommandBusFacade;
+use Zataca\Trazer\Bus\QueryBus\Infrastructure\QueryBusFacade;
+
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
+class DietasController extends Controller
+{
+
+    public function index()
+    {
+        $datos['dietas'] = Dieta::paginate(5);
+        return view('administracion.dietas.index', $datos);
+        
+    }
+    public function create()
+   {
+         return view('administracion.dietas.create');
+    }
+
+
+    public function store(Request $request)
+    {
+        $this->validateDieta($request);
+    
+        $datosdietas = $request->except('_token');
+
+        // Insertar el nuevo dieta en la base de datos
+        Dieta::insert($datosdietas);
+
+        // Redirigir con mensaje de éxito
+        return redirect('administracion/dietas')->with('Mensaje', 'dieta agregado con éxito');
+    }
+
+
+    
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
+    {
+        $dieta = Dieta::findOrFail($id);
+        return view('administracion.dietas.edit', compact('dieta'));
+
+        // compact-> array asociativo de variables y sus valores
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id)
+    {
+
+        
+        $this->validateDieta($request);
+       
+
+        $datosdietas = $request->only([
+            'nombre', 'descripcion', 'fecha_inicio', 'fecha_fin',
+        ]);
+        $dieta = Dieta::findOrFail($id);
+        $dieta->update($datosdietas);
+        return redirect('administracion/dietas')->with('Mensaje', 'dieta actualizado con éxito');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id)
+    {
+
+        Dieta::destroy($id);
+        return redirect('administracion/dietas')->with('Mensaje', 'dieta eliminado con exito');
+    }
+
+
+    public function search(Request $request)
+{
+    $query = Dieta::query();
+
+    if ($request->has('search') && !empty($request->search)) {
+        $search = $request->search;
+        $query->where('nombre', 'like', "%{$search}%")
+              ->orWhere('descripcion', 'like', "%{$search}%")
+              ->orWhere('id_dieta', '=', $search);
+                
+    }
+
+   
+    $dietas = $query->paginate(5);
+    return view('administracion.dietas.index', ['dietas'=>$dietas]); 
+}
+
+
+public function report()
+{
+    // Obtener todos los dietas, por ejemplo con sus roles
+    $dietas = Dieta::all();
+
+    // Generar el PDF con la vista 'dietas.report' y pasarle los datos
+    $pdf = Pdf::loadView('administracion.dietas.report', compact('dietas'));
+
+    // Devolver el PDF al navegador
+    return $pdf->stream('dietas.pdf');
+}
+
+
+private function validateDieta(Request $request)
+{
+    return $request->validate([
+        'nombre' => 'required|string|max:255',
+        'descripcion' => 'required|string',
+        'fecha_inicio' => 'required|date|before:fecha_fin',
+        'fecha_fin' => 'required|date|after:fecha_inicio',
+    ], [
+        'nombre.required' => 'El nombre de la dieta es obligatorio.',
+        'nombre.string' => 'El nombre de la dieta debe ser una cadena de texto.',
+        'nombre.max' => 'El nombre de la dieta no debe superar los 255 caracteres.',
+        'descripcion.required' => 'La descripción es obligatoria.',
+        'descripcion.string' => 'La descripción debe ser una cadena de texto.',
+        'fecha_inicio.required' => 'La fecha de inicio es obligatoria.',
+        'fecha_inicio.date' => 'La fecha de inicio debe ser una fecha válida.',
+        'fecha_inicio.before' => 'La fecha de inicio debe ser anterior a la fecha de fin.',
+        'fecha_fin.required' => 'La fecha de fin es obligatoria.',
+        'fecha_fin.date' => 'La fecha de fin debe ser una fecha válida.',
+        'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de inicio.',
+    ]);
+}
+
+    
+       
+}

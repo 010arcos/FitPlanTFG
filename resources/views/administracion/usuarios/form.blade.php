@@ -36,15 +36,16 @@
         {!! $errors->first('email', '<div class="invalid-feedback text-red-500 text-sm mt-1">:message</div>') !!}
     </div>
 
-    <!-- Contraseña (solo en crear) -->
-    @if($Modo == 'crear')
+   
     <div class="mb-6">
         <label for="password" class="block text-gray-700 text-sm font-medium">Contraseña</label>
         <input type="password" name="password" id="password"
+
+               value="{{ old('password', $usuario->password ?? '') }}"
                class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm {{ $errors->has('password') ? 'is-invalid' : '' }}">
         {!! $errors->first('password', '<div class="invalid-feedback text-red-500 text-sm mt-1">:message</div>') !!}
     </div>
-    @endif
+   
 
     <!-- Edad -->
     <div class="mb-6">

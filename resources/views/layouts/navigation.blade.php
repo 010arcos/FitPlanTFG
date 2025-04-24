@@ -15,6 +15,9 @@
                 <x-nav-link :href="route('administracion.usuarios.index')" :active="request()->routeIs('administracion.usuarios.index')" class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
                     {{ __('Usuarios') }}
                 </x-nav-link>
+                <x-nav-link :href="route('administracion.dietas.index')" :active="request()->routeIs('administracion.dietas.index')" class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
+                    {{ __('Dietas') }}
+                </x-nav-link>
 
               
 
@@ -84,6 +87,10 @@
                 <x-responsive-nav-link :href="route('administracion.usuarios.index')" :active="request()->routeIs('administracion.usuarios.index')"
                     class="text-gray-300 text-center hover:text-white hover:bg-gray-700 hover:scale-105 transition-transform duration-200 bg-transparent focus:bg-transparent active:bg-transparent border-l-0 hover:border-l-0">
                     {{ __('Usuarios') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('administracion.usuarios.index')" :active="request()->routeIs('administracion.dietas.index')"
+                    class="text-gray-300 text-center hover:text-white hover:bg-gray-700 hover:scale-105 transition-transform duration-200 bg-transparent focus:bg-transparent active:bg-transparent border-l-0 hover:border-l-0">
+                    {{ __('Dietas') }}
                 </x-responsive-nav-link>
 
             </div>
