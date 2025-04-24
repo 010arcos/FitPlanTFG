@@ -18,6 +18,8 @@
                 <th>Nombre</th>
                 <th>Género</th>
                 <th>Peso</th>
+                <th>Alta</th>
+                <th>Email</th>
                 
             </tr>
         </thead>
@@ -28,6 +30,8 @@
                     <td>{{ $usuario->name }}</td>
                     <td>{{ $usuario->genero }}</td>
                     <td>{{ $usuario->peso }}</td>
+                    <td>{{ $usuario->activo == 1 ? 'Activo' : 'Inactivo' }}</td>
+                    <td>{{ $usuario->email}}</td>
 
                 </tr>
             @endforeach

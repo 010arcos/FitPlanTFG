@@ -17,21 +17,19 @@ class Dieta extends Model
         'fecha_fin',
     ];
 
-    // Relación muchos a uno con Usuario
-    public function usuario()
-    {
-        return $this->belongsTo(User::class, 'id_usuario', 'id_usuario');
-    }
-
-    // Relación uno a muchos con comidas
+    // Relación muchos a muchos con Comida
     public function comidas()
     {
-        return $this->hasMany(Comida::class, 'id_dieta', 'id_dieta');
+        return $this->belongsToMany(Comida::class, 'pivot_dieta_comida', 'id_dieta', 'id_comida')
+                    ->withPivot('tipo_comida'); // Si quieres guardar más información en la tabla pivote
     }
 
-    // Relación uno a muchos con dieta_dia
-    public function dietaDias()
+    // Relación muchos a muchos con Usuario (usando la tabla pivote)
+    public function usuarios()
     {
-        return $this->hasMany(DietaDia::class, 'id_dieta', 'id_dieta');
+        return $this->belongsToMany(User::class, 'pivot_usuario_dieta', 'id_dieta', 'id_usuario')
+                    ->withPivot('fecha_asignacion');
     }
+
+   
 }

@@ -29,20 +29,17 @@ class UsuariosController
 
     public function store(Request $request)
     {
+        // Validar los datos del usuario usando el método común
+        $this->validateUser($request);
 
-        $request->validate([
-            "name" => "required|regex:/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/", // Permite letras, números y espacios.
-            
-        ], 
-        [
-            "required" => "El :attribute es requerido",
-            "name.regex" => "El campo name debe contener solo letras, números y espacios.",
-           
-        ]);
-        
+        // Obtener los datos del formulario
         $datosUsuarios = $request->except('_token');
+
+        // Insertar el nuevo usuario en la base de datos
         User::insert($datosUsuarios);
-        return redirect('administracion/usuarios')->with('Mensaje', 'Usuario agregado con exito'); //me redirecion al index y le envio una array asociaticvo
+
+        // Redirigir con mensaje de éxito
+        return redirect('administracion/usuarios')->with('Mensaje', 'Usuario agregado con éxito');
     }
 
 
@@ -64,37 +61,16 @@ class UsuariosController
      */
     public function update(Request $request, $id)
     {
-        // Validación de los campos del formulario
-        $request->validate([
-            'name' => 'required|regex:/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/', // Permite letras, números y espacios.
-            'apellido' => 'nullable|string|max:255',
-            'edad' => 'nullable|integer|min:0',
-            'altura' => 'nullable|numeric|min:0',
-            'peso' => 'nullable|numeric|min:0',
-            'genero' => 'nullable|string',
-            'activo' => 'nullable|boolean',
-        ], 
-        [
-            'required' => 'El :attribute es requerido',
-            'name.regex' => 'El campo name debe contener solo letras, números y espacios.',
-            'edad.integer' => 'La edad debe ser un número entero.',
-            'altura.numeric' => 'La altura debe ser un número.',
-            'peso.numeric' => 'El peso debe ser un número.',
-        ]);
-    
-        // Obtener los datos del formulario
+       
+        $this->validateUser($request, $id);
+
         $datosUsuarios = $request->only([
-            'name', 'apellido', 'edad', 'altura', 'peso', 'genero', 'activo'
+            'name', 'email', 'apellido', 'edad', 'altura', 'peso', 'genero', 'activo'
         ]);
-    
-        // Asegúrate de que el campo "activo" se convierte en un booleano si se ha marcado
+
         $datosUsuarios['activo'] = $request->has('activo');
-    
-        // Actualizar el usuario en la base de datos
         $usuario = User::findOrFail($id);
         $usuario->update($datosUsuarios);
-    
-        // Redirigir con un mensaje de éxito
         return redirect('administracion/usuarios')->with('Mensaje', 'Usuario actualizado con éxito');
     }
 
@@ -139,5 +115,35 @@ public function report()
     // Devolver el PDF al navegador
     return $pdf->stream('usuarios.pdf');
 }
+
+
+
+
+
+    private function validateUser(Request $request, $id = null)
+    {
+        $rules = [
+            "name" => "required|regex:/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/", // Permite letras, números y espacios.
+            "email" => "required|email|unique:users,email,{$id}", // Valida correo único (excluye el actual en el update)
+            "apellido" => "nullable|string|max:255",
+            "edad" => "nullable|integer|min:0",
+            "altura" => "nullable|numeric|min:0",
+            "peso" => "nullable|numeric|min:0",
+            "genero" => "nullable|string",
+            "activo" => "nullable|boolean",
+        ];
+
+        $messages = [
+            "required" => "El :attribute es requerido",
+            "name.regex" => "El campo name debe contener solo letras, números y espacios.",
+            "email.unique" => "El correo electrónico ya está registrado.",
+            "email.email" => "El correo electrónico debe ser válido.",
+            "edad.integer" => "La edad debe ser un número entero.",
+            "altura.numeric" => "La altura debe ser un número.",
+            "peso.numeric" => "El peso debe ser un número.",
+        ];
+
+        $request->validate($rules, $messages);
+    }
 
 }

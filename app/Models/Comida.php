@@ -18,9 +18,10 @@ class Comida extends Model
         'macros',
     ];
 
-    // Relación muchos a uno con Dieta
-    public function dieta()
+    // Relación muchos a muchos con Dieta
+    public function dietas()
     {
-        return $this->belongsTo(Dieta::class, 'id_dieta', 'id_dieta');
+        return $this->belongsToMany(Dieta::class, 'pivot_dieta_comida', 'id_comida', 'id_dieta')
+                    ->withPivot('tipo_comida'); // Si quieres guardar más información en la tabla pivote
     }
 }
