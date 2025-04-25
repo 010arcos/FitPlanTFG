@@ -10,10 +10,11 @@
 
 
 
-               <!-- Mostrar mensaje si existe -->
-               @if(Session::has('Mensaje'))
+                <!-- Mostrar mensaje si existe -->
+                @if(Session::has('Mensaje'))
                 <div class="flex justify-center mb-6">
-                    <div class="bg-teal-100 border border-teal-400 text-teal-700 px-6 py-3 rounded-lg shadow-md max-w-lg text-center">
+                    <div
+                        class="bg-teal-100 border border-teal-400 text-teal-700 px-6 py-3 rounded-lg shadow-md max-w-lg text-center">
                         {{ Session::get('Mensaje') }}
                     </div>
                 </div>
@@ -24,7 +25,8 @@
 
                 <!-- Botones de PDF -->
                 <div class="flex space-x-4">
-                    <a href="{{ route('administracion.usuarios.reportPDF') }}" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out shadow-md mt-2 mb-2">
+                    <a href="{{ route('administracion.usuarios.reportPDF') }}"
+                        class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out shadow-md mt-2 mb-2">
                         Generar PDF
                     </a>
 
@@ -37,24 +39,26 @@
 
                 <!-- Formulario de búsqueda y botones de navegación -->
                 <div class="flex justify-between items-center mb-6">
-                    <form action="{{ route('administracion.usuarios.search') }}" method="GET" class="flex items-center space-x-4"> <!--action="{{ url('usuarios/search') }}" --->
-                        <input
-                            type="text"
-                            name="search"
-                            placeholder="Buscar por nombre, género o raza"
+                    <form action="{{ route('administracion.usuarios.search') }}" method="GET"
+                        class="flex items-center space-x-4">
+                        <!--action="{{ url('usuarios/search') }}" --->
+                        <input type="text" name="search" placeholder="Buscar por nombre, género o raza"
                             class="px-4 py-2 border rounded-md w-64 shadow-sm focus:outline-none focus:ring-2 focus:ring-teal-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
                             value="{{ request()->search }}" />
-                        <button type="submit" class="bg-teal-500 text-white px-6 py-2 rounded-md hover:bg-teal-600 transition duration-300 ease-in-out shadow-md">
+                        <button type="submit"
+                            class="bg-teal-500 text-white px-6 py-2 rounded-md hover:bg-teal-600 transition duration-300 ease-in-out shadow-md">
                             Buscar
                         </button>
                     </form>
 
                     <!-- Botones de Listar y Agregar -->
                     <div class="flex space-x-4">
-                        <a href="{{ route('administracion.usuarios.index') }}" class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out shadow-md">
+                        <a href="{{ route('administracion.usuarios.index') }}"
+                            class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out shadow-md">
                             Listar usuarios
                         </a>
-                        <a href="{{ route('administracion.usuarios.create') }}" class="bg-teal-500 text-white px-6 py-2 rounded-md hover:bg-teal-600 transition duration-300 ease-in-out shadow-md transform hover:scale-105">
+                        <a href="{{ route('administracion.usuarios.create') }}"
+                            class="bg-teal-500 text-white px-6 py-2 rounded-md hover:bg-teal-600 transition duration-300 ease-in-out shadow-md transform hover:scale-105">
                             Agregar usuario
                         </a>
                     </div>
@@ -63,21 +67,40 @@
                 <!-- Mostrar resultados de búsqueda o todos los usuarios -->
                 <div class="overflow-x-auto bg-white dark:bg-gray-700 shadow-md rounded-lg">
                     @if(request()->has('search') && !empty(request()->search))
-                    <p class="text-gray-600 dark:text-gray-300 p-4">Resultados de la búsqueda para "<strong>{{ request()->search }}</strong>"</p>
+                    <p class="text-gray-600 dark:text-gray-300 p-4">Resultados de la búsqueda para "<strong>{{
+                            request()->search }}</strong>"</p>
                     @endif
 
                     <table class="min-w-full table-auto">
                         <thead class="bg-gray-100 dark:bg-gray-600">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">ID</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">Nombre</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">Apellido</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">Altura</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">Peso</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">Genero</th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase"> Alta </th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase"> Email </th>
-                                <th class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">  </th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
+                                    ID</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
+                                    Nombre</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
+                                    Apellido</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
+                                    Altura</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
+                                    Peso</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
+                                    Genero</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
+                                    Alta </th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
+                                    Email </th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
+                                </th>
                             </tr>
                         </thead>
                         <tbody class="text-sm">
@@ -89,26 +112,42 @@
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->altura }}</td>
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->peso }}</td>
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->genero }}</td>
-                                <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->activo == 1 ? 'Activo' : 'Inactivo' }}</td>
+                                <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->activo == 1 ?
+                                    'Activo' : 'Inactivo' }}</td>
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $usuario->email }}</td>
-                               
-                                
 
 
 
 
-                                <td class="px-6 py-4">
-                                    <div class="flex space-x-2">
-                                        <a href="{{ route('administracion.usuarios.edit', $usuario->id) }}" class="bg-green-500 text-white hover:bg-green-600 transition duration-300 ease-in-out text-sm px-4 py-2 rounded-md shadow-md">
+
+
+                                <td class="px-6 py-4 w-full">
+                                    <div class="flex space-x-2 justify-start">
+                                        <!-- Ajusta justify-start si prefieres alinearlo a la izquierda -->
+                                        <!-- Botón de editar -->
+                                        <a href="{{ route('administracion.usuarios.edit', $usuario->id) }}"
+                                            class="bg-green-500 text-white hover:bg-green-600 transition duration-300 ease-in-out text-sm px-4 py-2 rounded-md shadow-md">
                                             Editar
                                         </a>
-                                        <form action="{{ route('administracion.usuarios.destroy', $usuario->id) }}" method="POST" class="inline">
+
+                                        <!-- Botón de borrar -->
+                                        <form action="{{ route('administracion.usuarios.destroy', $usuario->id) }}"
+                                            method="POST" class="inline">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="bg-red-500 text-white hover:bg-red-600 transition duration-300 ease-in-out text-sm px-4 py-2 rounded-md shadow-md" onclick="return confirm('¿Estás seguro de borrar?')">
+                                            <button type="submit"
+                                                class="bg-red-500 text-white hover:bg-red-600 transition duration-300 ease-in-out text-sm px-4 py-2 rounded-md shadow-md"
+                                                onclick="return confirm('¿Estás seguro de borrar?')">
                                                 Borrar
                                             </button>
                                         </form>
+                                        <a href="{{ route('administracion.dietas.semana', $usuario->id) }}"
+                                            class="bg-yellow-500 text-white hover:bg-yellow-600 transition duration-300 ease-in-out text-sm px-3 py-2 rounded-md shadow-md">
+                                            Dieta
+                                        </a>
+
+
+
                                     </div>
                                 </td>
                             </tr>
@@ -124,7 +163,8 @@
 
                 <!-- Mensaje si no hay usuarios -->
                 @if(count($usuarios) == 0)
-                <p class="text-gray-600 dark:text-gray-300 mt-6">No se encontraron usuarios que coincidan con tu búsqueda o no hay usuarios registrados.</p>
+                <p class="text-gray-600 dark:text-gray-300 mt-6">No se encontraron usuarios que coincidan con tu
+                    búsqueda o no hay usuarios registrados.</p>
                 @endif
 
             </div>

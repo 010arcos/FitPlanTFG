@@ -15,11 +15,11 @@ Route::get('/', function () {
 
 //Ruta Admin
 Route::get('/administracion', function () {
-    $user = Auth::user(); 
-    $admin= $user->roles->first()->name;
-    if($admin == 'admin'){
+    $user = Auth::user();
+    $admin = $user->roles->first()->name;
+    if ($admin == 'admin') {
         return view('administracion');
-    } else{
+    } else {
         Auth::logout();
         return view('welcome');
     }
@@ -28,7 +28,7 @@ Route::get('/administracion', function () {
 
 // Route::middleware(['auth', 'verified'])->group(function () {
 
-   
+
 //     Route::get('administracion/search', [UsuariosController::class, 'search']);
 //     Route::resource('administracion', UsuariosController::class);
 //     Route::get('administracion/search', [UsuariosController::class, 'search'])->name('administracion.usuarios.search');
@@ -60,6 +60,7 @@ Route::middleware(['auth', 'verified'])->prefix('administracion')->name('adminis
         Route::get('{id}/edit', [DietasController::class, 'edit'])->name('edit');
         Route::put('{id}', [DietasController::class, 'update'])->name('update');
         Route::delete('{id}', [DietasController::class, 'destroy'])->name('destroy');
+        Route::get('usuario/{id}/semana', [DietasController::class, 'mostrarDietaSemanal'])->name('semana');
     });
 
     // Comidas
@@ -74,7 +75,7 @@ Route::middleware(['auth', 'verified'])->prefix('administracion')->name('adminis
         Route::delete('{id}', [ComidasController::class, 'destroy'])->name('destroy');
     });
 
-    
+
 
 
     // Y así sucesivamente para cada módulo...
@@ -82,4 +83,4 @@ Route::middleware(['auth', 'verified'])->prefix('administracion')->name('adminis
 
 
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -139,6 +139,8 @@ class ComidasController extends Controller
         return $pdf->stream('comidas.pdf');
     }
 
+    
+
 
 
 
@@ -170,6 +172,9 @@ class ComidasController extends Controller
             'ingredientes.*.cantidad.regex' => 'Usá formato tipo "100g".',
         ]);
     }
+
+
+
 
 
 }
