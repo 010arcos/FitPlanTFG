@@ -124,6 +124,7 @@ class DietasController extends Controller
 
     public function mostrarDietaSemanal($id)
     {
+        //tengo q recoger todas las dietas o recoger las dietas del suaurio ascoiado y una vez las tenga con su id mostrarlas 
         return view('administracion.comidas.tablaSemanal');
 
     }

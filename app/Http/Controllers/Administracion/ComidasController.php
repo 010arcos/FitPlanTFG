@@ -115,8 +115,8 @@ class ComidasController extends Controller
 
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->search;
-            $query->where('calorias', 'like', "%{$search}%")
-                ->orWhere('descripcion', 'like', "%{$search}%")
+            $query->where('nombre', 'like', "%{$search}%")
+                ->orWhere('alimentos', 'like', "%{$search}%")
                 ->orWhere('id_comida', '=', $search);
 
         }
