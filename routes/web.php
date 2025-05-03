@@ -48,7 +48,7 @@ Route::middleware(['auth', 'verified'])->prefix('administracion')->name('adminis
         Route::get('{id}/edit', [UsuariosController::class, 'edit'])->name('edit');
         Route::put('{id}', [UsuariosController::class, 'update'])->name('update');
         Route::delete('{id}', [UsuariosController::class, 'destroy'])->name('destroy');
-        
+
     });
 
     // Dietas
@@ -62,6 +62,8 @@ Route::middleware(['auth', 'verified'])->prefix('administracion')->name('adminis
         Route::put('{id}', [DietasController::class, 'update'])->name('update');
         Route::delete('{id}', [DietasController::class, 'destroy'])->name('destroy');
         Route::get('usuario/{id}/semana', [DietasController::class, 'mostrarDietaSemanal'])->name('dietasemana');
+        Route::get('/{id}/asignar/comida/', [DietasController::class, 'asignarComidaDieta'])->name('asignar.comida');
+        Route::post('/{id}/guardar/comidas/', [DietasController::class, 'guardarComidaDieta'])->name('guardar.comida');
     });
 
     // Comidas
@@ -79,7 +81,7 @@ Route::middleware(['auth', 'verified'])->prefix('administracion')->name('adminis
 
 
 
-    // Y así sucesivamente para cada módulo...
+
 });
 
 

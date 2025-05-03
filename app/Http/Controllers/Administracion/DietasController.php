@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
+use App\Models\Comida;
 use App\Models\Dieta;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -136,6 +137,68 @@ class DietasController extends Controller
     }
 
 
+    public function asignarComidaDieta($id)
+    {
+        $dieta = Dieta::findOrFail($id);
+        $comidas = Comida::all(); // Obtener todas las comidas disponibles
+        $comidasDieta = $dieta->comidas;
+        return view('administracion.dietas.asignarComidas', compact('dieta', 'comidasDieta', 'comidas'));
+
+
+    }
+
+    public function guardarComidaDieta(Request $request, $id)
+    {
+        $this->validateGuardarComidaDieta($request);
+
+        $dieta = Dieta::findOrFail($id);
+
+        // Obtener las comidas enviadas
+        $comidas = collect($request->input('comidas'));
+
+        // Validar que no se repitan IDs de comidas
+        if ($comidas->keys()->duplicates()->isNotEmpty()) {
+            return redirect()->back()->withErrors(['comidas' => 'No se pueden repetir los IDs de las comidas.'])->withInput();
+        }
+
+        // Preparar los datos para sincronizar
+        $comidasPreparadas = $comidas->mapWithKeys(function ($idComida, $tipo) {
+            return [$idComida => ['tipo_comida' => $tipo]];
+        });
+
+        // Sincronizar las comidas con la dieta
+        $dieta->comidas()->sync($comidasPreparadas);
+
+        return redirect()->route('administracion.dietas.index')->with('Mensaje', 'Comidas asignadas con éxito a la dieta.');
+    }
+
+
+
+
+    private function validateGuardarComidaDieta(Request $request)
+    {
+        $comidas = $request->input('comidas');
+
+        // Obtener solo los valores (los IDs)
+        $ids = array_values($comidas);
+
+        // Validar que no haya valores vacíos o nulos
+        foreach ($ids as $id) {
+            if (empty($id)) {
+                throw \Illuminate\Validation\ValidationException::withMessages([
+                    'comidas' => 'Todos los IDs de las comidas deben estar completos.'
+                ]);
+            }
+        }
+
+        // Validar que no haya IDs duplicados
+        if (count($ids) !== count(array_unique($ids))) {
+            throw \Illuminate\Validation\ValidationException::withMessages([
+                'comidas' => 'No se pueden repetir los IDs de las comidas.'
+            ]);
+        }
+    }
+
     private function validateDieta(Request $request)
     {
         return $request->validate([
@@ -157,7 +220,5 @@ class DietasController extends Controller
             'fecha_fin.after' => 'La fecha de fin debe ser posterior a la fecha de inicio.',
         ]);
     }
-
-
 
 }
