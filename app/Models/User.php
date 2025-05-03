@@ -61,7 +61,6 @@ class User extends Authenticatable
     public function dietas()
     {
         return $this->belongsToMany(Dieta::class, 'pivot_usuario_dieta', 'id_usuario', 'id_dieta')
-                    ->withPivot('fecha_asignacion')
                     ->withTimestamps();
     }
 }

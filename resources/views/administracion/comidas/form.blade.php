@@ -73,11 +73,11 @@
     <div class="mb-6">
         <label class="block text-gray-700 text-sm font-medium mb-2">Ingredientes</label>
         <div id="ingredientes-container" class="space-y-4">
-          @php
-        $ingredientesOld = old('ingredientes', $ingredientesArray);
-        @endphp
-        
-        @foreach($ingredientesOld as $index => $ingrediente)
+            @php
+            $ingredientesOld = old('ingredientes', $ingredientesArray);
+            @endphp
+
+            @foreach($ingredientesOld as $index => $ingrediente)
             <div class="flex space-x-4 items-center">
                 <div class="w-1/2">
                     <input type="text" name="ingredientes[{{ $index }}][nombre]" placeholder="Ingrediente"
@@ -112,11 +112,12 @@
         <a href="{{url('administracion/comidas')}}"
             class="inline-block bg-gray-300 text-gray-700 px-6 py-3 rounded-md hover:bg-gray-400 transition duration-300">Volver</a>
     </div>
-</form><script>
+</form>
+<script>
     let contadorIngredientes = {{ $contadorInicial ?? 1 }};
     
     function agregarIngrediente() {
-    const container = document.getElementById('ingredientes-container');
+    const container = document.getElementById('ingredientes-container');A
     
     const div = document.createElement('div');
     div.classList.add('flex', 'space-x-4', 'items-center');

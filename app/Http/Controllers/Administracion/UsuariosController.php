@@ -2,25 +2,28 @@
 
 namespace App\Http\Controllers\Administracion;
 
+use App\Models\Dieta; // Importar el modelo Dieta
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB; // Importar DB para consultas directas
 
 
-class UsuariosController 
+class UsuariosController
 {
-    
+
     public function index()
     {
         $datos['usuarios'] = User::where('id', '!=', 1)->paginate(5);
         return view('administracion.usuarios.index', $datos);
-        
-    } 
+
+    }
 
 
-   public function create()
-   {
-         return view('administracion.usuarios.create');
+    public function create()
+    {
+        $dietas = Dieta::all(); // Obtener todas las dietas
+        return view('administracion.usuarios.create', compact('dietas'));
     }
 
 
@@ -29,18 +32,22 @@ class UsuariosController
         // Validar los datos del usuario usando el método común
         $this->validateUser($request);
 
-        // Obtener los datos del formulario
-        $datosUsuarios = $request->except('_token');
+        // // Validar si la dieta seleccionada ya está asignada al usuario
+        // $this->validateDieta($request);
 
-        // Insertar el nuevo usuario en la base de datos
-        User::insert($datosUsuarios);
+        $dietas = $request->input('dietas');
+        $datosUsuarios = $request->except(['_token', 'dietas']);
+
+        $usuario = User::create($datosUsuarios);
+        // Asignar la dieta al usuario en la tabla pivote
+        $usuario->dietas()->attach($dietas);
 
         // Redirigir con mensaje de éxito
         return redirect('administracion/usuarios')->with('Mensaje', 'Usuario agregado con éxito');
     }
 
 
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -48,7 +55,9 @@ class UsuariosController
     public function edit($id)
     {
         $usuario = User::findOrFail($id);
-        return view('administracion.usuarios.edit', compact('usuario'));
+        $dietasAsociadas = $usuario->dietas->pluck('id_dieta')->toArray();
+        $dietas = Dieta::all();
+        return view('administracion.usuarios.edit', compact('usuario', 'dietas', 'dietasAsociadas'));
 
         // compact-> array asociativo de variables y sus valores
     }
@@ -58,16 +67,31 @@ class UsuariosController
      */
     public function update(Request $request, $id)
     {
-       
+
         $this->validateUser($request, $id);
 
+        // // Validar si la dieta seleccionada ya está asignada al usuario
+        // $this->validateDieta($request);
+
         $datosUsuarios = $request->only([
-            'name', 'email', 'password', 'apellido', 'edad', 'altura', 'peso', 'genero', 'activo'
+            'name',
+            'email',
+            'password',
+            'apellido',
+            'edad',
+            'altura',
+            'peso',
+            'genero',
+            'activo'
         ]);
 
         $datosUsuarios['activo'] = $request->has('activo');
         $usuario = User::findOrFail($id);
         $usuario->update($datosUsuarios);
+
+        $dietas = $request->input('dietas');
+        $usuario->dietas()->sync($dietas);
+
         return redirect('administracion/usuarios')->with('Mensaje', 'Usuario actualizado con éxito');
     }
 
@@ -83,35 +107,35 @@ class UsuariosController
 
 
     public function search(Request $request)
-{
-    $query = User::query();
+    {
+        $query = User::query();
 
-    if ($request->has('search') && !empty($request->search)) {
-        $search = $request->search;
-        $query->where('name', 'like', "%{$search}%")
-              ->orWhere('apellido', 'like', "%{$search}%")
-              ->orWhere('email', 'like', "%{$search}%")
-              ->orWhere('id', '=', $search);
-                
+        if ($request->has('search') && !empty($request->search)) {
+            $search = $request->search;
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('apellido', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('id', '=', $search);
+
+        }
+
+
+        $usuarios = $query->paginate(5);
+        return view('administracion.usuarios.index', ['usuarios' => $usuarios]);
     }
 
-   
-    $usuarios = $query->paginate(5);
-    return view('administracion.usuarios.index', ['usuarios'=>$usuarios]); 
-}
 
+    public function report()
+    {
+        // Obtener todos los usuarios, por ejemplo con sus roles
+        $usuarios = User::where('id', '!=', 1)->get();
 
-public function report()
-{
-    // Obtener todos los usuarios, por ejemplo con sus roles
-    $usuarios = User::where('id', '!=', 1)->get();
+        // Generar el PDF con la vista 'usuarios.report' y pasarle los datos
+        $pdf = Pdf::loadView('administracion.usuarios.report', compact('usuarios'));
 
-    // Generar el PDF con la vista 'usuarios.report' y pasarle los datos
-    $pdf = Pdf::loadView('administracion.usuarios.report', compact('usuarios'));
-
-    // Devolver el PDF al navegador
-    return $pdf->stream('usuarios.pdf');
-}
+        // Devolver el PDF al navegador
+        return $pdf->stream('usuarios.pdf');
+    }
 
 
 
@@ -144,5 +168,40 @@ public function report()
 
         $request->validate($rules, $messages);
     }
+
+
+    // public function mostrarDietaSemanal($id)
+    // {
+    //     $usuario = User::find($id);
+    //     $dietas = $usuario->dietas; // Obtener las dietas del usuario con sus comidas asociadas
+
+    //     $comidasPorDieta = $usuario->dietas->mapWithKeys(function ($dieta) {
+    //         return [$dieta->id_dieta => $dieta->comidas]; // Asociar cada dieta con sus comidas
+    //     });
+
+    //     return view('administracion.usuarios.tablaSemanal', compact('comidasPorDieta'));
+    // }
+
+    // private function validateDieta(Request $request)
+    // {
+    //     $request->validate([
+    //         'dieta_id' => [
+    //             'nullable',
+    //             function ($attribute, $value, $fail) use ($request) {
+    //                 $usuarioId = $request->id;
+
+    //                 // Verificar en la tabla pivote si la dieta ya está asignada al usuario
+    //                 $dietaAsignada = DB::table('pivot_usuario_dieta')
+    //                     ->where('user_id', $usuarioId)
+    //                     ->where('dieta_id', $value)
+    //                     ->exists();
+
+    //                 if ($dietaAsignada) {
+    //                     $fail('La dieta seleccionada ya está asignada a este usuario.');
+    //                 }
+    //             },
+    //         ],
+    //     ]);
+    // }
 
 }

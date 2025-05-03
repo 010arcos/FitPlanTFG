@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
 use App\Models\Dieta;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -124,9 +125,14 @@ class DietasController extends Controller
 
     public function mostrarDietaSemanal($id)
     {
-        //tengo q recoger todas las dietas o recoger las dietas del suaurio ascoiado y una vez las tenga con su id mostrarlas 
-        return view('administracion.comidas.tablaSemanal');
+        $usuario = User::find($id);
+        $dietas = $usuario->dietas; // Obtener las dietas del usuario con sus comidas asociadas
 
+        $comidasPorDieta = $usuario->dietas->mapWithKeys(function ($dieta) {
+            return [$dieta->id_dieta => $dieta->comidas]; // Asociar cada dieta con sus comidas
+        });
+
+        return view('administracion.dietas.tablaSemanal', compact('comidasPorDieta'));
     }
 
 

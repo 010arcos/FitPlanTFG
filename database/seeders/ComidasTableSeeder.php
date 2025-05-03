@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class ComidasTableSeeder extends Seeder
 {
-     /**
+    /**
      * Run the database seeds.
      */
     public function run(): void
@@ -31,9 +31,9 @@ class ComidasTableSeeder extends Seeder
                 'nombre' => 'Tostadas integrales con aguacate y huevo',
                 'alimentos' => json_encode([
                     'ingredientes' => [
-                        ['nombre' => 'Tostada integral', 'cantidad' => '2 rebanadas'],
+                        ['nombre' => 'Tostada integral', 'cantidad' => '60g'],
                         ['nombre' => 'Aguacate', 'cantidad' => '50g'],
-                        ['nombre' => 'Huevo', 'cantidad' => '1']
+                        ['nombre' => 'Huevo', 'cantidad' => '50g']
                     ]
                 ]),
                 'calorias' => 400,
@@ -57,7 +57,7 @@ class ComidasTableSeeder extends Seeder
                 'alimentos' => json_encode([
                     'ingredientes' => [
                         ['nombre' => 'Avena', 'cantidad' => '40g'],
-                        ['nombre' => 'Leche', 'cantidad' => '200ml'],
+                        ['nombre' => 'Leche', 'cantidad' => '200g'],
                         ['nombre' => 'Mantequilla de maní', 'cantidad' => '20g']
                     ]
                 ]),
@@ -84,7 +84,7 @@ class ComidasTableSeeder extends Seeder
                 'alimentos' => json_encode([
                     'ingredientes' => [
                         ['nombre' => 'Pollo', 'cantidad' => '100g'],
-                        ['nombre' => 'Tortilla de maíz', 'cantidad' => '2'],
+                        ['nombre' => 'Tortilla de maíz', 'cantidad' => '60g'],
                         ['nombre' => 'Guacamole', 'cantidad' => '50g']
                     ]
                 ]),
@@ -95,7 +95,7 @@ class ComidasTableSeeder extends Seeder
                 'nombre' => 'Sándwich integral de atún con espinacas',
                 'alimentos' => json_encode([
                     'ingredientes' => [
-                        ['nombre' => 'Pan integral', 'cantidad' => '2 rebanadas'],
+                        ['nombre' => 'Pan integral', 'cantidad' => '60g'],
                         ['nombre' => 'Atún', 'cantidad' => '100g'],
                         ['nombre' => 'Espinacas', 'cantidad' => '50g']
                     ]
@@ -121,7 +121,7 @@ class ComidasTableSeeder extends Seeder
                 'alimentos' => json_encode([
                     'ingredientes' => [
                         ['nombre' => 'Carne de ternera', 'cantidad' => '150g'],
-                        ['nombre' => 'Pan integral', 'cantidad' => '1'],
+                        ['nombre' => 'Pan integral', 'cantidad' => '60g'],
                         ['nombre' => 'Lechuga', 'cantidad' => '30g'],
                         ['nombre' => 'Tomate', 'cantidad' => '30g'],
                         ['nombre' => 'Cebolla', 'cantidad' => '30g']
@@ -162,7 +162,7 @@ class ComidasTableSeeder extends Seeder
                 'alimentos' => json_encode([
                     'ingredientes' => [
                         ['nombre' => 'Aguacate', 'cantidad' => '50g'],
-                        ['nombre' => 'Pan integral', 'cantidad' => '2 rebanadas'],
+                        ['nombre' => 'Pan integral', 'cantidad' => '60g'],
                         ['nombre' => 'Tomate', 'cantidad' => '30g']
                     ]
                 ]),
@@ -186,7 +186,7 @@ class ComidasTableSeeder extends Seeder
                 'alimentos' => json_encode([
                     'ingredientes' => [
                         ['nombre' => 'Proteína en polvo', 'cantidad' => '25g'],
-                        ['nombre' => 'Leche de almendra', 'cantidad' => '250ml']
+                        ['nombre' => 'Leche de almendra', 'cantidad' => '250g']
                     ]
                 ]),
                 'calorias' => 350,
@@ -248,7 +248,7 @@ class ComidasTableSeeder extends Seeder
                 'nombre' => 'Tortilla de patatas con cebolla',
                 'alimentos' => json_encode([
                     'ingredientes' => [
-                        ['nombre' => 'Huevos', 'cantidad' => '3'],
+                        ['nombre' => 'Huevos', 'cantidad' => '150g'],
                         ['nombre' => 'Patatas', 'cantidad' => '200g'],
                         ['nombre' => 'Cebolla', 'cantidad' => '50g']
                     ]
