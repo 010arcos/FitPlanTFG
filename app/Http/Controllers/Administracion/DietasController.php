@@ -133,7 +133,7 @@ class DietasController extends Controller
             return [$dieta->id_dieta => $dieta->comidas]; // Asociar cada dieta con sus comidas
         });
 
-        return view('administracion.dietas.tablaSemanal', compact('comidasPorDieta'));
+        return view('administracion.dietas.tablaSemanal', compact('comidasPorDieta', 'usuario', 'dietas'));
     }
 
 

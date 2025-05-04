@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container mx-auto p-6 bg-gray-50 shadow-lg rounded-lg">
-    <h1 class="text-3xl font-bold mb-8 text-gray-800 text-center">Plan Semanal de Comidas</h1>
+    <h1 class="text-3xl font-bold mb-8 text-gray-800 text-center">Plan Semanal de Comidas de {{ $usuario->name }}</h1>
 
     <!-- Mensajes de éxito o error -->
     @if(Session::has('Mensaje'))
@@ -18,8 +18,10 @@
             <select id="dietaSelector"
                 class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300">
                 <option value="">Selecciona una dieta</option>
-                @foreach ($comidasPorDieta as $dietaId => $comidas)
-                <option value="{{ $dietaId }}">Dieta ID: {{ $dietaId }}</option>
+                @foreach ($dietas as $dieta)
+                <option value="{{ $dieta->id_dieta }}" data-nombre="{{ $dieta->nombre }}">
+                   Id {{ $dieta->id_dieta }} - {{ $dieta->nombre }} 
+                </option>
                 @endforeach
             </select>
         </div>
