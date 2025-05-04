@@ -172,6 +172,21 @@ class DietasController extends Controller
         return redirect()->route('administracion.dietas.index')->with('Mensaje', 'Comidas asignadas con éxito a la dieta.');
     }
 
+    public function eliminarDietaUsuario(Request $request)
+    {
+        // $request->validate([
+        //     'usuario_id' => 'required|exists:users,id',
+        //     'dieta_id' => 'required|exists:dietas,id_dieta',
+        // ]);
+
+        $usuario = User::findOrFail($request->usuario_id);
+
+        // Eliminar la relación entre el usuario y la dieta
+        $usuario->dietas()->detach($request->dieta_id);
+
+        return redirect()->back()->with('Mensaje', 'Dieta eliminada del usuario con éxito');
+    }
+
 
 
 

@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified'])->prefix('administracion')->name('adminis
         Route::get('usuario/{id}/semana', [DietasController::class, 'mostrarDietaSemanal'])->name('dietasemana');
         Route::get('/{id}/asignar/comida/', [DietasController::class, 'asignarComidaDieta'])->name('asignar.comida');
         Route::post('/{id}/guardar/comidas/', [DietasController::class, 'guardarComidaDieta'])->name('guardar.comida');
+        Route::delete('/usuario/{usuario_id}/eliminar/{dieta_id}', [DietasController::class, 'eliminarDietaUsuario'])->name('eliminar.dieta.usuario');
     });
 
     // Comidas
