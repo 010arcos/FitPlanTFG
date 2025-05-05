@@ -13,17 +13,32 @@ Route::get('/', function () {
 });
 
 
-//Ruta Admin
+//Ruta Protegidas
 Route::get('/administracion', function () {
     $user = Auth::user();
-    $admin = $user->roles->first()->name;
-    if ($admin == 'admin') {
+    $adminRole = $user->roles->first()->name;
+
+    if ($adminRole == 'admin') {
         return view('administracion');
     } else {
-        Auth::logout();
-        return view('welcome');
+        return redirect()->route('usuario.index');
     }
 })->middleware(['auth', 'verified'])->name('administracion');
+
+// Ruta Usuario
+Route::get('/usuario/index', function () {
+    $user = Auth::user();
+    $userRole = $user->roles->contains('name', 'user');
+
+    if ($userRole) {
+        return view('usuario.index');
+    } else {
+        return redirect()->route('administracion');
+    }
+})->middleware(['auth', 'verified'])->name('usuario.index');
+
+
+
 
 
 // Route::middleware(['auth', 'verified'])->group(function () {

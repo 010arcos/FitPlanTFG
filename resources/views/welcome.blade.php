@@ -226,16 +226,36 @@
 </head>
 
 <body>
-    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">NutriFit</a>
             <div class="d-flex">
-                <a href="{{ route('login') }}" class="btn btn-light me-2">Iniciar Sesión</a>
+    
+                @auth
+                <!-- Si el usuario está autenticado -->
+                @if(Auth::user()->roles->contains('name', 'admin'))
+                <a href="{{ route('administracion') }}" class="btn btn-outline-light">Panel de Administración</a>
+                @elseif(Auth::user()->roles->contains('name', 'user'))
+                <a href="{{ route('usuario.index') }}" class="btn btn-outline-light">Mi Perfil</a>
+                @else
+                <!-- Opción por defecto si el usuario no tiene ni rol 'admin' ni rol 'user' -->
+                <a href="{{ url('/') }}" class="btn btn-outline-light">Inicio</a>
+                @endif
+                @else
+                <!-- Si el usuario NO está autenticado -->
+                <a href="{{ route('login') }}" class="btn btn-outline-light me-2">Iniciar Sesión</a>
                 <a href="{{ route('register') }}" class="btn btn-outline-light">Registrarse</a>
+                @endauth
             </div>
         </div>
     </nav>
+
+
+
+
+
+
+
 
     <!-- Hero Section -->
     <div class="hero">
@@ -309,6 +329,18 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Solución completa para forzar recarga al navegar hacia atrás
+        window.addEventListener('pageshow', function(event) {
+            // Si la página se carga desde caché (navegación hacia atrás)
+            if (event.persisted) {
+                location.reload(true); // true fuerza recarga desde servidor, no desde caché
+            }
+        });
+        
+        // Prevenir caché de página en algunos navegadores
+        window.onunload = function() {};
+    </script>
 </body>
 
 </html>

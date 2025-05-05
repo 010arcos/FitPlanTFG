@@ -28,17 +28,17 @@
         }
 
         .navbar-brand {
-        color: white;
-        font-weight: bold;
-        font-size: 1.5rem;
-        transition: color 0.3s ease;
-        /* Opcional para una transición suave */
+            color: white;
+            font-weight: bold;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+            /* Opcional para una transición suave */
         }
-        
+
         .navbar-brand:hover {
-        color: white;
-        scale: 1.05;
-        /* Asegurarte de que el color se mantenga blanco */
+            color: white;
+            scale: 1.05;
+            /* Asegurarte de que el color se mantenga blanco */
         }
 
         .hero {
@@ -161,6 +161,9 @@
                     <label for="email" class="form-label">Email</label>
                     <input id="email" class="form-control" type="email" name="email" :value="old('email')" required
                         autofocus autocomplete="username">
+                    @error('email')
+                    <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Password -->
@@ -168,6 +171,9 @@
                     <label for="password" class="form-label">Contraseña</label>
                     <input id="password" class="form-control" type="password" name="password" required
                         autocomplete="current-password">
+                    @error('password')
+                    <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <!-- Remember Me -->
@@ -193,7 +199,8 @@
         </div>
     </div>
 
-    {{-- <!-- Call to Action Section -->
+    {{--
+    <!-- Call to Action Section -->
     <div class="cta">
         <h2>¿No tienes una cuenta?</h2>
         <a href="{{ route('register') }}" class="btn btn-lg">Regístrate ahora</a>
@@ -206,6 +213,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
 </body>
 
 </html>

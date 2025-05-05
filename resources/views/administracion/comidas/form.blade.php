@@ -117,7 +117,7 @@
     let contadorIngredientes = {{ $contadorInicial ?? 1 }};
     
     function agregarIngrediente() {
-    const container = document.getElementById('ingredientes-container');A
+    const container = document.getElementById('ingredientes-container');
     
     const div = document.createElement('div');
     div.classList.add('flex', 'space-x-4', 'items-center');

@@ -28,7 +28,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('administracion', absolute: false));
+        $user = Auth::user();
+        $adminRole = $user->roles->first()->name;
+        $userRole = $user->roles->contains('name', 'user'); // esto es un booleano me dice si contien el rol name: user
+        
+
+        if ($adminRole == 'admin') {
+            return redirect()->intended(route('administracion', absolute: false));
+        } else if ($userRole) {
+            return redirect()->intended(route('usuario.index', absolute: false));
+        } else{
+            return redirect()->route('welcome');
+        }
     }
 
     /**
