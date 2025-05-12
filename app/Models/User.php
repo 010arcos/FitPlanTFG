@@ -3,19 +3,21 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+
+class User extends Authenticatable //implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
     use Notifiable;
     use HasRoles;
-    use SoftDeletes; 
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -61,6 +63,6 @@ class User extends Authenticatable
     public function dietas()
     {
         return $this->belongsToMany(Dieta::class, 'pivot_usuario_dieta', 'id_usuario', 'id_dieta')
-                    ->withTimestamps();
+            ->withTimestamps();
     }
 }

@@ -14,44 +14,43 @@ Route::get('/', function () {
 
 
 //Ruta Protegidas
+
+// Route::get('/administracion', function () {
+//     $user = Auth::user();
+//     $adminRole = $user->roles->first()->name;
+
+//     if ($adminRole == 'admin') {
+//         return view('administracion');
+//     } else {
+//         return redirect()->route('usuario.index');
+//     }
+// })->middleware(['auth', 'verified'])->name('administracion');
+
+// // Ruta Usuario
+// Route::get('/usuario/index', function () {
+//     $user = Auth::user();
+//     $userRole = $user->roles->contains('name', 'user');
+
+//     if ($userRole) {
+//         return view('usuario.index');
+//     } else {
+//         return redirect()->route('administracion');
+//     }
+// })->middleware(['auth', 'verified'])->name('usuario.index');
+
+
+
 Route::get('/administracion', function () {
-    $user = Auth::user();
-    $adminRole = $user->roles->first()->name;
+    return view('administracion');
+})->middleware(['auth', 'verified', 'admin'])->name('administracion');
 
-    if ($adminRole == 'admin') {
-        return view('administracion');
-    } else {
-        return redirect()->route('usuario.index');
-    }
-})->middleware(['auth', 'verified'])->name('administracion');
 
-// Ruta Usuario
 Route::get('/usuario/index', function () {
-    $user = Auth::user();
-    $userRole = $user->roles->contains('name', 'user');
-
-    if ($userRole) {
-        return view('usuario.index');
-    } else {
-        return redirect()->route('administracion');
-    }
+    return view('usuario.index');
 })->middleware(['auth', 'verified'])->name('usuario.index');
 
 
-
-
-
-// Route::middleware(['auth', 'verified'])->group(function () {
-
-
-//     Route::get('administracion/search', [UsuariosController::class, 'search']);
-//     Route::resource('administracion', UsuariosController::class);
-//     Route::get('administracion/search', [UsuariosController::class, 'search'])->name('administracion.usuarios.search');
-//     Route::get('administracion/report', [UsuariosController::class, 'report'])->name('administracion.usuarios.reportPDF');
-//     Route::resource('administracion/usuarios', UsuariosController::class);
-// });
-
-Route::middleware(['auth', 'verified'])->prefix('administracion')->name('administracion.')->group(function () {
+Route::middleware(['auth', 'verified', 'admin'])->prefix('administracion')->name('administracion.')->group(function () {
 
     // Usuarios
     Route::prefix('usuarios')->name('usuarios.')->group(function () {
