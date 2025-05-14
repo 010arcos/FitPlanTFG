@@ -19,9 +19,14 @@ class Ejercicio extends Model
         'tipo',
     ];
 
-    // Relación uno a muchos con ejercicios_dia
-    public function ejerciciosDia()
+
+    // Relación muchos a muchos con Rutinas
+    public function rutinas()
     {
-        return $this->hasMany(EjercicioDia::class, 'id_ejercicio', 'id_ejercicio');
+        return $this->belongsToMany(Rutina::class, 'pivot_ejercicio_rutina', 'id_ejercicio', 'id_rutina')
+            ->withPivot('dia', 'repeticiones', 'series')
+            ->withTimestamps();
     }
+
+    
 }

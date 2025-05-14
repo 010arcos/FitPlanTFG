@@ -13,21 +13,24 @@ class Rutina extends Model
     protected $primaryKey = 'id_rutina';
 
     protected $fillable = [
-        'id_usuario',
         'nombre',
+        'descripcion',
         'fecha_inicio',
         'fecha_fin',
     ];
 
-    // Relación muchos a uno con Usuario
-    public function usuario()
+    public function usuarios()
     {
-        return $this->belongsTo(User::class, 'id_usuario', 'id_usuario');
+        return $this->belongsToMany(User::class, 'pivot_usuario_rutina', 'id_rutina', 'id_usuario')
+            ->withPivot('fecha_inicio', 'fecha_fin')
+            ->withTimestamps();
     }
 
-    // Relación uno a muchos con ejercicios_dia
-    public function ejerciciosDia()
+    // Relación muchos a muchos con Ejercicios
+    public function ejercicios()
     {
-        return $this->hasMany(EjercicioDia::class, 'id_rutina', 'id_rutina');
+        return $this->belongsToMany(Ejercicio::class, 'pivot_ejercicio_rutina', 'id_rutina', 'id_ejercicio')
+            ->withPivot('dia', 'repeticiones', 'series')
+            ->withTimestamps();
     }
 }

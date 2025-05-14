@@ -10,19 +10,14 @@ return new class extends Migration
     {
         Schema::create('rutinas', function (Blueprint $table) {
             $table->id('id_rutina');
-            $table->unsignedBigInteger('id_usuario');
             $table->string('nombre', 100);
+            $table->text('descripcion')->nullable();
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->timestamps();
             $table->softDeletes(); 
 
-            // Clave foránea
-            $table->foreign('id_usuario')
-                ->references('id')
-                ->on('users')
-                ->onDelete('cascade')
-                ->onUpdate('cascade');
+
         });
     }
 

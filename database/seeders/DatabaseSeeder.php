@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Ejercicio;
-use App\Models\User;
+
 use Database\Seeders\UsersTableSeeder;
-use Illuminate\Database\Eloquent\Relations\Pivot;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,7 +13,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-    
+
 
         // Llamar a los seeders personalizados con y magia jejej php artisan migrate:refresh --seed 
         $this->call([
@@ -24,10 +22,14 @@ class DatabaseSeeder extends Seeder
             DietasTableSeeder::class,
             ComidasTableSeeder::class,
             PivotDietaComidaSeeder::class,
-            PivotDietaDiaSeeder::class,
             PivotUsuarioDietaSeeder::class,
-           
-            
+            RutinaTableSeeder::class,
+            PivotRutinaUsuarioSeeder::class,
+            EjerciciosTableSeeder::class,
+            PivotRutinaEjerciciosSeeder::class,
+
+
+
         ]);
     }
 }
