@@ -42,9 +42,9 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Nombre</th>
                 <th>Descipcion</th>
-                <th>Calorias</th>
-                <th>Macros</th>
+               
 
 
             </tr>
@@ -53,24 +53,15 @@
             @foreach($ejercicios as $ejercicio)
             <tr>
                 <td>{{ $ejercicio->id_ejercicio }}</td>
-                <td>{{ $ejercicio->descripcion }}</td>
                 <td>{{ $ejercicio->nombre }}</td>
+                <td>{{ $ejercicio->descripcion }}</td>
+             
                 <!-- Decodificando el JSON de 'macros' -->
                 @php
                 $macros = json_decode($ejercicio->macros, true);
                 @endphp
 
-                {{-- <td class="px-6 py-4 text-gray-700 dark:text-gray-300">
-                    @if($macros)
-                    <ul class="list-none">
-                        <li><strong>Proteínas:</strong> {{ $macros['proteinas'] }} g</li>
-                        <li><strong>Carbohidratos:</strong> {{ $macros['carbohidratos'] }} g</li>
-                        <li><strong>Grasas:</strong> {{ $macros['grasas'] }} g</li>
-                    </ul>
-                    @else
-                    <span>No disponible</span>
-                    @endif
-                </td> --}}
+
 
 
 

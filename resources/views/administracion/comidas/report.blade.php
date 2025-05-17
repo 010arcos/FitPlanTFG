@@ -20,7 +20,7 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Descipcion</th>
+                <th>Nombre</th>
                 <th>Calorias</th>
                 <th>Macros</th>
             
@@ -31,7 +31,7 @@
             @foreach($comidas as $comida)
                 <tr>
                     <td>{{ $comida->id_comida }}</td>
-                    <td>{{ $comida->descripcion }}</td>
+                    <td>{{ $comida->nombre }}</td>
                     <td>{{ $comida->calorias }}</td>
                     <!-- Decodificando el JSON de 'macros' -->
                     @php
