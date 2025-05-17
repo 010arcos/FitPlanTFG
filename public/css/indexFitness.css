@@ -1,0 +1,516 @@
+/* Layout principal */
+.fitness-dashboard {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 2rem;
+    max-width: 70vw;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    align-items: start;
+}
+
+/* Menú lateral */
+.fitness-menu {
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: .5rem;
+    position: sticky;
+    top: 10rem;
+    align-self: start;
+}
+
+.fitness-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.fitness-menu .menu-item {
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.fitness-menu .menu-item:last-child {
+    border-bottom: none;
+}
+
+.fitness-menu summary.menu-header {
+    list-style: none;
+    cursor: pointer;
+    padding: .75rem 1rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background .2s;
+}
+
+.fitness-menu .menu-item[open]>summary.menu-header {
+    background: #4F46E5;
+    /* Color principal - puedes cambiarlo */
+    color: #FFFFFF;
+    border-top-left-radius: .5rem;
+    border-top-right-radius: .5rem;
+}
+
+.fitness-menu summary.menu-header .chevron {
+    transition: transform .3s;
+}
+
+.fitness-menu .menu-item[open]>summary.menu-header .chevron {
+    transform: rotate(180deg);
+}
+
+/* Submenú oculto por defecto */
+.fitness-menu .submenu {
+    display: none;
+}
+
+/* Mostrar cuando el <details> esté abierto */
+.fitness-menu .menu-item[open]>.submenu {
+    display: block;
+}
+
+/* Enlaces de submenú */
+.fitness-menu .submenu-link {
+    width: 100%;
+    background: #F9FAFB;
+    padding: .5rem 2rem;
+    font-size: .875rem;
+    color: #4B5563;
+    /* Color de texto estándar */
+    text-decoration: none;
+    transition: background .5s;
+    text-align: left;
+    border: none;
+    cursor: pointer;
+}
+
+.fitness-menu .submenu-link:hover {
+    background: #EEF2FF;
+    /* Color de hover más claro */
+}
+
+/* Enlaces de submenú activos */
+.fitness-menu .submenu-link.active {
+    background: #818CF8;
+    /* Color secundario */
+    color: #FFFFFF;
+}
+
+.fitness-menu .submenu-link.active:hover {
+    background: #6366F1;
+    /* Color secundario más oscuro */
+}
+
+/* Contenido de la sección */
+.fitness-content {
+    padding: 1.5rem;
+}
+
+.content-section {
+    margin-bottom: 2rem;
+}
+
+/* Encabezado de sección */
+.section-header {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #E5E7EB;
+    padding-bottom: 0.75rem;
+}
+
+.section-header h2 {
+    margin-bottom: .5rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1F2937;
+    /* Color de subtítulo */
+}
+
+.section-date {
+    color: #6B7280;
+    font-size: 0.875rem;
+}
+
+/* Tarjetas de ejercicios */
+.exercise-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.exercise-card {
+    background: #FFFFFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.25rem;
+    border: 1px solid #E5E7EB;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.exercise-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.exercise-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.exercise-type {
+    font-size: 0.75rem;
+    background: #EEF2FF;
+    color: #4F46E5;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+}
+
+.exercise-description {
+    color: #4B5563;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+/* Lista de ejercicios */
+.exercise-list h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+.exercise-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.exercise-list li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #E5E7EB;
+}
+
+.exercise-list li:last-child {
+    border-bottom: none;
+}
+
+.exercise-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.exercise-name {
+    font-weight: 500;
+    color: #374151;
+}
+
+.exercise-details {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.875rem;
+    color: #6B7280;
+}
+
+/* Tarjetas de comidas */
+.meal-card {
+    background: #FFFFFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border: 1px solid #E5E7EB;
+}
+
+.meal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.meal-header h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #111827;
+}
+
+.meal-calories {
+    font-size: 0.875rem;
+    background: #FEF3C7;
+    color: #D97706;
+    padding: 0.25rem 0.5rem;
+    border-radius: 9999px;
+    font-weight: 500;
+}
+
+/* Lista de ingredientes */
+.ingredients-list h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: #374151;
+}
+
+.ingredients-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+}
+
+.ingredients-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #E5E7EB;
+}
+
+.ingredients-list li:last-child {
+    border-bottom: none;
+}
+
+.ingredient-name {
+    color: #4B5563;
+}
+
+.ingredient-amount {
+    color: #6B7280;
+    font-size: 0.875rem;
+}
+
+/* Preparación de comidas */
+.meal-preparation h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+.meal-preparation p {
+    color: #4B5563;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+/* Información de macros */
+.macros-info {
+    display: flex;
+    justify-content: space-around;
+    background: #F9FAFB;
+    border-radius: 0.375rem;
+    padding: 1rem;
+    margin-top: 1rem;
+}
+
+.macro-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.macro-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.macro-label {
+    font-size: 0.75rem;
+    color: #6B7280;
+    margin-top: 0.25rem;
+}
+
+/* Estado vacío */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+    background: #F9FAFB;
+    border-radius: 0.5rem;
+    border: 1px dashed #E5E7EB;
+}
+
+.empty-icon {
+    width: 3rem;
+    height: 3rem;
+    color: #9CA3AF;
+    margin-bottom: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.empty-state p {
+    color: #6B7280;
+    margin-bottom: 0.5rem;
+}
+
+.empty-subtitle {
+    font-size: 0.875rem;
+    color: #9CA3AF;
+}
+
+/* Gráficos de progreso */
+.progress-chart {
+    background: #FFFFFF;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    border: 1px solid #E5E7EB;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-placeholder {
+    color: #9CA3AF;
+    text-align: center;
+}
+
+/* Scroll suave para enlaces ancla */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .fitness-dashboard {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+
+    .fitness-menu {
+        position: relative;
+        top: 0;
+        margin-bottom: 1.5rem;
+    }
+
+    .exercise-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Ocultar elementos con Alpine.js */
+[x-cloak] {
+    display: none !important;
+}
+
+/* Estilos para el selector de dieta */
+.diet-selector {
+    margin-bottom: 1.5rem;
+}
+
+.diet-selector select {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    border: 1px solid #E5E7EB;
+    background-color: white;
+    font-size: 0.875rem;
+    color: #374151;
+}
+
+.diet-selector select:focus {
+    outline: none;
+    border-color: #4F46E5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* Estilos para modo oscuro */
+.dark .fitness-menu {
+    background: #1F2937;
+    border-color: #374151;
+}
+
+.dark .menu-item {
+    border-color: #374151;
+}
+
+.dark .submenu-link {
+    background: #1F2937;
+    color: #D1D5DB;
+}
+
+.dark .submenu-link:hover {
+    background: #374151;
+}
+
+.dark .section-header {
+    border-color: #374151;
+}
+
+.dark .section-header h2 {
+    color: #F9FAFB;
+}
+
+.dark .section-date {
+    color: #9CA3AF;
+}
+
+.dark .exercise-card,
+.dark .meal-card,
+.dark .progress-chart {
+    background: #1F2937;
+    border-color: #374151;
+}
+
+.dark .exercise-header h3,
+.dark .meal-header h3 {
+    color: #F9FAFB;
+}
+
+.dark .exercise-type {
+    background: #312E81;
+    color: #A5B4FC;
+}
+
+.dark .meal-calories {
+    background: #78350F;
+    color: #FDE68A;
+}
+
+.dark .exercise-list li,
+.dark .ingredients-list li {
+    border-color: #374151;
+}
+
+.dark .exercise-name,
+.dark .exercise-list h4,
+.dark .ingredients-list h4 {
+    color: #E5E7EB;
+}
+
+.dark .exercise-details,
+.dark .ingredient-amount {
+    color: #9CA3AF;
+}
+
+.dark .macros-info {
+    background: #374151;
+}
+
+.dark .macro-value {
+    color: #F9FAFB;
+}
+
+.dark .empty-state {
+    background: #1F2937;
+    border-color: #374151;
+}
+
+.dark .empty-state p {
+    color: #D1D5DB;
+}
+
+.dark .empty-subtitle {
+    color: #9CA3AF;
+}

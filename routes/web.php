@@ -15,30 +15,7 @@ Route::get('/', function () {
 });
 
 
-//Ruta Protegidas
 
-// Route::get('/administracion', function () {
-//     $user = Auth::user();
-//     $adminRole = $user->roles->first()->name;
-
-//     if ($adminRole == 'admin') {
-//         return view('administracion');
-//     } else {
-//         return redirect()->route('usuario.index');
-//     }
-// })->middleware(['auth', 'verified'])->name('administracion');
-
-// // Ruta Usuario
-// Route::get('/usuario/index', function () {
-//     $user = Auth::user();
-//     $userRole = $user->roles->contains('name', 'user');
-
-//     if ($userRole) {
-//         return view('usuario.index');
-//     } else {
-//         return redirect()->route('administracion');
-//     }
-// })->middleware(['auth', 'verified'])->name('usuario.index');
 
 
 
@@ -47,9 +24,11 @@ Route::get('/administracion', function () {
 })->middleware(['auth', 'verified', 'admin'])->name('administracion');
 
 
-Route::get('/usuario/index', function () {
-    return view('usuario.index');
-})->middleware(['auth', 'verified'])->name('usuario.index');
+// Rutas Usuario
+Route::get('/', [UsuariosController::class, 'indexUsuario'])
+    ->name('usuario.index')
+    ->middleware(['auth', 'verified']);
+
 
 
 Route::middleware(['auth', 'verified', 'admin'])->prefix('administracion')->name('administracion.')->group(function () {

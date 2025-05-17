@@ -35,9 +35,9 @@ class UsersTableSeeder extends Seeder
 
         // Crear usuario 2
         $user2 = User::create([
-            'name' => 'Juan Pérez',
-            'email' => 'juan@example.com',
-            'password' => Hash::make('12345678'),
+            'name' => 'Marco Arcos',
+            'email' => 'marco1arcos@gmail.com',
+            'password' => Hash::make('123'),
             'apellido' => 'Pérez',
             'genero' => 'Masculino',
             'edad' => 25,
@@ -52,7 +52,7 @@ class UsersTableSeeder extends Seeder
         $user3 = User::create([
             'name' => 'María Gómez',
             'email' => 'maria@example.com',
-            'password' => Hash::make('87654321'),
+            'password' => Hash::make('123'),
             'apellido' => 'Gómez',
             'genero' => 'Femenino',
             'edad' => 28,

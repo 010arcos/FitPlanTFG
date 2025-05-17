@@ -6,6 +6,7 @@ use App\Models\Dieta; // Importar el modelo Dieta
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB; // Importar DB para consultas directas
 
 
@@ -18,6 +19,45 @@ class UsuariosController
         return view('administracion.usuarios.index', $datos);
 
     }
+
+
+    public function indexUsuario()
+    {
+
+        $usuario = Auth::user();
+        $idUsuario = $usuario->id;
+        $user = User::findOrFail($idUsuario);
+        // Obtener las rutinas del usuario
+        $rutinas = $user->rutinas()->with('ejercicios')->get();
+
+        
+        $dietas = $user->dietas()->with('comidas')->get();
+
+
+
+        // Organizar las dietas para mostrarlas en la vista
+        $dietasOrganizadas = [];
+
+        foreach ($dietas as $dieta) {
+            $dietasOrganizadas[$dieta->id_dieta] = [
+                'info' => $dieta,
+                'comidas' => []
+            ];
+
+            foreach ($dieta->comidas as $comida) {
+                $tipoComida = $comida->pivot->tipo_comida;
+
+                if (!isset($dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida])) {
+                    $dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida] = [];
+                }
+
+                $dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida][] = $comida;
+            }
+        }
+
+        return view('usuario.index', compact('dietas', 'rutinas', 'dietasOrganizadas'));
+    }
+
 
 
     public function create()

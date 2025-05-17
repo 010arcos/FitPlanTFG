@@ -42,16 +42,20 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-       
-         
-         $userRole= Role::firstOrCreate(['name' => 'user']);
-         $user->assignRole($userRole); 
 
+
+        $userRole = Role::firstOrCreate(['name' => 'user']);
+        $user->assignRole($userRole);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('administracion', absolute: false));
+        // Cambiar esta línea para redirigir según el rol
+        if ($user->hasRole('admin')) {
+            return redirect()->route('administracion');
+        } else {
+            return redirect()->route('usuario.index');
+        }
     }
 }

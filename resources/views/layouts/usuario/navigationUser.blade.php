@@ -12,13 +12,13 @@
             <!-- Links in primary menu (including usuarios link and Videojuegos link) -->
             <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
                 <!-- usuarios link -->
-                <x-nav-link :href="route('administracion.usuarios.index')"
-                    :active="request()->routeIs('administracion.usuarios.index')"
+                <x-nav-link :href="route('usuario.index')"
+                    :active="request()->routeIs('usuario.index')"
                     class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
-                    {{ __('Usuarios') }}
+                    {{ __('Rutinas') }}
                 </x-nav-link>
-                <x-nav-link :href="route('administracion.dietas.index')"
-                    :active="request()->routeIs('administracion.dietas.index')"
+                <x-nav-link :href="route('usuario.index')"
+                    :active="request()->routeIs('usuario.index')"
                     class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
                     {{ __('Dietas') }}
                 </x-nav-link>
