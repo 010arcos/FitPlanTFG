@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Administracion;
 
 use App\Http\Controllers\Controller;
-use App\Models\comida;
+use App\Models\Comida;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class ComidasController extends Controller
 
     public function index()
     {
-        $datos['comidas'] = comida::paginate(10);
+        $datos['comidas'] = Comida::paginate(10);
         return view('administracion.comidas.index', $datos);
 
     }
@@ -130,7 +130,7 @@ class ComidasController extends Controller
     public function report()
     {
         // Obtener todos los comidas, por ejemplo con sus roles
-        $comidas = comida::all();
+        $comidas = Comida::all();
 
         // Generar el PDF con la vista 'comidas.report' y pasarle los datos
         $pdf = Pdf::loadView('administracion.comidas.report', compact('comidas'));
@@ -139,16 +139,12 @@ class ComidasController extends Controller
         return $pdf->stream('comidas.pdf');
     }
 
-    
-
-
-
 
 
     private function validateComida(Request $request)
     {
         return $request->validate([
-            'nombre' => 'required|string|max:255',
+            'nombre' => 'required|string|max:255|unique:comidas,nombre,' . ($request->id_comida ?? ''),
             'calorias' => 'required|integer',
             'proteinas' => 'required|numeric',
             'grasas' => 'required|numeric',
@@ -158,6 +154,7 @@ class ComidasController extends Controller
             'ingredientes.*.cantidad' => 'required|string|regex:/^\d+g$/i',
         ], [
             'nombre.required' => 'Nombre obligatorio.',
+            'nombre.unique' => 'Ya existe una comida con este nombre.',
             'calorias.required' => 'Calorías obligatorias.',
             'proteinas.required' => 'Proteínas obligatorias.',
             'grasas.required' => 'Grasas obligatorias.',

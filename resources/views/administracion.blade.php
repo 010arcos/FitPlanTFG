@@ -7,7 +7,7 @@
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-2xl sm:rounded-3xl p-8">
             <div class="text-center">
                 <!-- Título -->
-               <h2 class="text-4xl font-extrabold text-teal-600 mb-6">
+                <h2 class="text-4xl font-extrabold text-teal-600 mb-6">
                     ¡Bienvenido {{ Auth::user()->name }}!
                 </h2>
 
@@ -44,10 +44,31 @@
                     <div
                         class="bg-gray-800 p-6 rounded-xl shadow-2xl hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:scale-105">
                         <h3 class="text-3xl font-bold text-white mb-4">Comidas</h3>
-                        <p class="text-gray-300 mb-6">Consulta las comidas asociadas a las dietas de los usuarios.</p>
+                        <p class="text-gray-300 mb-6">Consulta las comidas disponibles</p>
                         <a href="{{ route('administracion.comidas.index') }}"
                             class="bg-teal-600 text-white px-8 py-4 rounded-lg hover:bg-teal-700 transition duration-300 ease-in-out shadow-sm transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 w-full block text-center">
                             Ver Comidas
+                        </a>
+                    </div>
+                    <!-- Tarjeta de Ejercicios -->
+                    <div
+                        class="bg-gray-800 p-6 rounded-xl shadow-2xl hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:scale-105">
+                        <h3 class="text-3xl font-bold text-white mb-4">Comidas</h3>
+                        <p class="text-gray-300 mb-6">Consulta los ejercicios disponibles.
+                        </p>
+                        <a href="{{ route('administracion.ejercicios.index') }}"
+                            class="bg-teal-600 text-white px-8 py-4 rounded-lg hover:bg-teal-700 transition duration-300 ease-in-out shadow-sm transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 w-full block text-center">
+                            Ver Ejercicios
+                        </a>
+                    </div>
+                    <!-- Tarjeta de Rutinas -->
+                    <div
+                        class="bg-gray-800 p-6 rounded-xl shadow-2xl hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:scale-105">
+                        <h3 class="text-3xl font-bold text-white mb-4">Rutina</h3>
+                        <p class="text-gray-300 mb-6">Consulta las Rutinas disponibles de los usuarios.</p>
+                        <a href="{{ route('administracion.rutinas.index') }}"
+                            class="bg-teal-600 text-white px-8 py-4 rounded-lg hover:bg-teal-700 transition duration-300 ease-in-out shadow-sm transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 w-full block text-center">
+                            Ver Rutinas
                         </a>
                     </div>
                 </div> <!-- Fin del contenedor de tarjetas -->

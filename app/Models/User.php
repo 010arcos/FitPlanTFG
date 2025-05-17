@@ -65,4 +65,15 @@ class User extends Authenticatable //implements MustVerifyEmail
         return $this->belongsToMany(Dieta::class, 'pivot_usuario_dieta', 'id_usuario', 'id_dieta')
             ->withTimestamps();
     }
+
+    // En el modelo User
+    public function rutinas()
+    {
+        return $this->belongsToMany(Rutina::class, 'pivot_usuario_rutina', 'id_usuario', 'id_rutina')
+            ->withPivot('fecha_inicio', 'fecha_fin')
+            ->withTimestamps();
+    }
+
+
+
 }

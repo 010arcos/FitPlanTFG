@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ejercicio extends Model
 {
-    use SoftDeletes; 
+    use SoftDeletes;
     protected $table = 'ejercicios';
 
     protected $primaryKey = 'id_ejercicio';
@@ -28,5 +28,5 @@ class Ejercicio extends Model
             ->withTimestamps();
     }
 
-    
+
 }

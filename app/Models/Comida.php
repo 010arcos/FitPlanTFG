@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comida extends Model
 {
-    use SoftDeletes; 
+    use SoftDeletes;
     protected $table = 'comidas';
 
     protected $primaryKey = 'id_comida';
@@ -24,6 +24,6 @@ class Comida extends Model
     public function dietas()
     {
         return $this->belongsToMany(Dieta::class, 'pivot_dieta_comida', 'id_comida', 'id_dieta')
-                    ->withPivot('tipo_comida'); // Si quieres guardar más información en la tabla pivote
+            ->withPivot('tipo_comida'); // Si quieres guardar más información en la tabla pivote
     }
 }

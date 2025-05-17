@@ -4,7 +4,6 @@
     @if($Modo == 'editar')
     @method('PUT')
     @endif
-
     <!-- Datos Personales -->
     <div class="mb-8">
         <h2
@@ -19,7 +18,6 @@
                     class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 {{ $errors->has('name') ? 'is-invalid' : '' }}">
                 {!! $errors->first('name', '<div class="text-red-500 text-sm mt-2">:message</div>') !!}
             </div>
-
             <!-- Apellido -->
             <div>
                 <label for="apellido" class="block text-lg font-medium text-gray-800">Apellido</label>
@@ -27,7 +25,6 @@
                     class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 {{ $errors->has('apellido') ? 'is-invalid' : '' }}">
                 {!! $errors->first('apellido', '<div class="text-red-500 text-sm mt-2">:message</div>') !!}
             </div>
-
             <!-- Email -->
             <div>
                 <label for="email" class="block text-lg font-medium text-gray-800">Email</label>
@@ -35,7 +32,6 @@
                     class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 {{ $errors->has('email') ? 'is-invalid' : '' }}">
                 {!! $errors->first('email', '<div class="text-red-500 text-sm mt-2">:message</div>') !!}
             </div>
-
             <!-- Password -->
             <div>
                 <label for="password" class="block text-lg font-medium text-gray-800">Contraseña</label>
@@ -44,7 +40,6 @@
                     class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300 {{ $errors->has('password') ? 'is-invalid' : '' }}">
                 {!! $errors->first('password', '<div class="text-red-500 text-sm mt-2">:message</div>') !!}
             </div>
-
             <!-- Género -->
             <div>
                 <label for="genero" class="block text-lg font-medium text-gray-800">Género</label>
@@ -60,7 +55,6 @@
                 </select>
                 {!! $errors->first('genero', '<div class="text-red-500 text-sm mt-2">:message</div>') !!}
             </div>
-
             <!-- Activo -->
             <div>
                 <label for="activo" class="block text-lg font-medium text-gray-800">Activo</label>
@@ -71,12 +65,11 @@
                 </select>
                 {!! $errors->first('activo', '<div class="text-red-500 text-sm mt-2">:message</div>') !!}
             </div>
-
             <!-- Asignar Dietas -->
             <div class="col-span-full mb-8">
                 <label class="block text-lg font-medium text-gray-800 mb-3">Asignar Dietas</label>
                 <div id="dietas-container" class="space-y-6">
-                    @if(isset($dietasAsociadas))
+                    @if(isset($dietasAsociadas) && count($dietasAsociadas) > 0)
                     @foreach($dietasAsociadas as $dietaId)
                     <div class="flex space-x-6 items-center w-full">
                         <div class="relative w-8/12">
@@ -91,36 +84,15 @@
                     </div>
                     @endforeach
                     @endif
-                    <div class="flex space-x-6 items-center w-full">
-                        <div class="relative w-8/12">
-                            <input type="text"
-                                class="search-dieta flex-grow px-4 py-2 border border-gray-300 rounded-lg shadow-sm w-full focus:ring focus:ring-blue-300"
-                                placeholder="Buscar dieta..." onfocus="mostrarOpciones(this)"
-                                oninput="filtrarOpciones(this)">
-                            <div class="absolute bg-white border border-gray-300 rounded-lg shadow-lg w-full max-h-40 overflow-y-auto hidden"
-                                id="opciones-dieta">
-                                @foreach($dietas as $dieta)
-                                <div class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-                                    onclick="seleccionarOpcion(this, '{{ $dieta->id_dieta }} - {{ $dieta->nombre }}', '{{ $dieta->id_dieta }}')">
-                                    {{ $dieta->id_dieta }} - {{ $dieta->nombre }}
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <input type="hidden" name="dietas[]" value="">
-                        <button type="button" onclick="this.parentElement.remove()"
-                            class="ml-3 text-red-500 hover:text-red-700 font-bold text-xl">&times;</button>
-                    </div>
+                    <!-- Se eliminó el campo vacío que aparecía por defecto -->
                 </div>
-
                 <button type="button" onclick="agregarDieta()"
                     class="mt-6 bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition">
-                    + Agregar otra dieta
+                    + Agregar dieta
                 </button>
             </div>
         </div>
     </div>
-
     <!-- Datos Métricos -->
     <div class="mb-8">
         <h2
@@ -135,7 +107,6 @@
                     class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-green-300 {{ $errors->has('edad') ? 'is-invalid' : '' }}">
                 {!! $errors->first('edad', '<div class="text-red-500 text-sm mt-2">:message</div>') !!}
             </div>
-
             <!-- Altura -->
             <div>
                 <label for="altura" class="block text-lg font-medium text-gray-800">Altura (m)</label>
@@ -144,7 +115,6 @@
                     class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-green-300 {{ $errors->has('altura') ? 'is-invalid' : '' }}">
                 {!! $errors->first('altura', '<div class="text-red-500 text-sm mt-2">:message</div>') !!}
             </div>
-
             <!-- Peso -->
             <div>
                 <label for="peso" class="block text-lg font-medium text-gray-800">Peso (kg)</label>
@@ -154,7 +124,6 @@
             </div>
         </div>
     </div>
-
     <!-- Botones -->
     <div class="flex justify-between mt-8">
         <button type="submit"
@@ -167,10 +136,8 @@
 <script>
     function agregarDieta() {
         const container = document.getElementById('dietas-container');
-
         const div = document.createElement('div');
         div.classList.add('flex', 'space-x-6', 'items-center', 'w-full');
-
         div.innerHTML = `
             <div class="relative w-8/12">
                 <input type="text" class="search-dieta flex-grow px-4 py-2 border border-gray-300 rounded-lg shadow-sm w-full focus:ring focus:ring-blue-300" placeholder="Buscar dieta..." onfocus="mostrarOpciones(this)" oninput="filtrarOpciones(this)">
@@ -185,7 +152,6 @@
             <input type="hidden" name="dietas[]" value="">
             <button type="button" onclick="this.parentElement.remove()" class="ml-3 text-red-500 hover:text-red-700 font-bold text-xl">&times;</button>
         `;
-
         container.appendChild(div);
     }
 
@@ -197,7 +163,6 @@
     function filtrarOpciones(input) {
         const valor = input.value.toLowerCase();
         const opciones = input.nextElementSibling.querySelectorAll('div');
-
         opciones.forEach(opcion => {
             if (opcion.textContent.toLowerCase().includes(valor)) {
                 opcion.style.display = '';

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Administracion\ComidasController;
 use App\Http\Controllers\Administracion\DietasController;
+use App\Http\Controllers\Administracion\EjerciciosController;
+use App\Http\Controllers\Administracion\RutinasController;
 use App\Http\Controllers\Administracion\UsuariosController;
 use App\Models\Dieta;
 use Illuminate\Support\Facades\Auth;
@@ -94,38 +96,47 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix('administracion')->name
     });
 
 
-    // Comidas // cambiar el controlador // 
+    // Ejercicios // cambiar el controlador // 
     Route::prefix('ejercicios')->name('ejercicios.')->group(function () {
-        Route::get('/', [ComidasController::class, 'index'])->name('index');
-        Route::get('create', [ComidasController::class, 'create'])->name('create');
-        Route::post('/', [ComidasController::class, 'store'])->name('guardar');
-        Route::get('search', [ComidasController::class, 'search'])->name('search');
-        Route::get('report', [ComidasController::class, 'report'])->name('reportPDF');
-        Route::get('{id}/edit', [ComidasController::class, 'edit'])->name('edit');
-        Route::put('{id}', [ComidasController::class, 'update'])->name('update');
-        Route::delete('{id}', [ComidasController::class, 'destroy'])->name('destroy');
+        Route::get('/', [EjerciciosController::class, 'index'])->name('index');
+        Route::get('create', [EjerciciosController::class, 'create'])->name('create');
+        Route::post('/', [EjerciciosController::class, 'store'])->name('guardar');
+        Route::get('search', [EjerciciosController::class, 'search'])->name('search');
+        Route::get('report', [EjerciciosController::class, 'report'])->name('reportPDF');
+        Route::get('{id}/edit', [EjerciciosController::class, 'edit'])->name('edit');
+        Route::put('{id}', [EjerciciosController::class, 'update'])->name('update');
+        Route::delete('{id}', [EjerciciosController::class, 'destroy'])->name('destroy');
     });
 
 
 
-    // Dietas // // cambiar el controlador // 
+    // Rutinas // // cambiar el controlador // 
     Route::prefix('rutinas')->name('rutinas.')->group(function () {
-        Route::get('/', [DietasController::class, 'index'])->name('index');
-        Route::get('create', [DietasController::class, 'create'])->name('create');
-        Route::post('/', [DietasController::class, 'store'])->name('guardar');
-        Route::get('search', [DietasController::class, 'search'])->name('search');
-        Route::get('report', [DietasController::class, 'report'])->name('reportPDF');
-        Route::get('{id}/edit', [DietasController::class, 'edit'])->name('edit');
-        Route::put('{id}', [DietasController::class, 'update'])->name('update');
-        Route::delete('{id}', [DietasController::class, 'destroy'])->name('destroy');
-        Route::get('usuario/{id}/semana', [DietasController::class, 'mostrarRutinaSemanal'])->name('rutinasemana');
-        Route::get('/{id}/asignar/ejercicio/', [DietasController::class, 'asignarEjercicioRutina'])->name('asignar.ejericio');
-        Route::post('/{id}/guardar/ejercicios/', [DietasController::class, 'guardarEjercicioRutina'])->name('guardar.ejercicio');
-        Route::delete('/usuario/{usuario_id}/eliminar/{id_rutina}', [DietasController::class, 'eliminarRutinaUsuario'])->name('eliminar.dieta.usuario');
+        Route::get('/', [RutinasController::class, 'index'])->name('index');
+        Route::get('create', [RutinasController::class, 'create'])->name('create');
+        Route::post('/', [RutinasController::class, 'store'])->name('guardar');
+        Route::get('search', [RutinasController::class, 'search'])->name('search');
+        Route::get('report', [RutinasController::class, 'report'])->name('reportPDF');
+        Route::get('{id}/edit', [RutinasController::class, 'edit'])->name('edit');
+        Route::put('{id}', [RutinasController::class, 'update'])->name('update');
+        Route::delete('{id}', [RutinasController::class, 'destroy'])->name('destroy');
+        Route::get('usuario/{id}/semana', [RutinasController::class, 'mostrarRutinaSemanal'])->name('rutinasemana');
+        Route::get('/{id}/asignar/ejercicio/', [RutinasController::class, 'asignarEjercicioRutina'])->name('asignar.ejercicio');
+        Route::post('/{id}/guardar/ejercicios/', [RutinasController::class, 'guardarEjercicioRutina'])->name('guardar.ejercicio');
+
+
+        Route::get('/usuario/{id}/asignar', [RutinasController::class, 'asignarRutinasUsuario'])
+            ->name('asignar.usuario');
+
+        Route::post('/administracion/usuarios/{id}/rutinas/guardar', [RutinasController::class, 'guardarRutinasUsuario'])
+            ->name('guardar.usuario');
+
+
+        Route::delete('/usuario/{usuario_id}/eliminar/{id_rutina}', [RutinasController::class, 'eliminarRutinaUsuario'])->name('eliminar.dieta.usuario');
     });
 
 
-   
+
 
 
 
