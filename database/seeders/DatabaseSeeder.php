@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
             PivotUsuarioDietaSeeder::class,
             RutinaTableSeeder::class,
             PivotRutinaUsuarioSeeder::class,
-            EjerciciosTableSeeder::class,
             PivotRutinaEjerciciosSeeder::class,
 
 

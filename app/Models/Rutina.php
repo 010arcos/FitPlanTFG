@@ -15,6 +15,7 @@ class Rutina extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
+        'dia',
         'fecha_inicio',
         'fecha_fin',
     ];
@@ -30,7 +31,7 @@ class Rutina extends Model
     public function ejercicios()
     {
         return $this->belongsToMany(Ejercicio::class, 'pivot_ejercicio_rutina', 'id_rutina', 'id_ejercicio')
-            ->withPivot('dia', 'repeticiones', 'series')
+            ->withPivot('repeticiones', 'series')
             ->withTimestamps();
     }
 }

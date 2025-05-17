@@ -77,6 +77,7 @@ class RutinasController extends Controller
         $datosrutinas = $request->only([
             'nombre',
             'descripcion',
+            'dia',
             'fecha_inicio',
             'fecha_fin',
         ]);
@@ -103,7 +104,6 @@ class RutinasController extends Controller
         if ($request->has('search') && !empty($request->search)) {
             $search = $request->search;
             $query->where('nombre', 'like', "%{$search}%")
-                ->orWhere('descripcion', 'like', "%{$search}%")
                 ->orWhere('id_rutina', '=', $search);
 
         }
@@ -130,6 +130,9 @@ class RutinasController extends Controller
     }
 
 
+
+    //  USUARIO 
+
     public function mostrarRutinaSemanal($id)
     {
         // Paso 1: Obtener el usuario
@@ -139,15 +142,20 @@ class RutinasController extends Controller
         $rutinas = $usuario->rutinas;
 
         // Paso 3: Organizar los ejercicios por día
-        $diasSemana = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes'];
+        $diasSemana = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
         $ejerciciosPorDia = [];
 
         foreach ($diasSemana as $dia) {
             $ejerciciosPorDia[$dia] = [];
-            foreach ($rutinas as $rutina) {
-                // Obtener los ejercicios de esta rutina para este día específico
+
+            // Filtrar las rutinas que corresponden a este día
+            $rutinasDeDia = $rutinas->filter(function ($rutina) use ($dia) {
+                return $rutina->dia == $dia;
+            });
+
+            foreach ($rutinasDeDia as $rutina) {
+                // Obtener todos los ejercicios de esta rutina (ya no filtramos por día en la tabla pivote)
                 $ejerciciosDia = $rutina->ejercicios()
-                    ->wherePivot('dia', $dia)
                     ->withPivot('series', 'repeticiones')
                     ->get();
 
@@ -163,6 +171,7 @@ class RutinasController extends Controller
         // Paso 4: Pasar los datos a la vista
         return view('administracion.rutinas.tablaSemanal', compact('usuario', 'rutinas', 'ejerciciosPorDia', 'diasSemana'));
     }
+
 
 
 
@@ -184,26 +193,17 @@ class RutinasController extends Controller
             'miercoles' => [],
             'jueves' => [],
             'viernes' => [],
-            'sabado' => [],
-            'domingo' => []
+          
         ];
 
         // Agrupar las rutinas por día
         foreach ($rutinas as $rutina) {
-            // Obtener el día de la primera relación ejercicio-rutina
-            $diaRutina = DB::table('pivot_ejercicio_rutina')
-                ->where('id_rutina', $rutina->id_rutina)
-                ->value('dia');
+            // Usar directamente el día de la rutina
+            $diaRutina = $rutina->dia;
 
-            // Asignar el día a la rutina
-            $rutina->dia_semana = $diaRutina ?? 'No asignado';
-
-            // Normalizar el nombre del día (sin acentos, en minúsculas)
-            $diaNormalizado = strtolower(str_replace(['á', 'é', 'í', 'ó', 'ú'], ['a', 'e', 'i', 'o', 'u'], $diaRutina ?? ''));
-
-            // Agregar la rutina al día correspondiente si existe
-            if (array_key_exists($diaNormalizado, $rutinasPorDia)) {
-                $rutinasPorDia[$diaNormalizado][] = $rutina;
+            // Si la rutina tiene un día asignado, agregarla al arreglo correspondiente
+            if ($diaRutina && array_key_exists($diaRutina, $rutinasPorDia)) {
+                $rutinasPorDia[$diaRutina][] = $rutina;
             }
         }
 
@@ -214,6 +214,8 @@ class RutinasController extends Controller
             'rutinasPorDia'
         ));
     }
+
+
 
 
 
@@ -232,7 +234,7 @@ class RutinasController extends Controller
             'miercoles',
             'jueves',
             'viernes',
-            'sabado'
+            
         ];
 
         // Fechas por defecto (30 días)
@@ -255,9 +257,6 @@ class RutinasController extends Controller
             }
         }
 
-
-
-
         return redirect('administracion/usuarios')->with('Mensaje', 'Plan de entrenamiento semanal asignado correctamente');
     }
 
@@ -267,21 +266,22 @@ class RutinasController extends Controller
 
 
 
+//EJERICIO -RUTINA 
 
-
-    public function asignarEjercicioRutina($id)
+public function asignarEjercicioRutina($id)
     {
-        // Obtener la rutina
         $rutina = Rutina::findOrFail($id);
 
-        // Obtener todos los ejercicios agrupados por zona
-        $ejerciciosPorZona = Ejercicio::get()->groupBy('zona');
+        // Cargar ejercicios agrupados por zona muscular
+        $ejerciciosPorZona = Ejercicio::orderBy('nombre')->get()->groupBy('zona');
 
-        // Obtener los ejercicios ya asignados a esta rutina
-        $ejerciciosAsignados = $rutina->ejercicios()->get()->groupBy('pivot.dia');
+        // Obtener ejercicios ya asignados a esta rutina
+        $ejerciciosAsignados = $rutina->ejercicios()
+            ->withPivot('series', 'repeticiones')
+            ->get();
 
-        // Días de la semana para el formulario
-        $diasSemana = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+        // Lista de días de la semana para el selector
+        $diasSemana = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'];
 
         return view('administracion.rutinas.asignarEjercicios', compact(
             'rutina',
@@ -291,22 +291,33 @@ class RutinasController extends Controller
         ));
     }
 
+
+
     public function guardarEjercicioRutina(Request $request, $id)
     {
 
         $this->validateEjercicioRutina($request);
-
         $rutina = Rutina::findOrFail($id);
 
-        // Eliminar asignaciones anteriores
+        // Actualizar el día de la rutina si se ha cambiado
+        if ($request->has('dia_rutina')) {
+            $rutina->dia = $request->dia_rutina;
+            $rutina->save();
+        }
+
+        // Eliminar todos los ejercicios actuales de esta rutina
         $rutina->ejercicios()->detach();
 
-        // Crear nuevas asignaciones
-        for ($i = 0; $i < count($request->ejercicios); $i++) {
-            $rutina->ejercicios()->attach($request->ejercicios[$i], [
-                'dia' => $request->dias[$i],
-                'series' => $request->series[$i],
-                'repeticiones' => $request->repeticiones[$i],
+        // Obtener los ejercicios seleccionados
+        $ejercicios = $request->input('ejercicios', []);
+        $series = $request->input('series', []);
+        $repeticiones = $request->input('repeticiones', []);
+
+        // Guardar los nuevos ejercicios con sus series y repeticiones
+        for ($i = 0; $i < count($ejercicios); $i++) {
+            $rutina->ejercicios()->attach($ejercicios[$i], [
+                'series' => $series[$i] ?? 3,
+                'repeticiones' => $repeticiones[$i] ?? 12,
             ]);
         }
 
@@ -319,20 +330,8 @@ class RutinasController extends Controller
 
 
 
-    public function eliminarRutinaUsuario(Request $request)
-    {
-        // $request->validate([
-        //     'usuario_id' => 'required|exists:users,id',
-        //     'rutina_id' => 'required|exists:rutinas,id_rutina',
-        // ]);
 
-        $usuario = User::findOrFail($request->usuario_id);
-
-        // Eliminar la relación entre el usuario y la rutina
-        $usuario->rutinas()->detach($request->rutina_id);
-
-        return redirect()->back()->with('Mensaje', 'Rutina eliminada del usuario con éxito');
-    }
+    
 
 
 

@@ -83,6 +83,11 @@
                                 <th
                                     class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
                                     Descripcion</th>
+
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
+                                    Dia</th>
+
                                 <th
                                     class="px-6 py-3 text-left text-xs font-semibold text-gray-600 dark:text-gray-200 uppercase">
                                     Fecha Inicio</th>
@@ -100,9 +105,12 @@
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $rutina->id_rutina }}</td>
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $rutina->nombre }}</td>
                                 <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $rutina->descripcion }}</td>
-                                <td class="px-6 py-4 text-gray-700 dark:text-gray-300 w-[150px]">{{ $rutina->fecha_inicio
+                                <td class="px-6 py-4 text-gray-700 dark:text-gray-300">{{ $rutina->dia }}</td>
+                                <td class="px-6 py-4 text-gray-700 dark:text-gray-300 w-[150px]">{{
+                                    $rutina->fecha_inicio
                                     }}</td> <!-- Aumenté el ancho de esta celda -->
-                                <td class="px-6 py-4 text-gray-700 dark:text-gray-300 w-[150px]">{{ $rutina->fecha_fin }}
+                                <td class="px-6 py-4 text-gray-700 dark:text-gray-300 w-[150px]">{{ $rutina->fecha_fin
+                                    }}
                                 </td> <!-- Aumenté el ancho de esta celda -->
 
 

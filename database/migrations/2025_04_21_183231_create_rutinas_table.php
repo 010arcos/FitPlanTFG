@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id('id_rutina');
             $table->string('nombre', 100);
             $table->text('descripcion')->nullable();
+            $table->enum('dia', ['lunes', 'martes', 'miercoles', 'jueves', 'viernes'])->nullable();
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->timestamps();

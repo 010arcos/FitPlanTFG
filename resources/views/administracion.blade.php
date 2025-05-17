@@ -53,7 +53,7 @@
                     <!-- Tarjeta de Ejercicios -->
                     <div
                         class="bg-gray-800 p-6 rounded-xl shadow-2xl hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:scale-105">
-                        <h3 class="text-3xl font-bold text-white mb-4">Comidas</h3>
+                        <h3 class="text-3xl font-bold text-white mb-4">Ejercicios</h3>
                         <p class="text-gray-300 mb-6">Consulta los ejercicios disponibles.
                         </p>
                         <a href="{{ route('administracion.ejercicios.index') }}"

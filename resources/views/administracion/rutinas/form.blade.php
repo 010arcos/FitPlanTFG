@@ -26,6 +26,23 @@
         {!! $errors->first('descripcion', '<div class="invalid-feedback text-red-500 text-sm mt-1">:message</div>') !!}
     </div>
 
+    <!-- Día de la semana -->
+    <div class="mb-6">
+        <label for="dia" class="block text-gray-700 text-sm font-medium">Día de la semana</label>
+        <select name="dia" id="dia"
+            class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm {{ $errors->has('dia') ? 'is-invalid' : '' }}">
+            <option value="">Seleccionar día</option>
+            <option value="lunes" {{ old('dia', $rutina->dia ?? '') == 'lunes' ? 'selected' : '' }}>Lunes</option>
+            <option value="martes" {{ old('dia', $rutina->dia ?? '') == 'martes' ? 'selected' : '' }}>Martes</option>
+            <option value="miercoles" {{ old('dia', $rutina->dia ?? '') == 'miercoles' ? 'selected' : '' }}>Miércoles
+            </option>
+            <option value="jueves" {{ old('dia', $rutina->dia ?? '') == 'jueves' ? 'selected' : '' }}>Jueves</option>
+            <option value="viernes" {{ old('dia', $rutina->dia ?? '') == 'viernes' ? 'selected' : '' }}>Viernes</option>
+          
+        </select>
+        {!! $errors->first('dia', '<div class="invalid-feedback text-red-500 text-sm mt-1">:message</div>') !!}
+    </div>
+
 
     <!-- Fecha de Inicio -->
     <div class="mb-6">

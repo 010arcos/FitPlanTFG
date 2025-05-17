@@ -12,25 +12,31 @@
             <div class="mb-4">
                 <p class="text-gray-700 mb-2"><span class="font-semibold">Descripción:</span> {{ $rutina->descripcion }}
                 </p>
-                <p class="text-gray-700"><span class="font-semibold">Fechas:</span> {{ date('d/m/Y',
+                <p class="text-gray-700 mb-2"><span class="font-semibold">Fechas:</span> {{ date('d/m/Y',
                     strtotime($rutina->fecha_inicio)) }} - {{ date('d/m/Y', strtotime($rutina->fecha_fin)) }}</p>
+
+                <!-- Selector de día para la rutina -->
+                <div class="mt-4">
+                    <label for="dia_rutina" class="block text-sm font-medium text-gray-700 mb-2">Día de la
+                        rutina (cambiar):</label>
+                    <select id="dia_rutina" name="dia_rutina"
+                        class="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                        @foreach($diasSemana as $dia)
+                        <option value="{{ $dia }}" {{ $rutina->dia == $dia ? 'selected' : '' }}>
+                            {{ ucfirst($dia) }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
 
-            <!-- Selector de día -->
-            <div class="mb-6">
-                <label for="dia_seleccionado" class="block text-sm font-medium text-gray-700 mb-2">Seleccionar día para
-                    asignar ejercicios:</label>
-                <select id="dia_seleccionado" name="dia_seleccionado"
-                    class="w-full md:w-64 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                    @foreach($diasSemana as $dia)
-                    <option value="{{ $dia }}">
-                        {{ ucfirst($dia) }}
-                        @if(isset($ejerciciosAsignados[$dia]) && count($ejerciciosAsignados[$dia]) > 0)
-                        ({{ count($ejerciciosAsignados[$dia]) }} ejercicios)
-                        @endif
-                    </option>
-                    @endforeach
-                </select>
+            <!-- Contador de ejercicios seleccionados -->
+            <div class="mb-4">
+                <p class="text-gray-700">
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+                        {{ $ejerciciosAsignados->count() }} ejercicios asignados
+                    </span>
+                </p>
             </div>
 
             <!-- Acordeón para zonas musculares -->
@@ -39,8 +45,17 @@
                 <div class="border border-gray-200 rounded-lg overflow-hidden zona-container">
                     <button type="button"
                         class="zona-toggle w-full flex justify-between items-center p-3 bg-gray-50 hover:bg-gray-100 transition duration-200">
-                        <span class="font-medium text-gray-700">{{ ucfirst($zona) }} <span
-                                class="text-sm text-gray-500">({{ count($ejercicios) }} ejercicios)</span></span>
+                        <span class="font-medium text-gray-700">{{ ucfirst($zona) }}
+                            <span class="text-sm text-gray-500">({{ count($ejercicios) }} ejercicios)</span>
+                            @php
+                            $ejerciciosSeleccionadosEnZona = $ejerciciosAsignados->where('zona', $zona)->count();
+                            @endphp
+                            @if($ejerciciosSeleccionadosEnZona > 0)
+                            <span class="ml-2 bg-blue-100 text-blue-800 text-xs font-medium px-2 py-0.5 rounded-full">
+                                {{ $ejerciciosSeleccionadosEnZona }} seleccionados
+                            </span>
+                            @endif
+                        </span>
                         <svg class="w-5 h-5 text-gray-500 transform transition-transform duration-200" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
@@ -72,21 +87,27 @@
                                 </thead>
                                 <tbody>
                                     @foreach($ejercicios as $ejercicio)
-                                    <tr class="hover:bg-gray-50 ejercicio-row" data-id="{{ $ejercicio->id_ejercicio }}">
+                                    @php
+                                    $estaAsignado = $ejerciciosAsignados->contains('id_ejercicio',
+                                    $ejercicio->id_ejercicio);
+                                    $ejercicioAsignado = $estaAsignado ?
+                                    $ejerciciosAsignados->firstWhere('id_ejercicio', $ejercicio->id_ejercicio) : null;
+                                    @endphp
+                                    <tr class="hover:bg-gray-50 ejercicio-row {{ $estaAsignado ? 'bg-blue-50' : '' }}"
+                                        data-id="{{ $ejercicio->id_ejercicio }}">
                                         <td class="py-2 px-4 border-b">
                                             <label class="inline-flex items-center">
                                                 <input type="checkbox"
                                                     class="ejercicio-checkbox form-checkbox h-5 w-5 text-blue-600"
-                                                    data-id="{{ $ejercicio->id_ejercicio }}">
+                                                    data-id="{{ $ejercicio->id_ejercicio }}" {{ $estaAsignado
+                                                    ? 'checked' : '' }}>
                                                 <span class="ml-2 text-sm text-gray-600">Incluir</span>
                                             </label>
 
                                             <!-- Campo oculto para el ejercicio -->
                                             <input type="hidden" class="ejercicio-input" name="ejercicios[]"
-                                                value="{{ $ejercicio->id_ejercicio }}" disabled>
-
-                                            <!-- Campo oculto para el día -->
-                                            <input type="hidden" class="dia-input" name="dias[]" disabled>
+                                                value="{{ $ejercicio->id_ejercicio }}" {{ $estaAsignado ? ''
+                                                : 'disabled' }}>
                                         </td>
                                         <td class="py-2 px-4 border-b font-medium">{{ $ejercicio->nombre }}</td>
                                         <td class="py-2 px-4 border-b">
@@ -101,14 +122,18 @@
                                             <div class="flex items-center">
                                                 <input type="number"
                                                     class="series-input w-16 px-2 py-1 border rounded focus:ring-blue-500 focus:border-blue-500"
-                                                    name="series[]" min="1" max="10" disabled>
+                                                    name="series[]" min="1" max="10"
+                                                    value="{{ $estaAsignado ? $ejercicioAsignado->pivot->series : '' }}"
+                                                    {{ $estaAsignado ? '' : 'disabled' }}>
                                             </div>
                                         </td>
                                         <td class="py-2 px-4 border-b">
                                             <div class="flex items-center">
                                                 <input type="number"
                                                     class="repeticiones-input w-16 px-2 py-1 border rounded focus:ring-blue-500 focus:border-blue-500"
-                                                    name="repeticiones[]" min="1" max="100" disabled>
+                                                    name="repeticiones[]" min="1" max="100"
+                                                    value="{{ $estaAsignado ? $ejercicioAsignado->pivot->repeticiones : '' }}"
+                                                    {{ $estaAsignado ? '' : 'disabled' }}>
                                             </div>
                                         </td>
                                     </tr>
@@ -137,71 +162,6 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Datos de ejercicios asignados por día
-        const ejerciciosAsignados = {
-            @foreach($diasSemana as $dia)
-                '{{ $dia }}': [
-                    @if(isset($ejerciciosAsignados[$dia]))
-                        @foreach($ejerciciosAsignados[$dia] as $ejercicio)
-                            {
-                                id: {{ $ejercicio->id_ejercicio }},
-                                series: {{ $ejercicio->pivot->series }},
-                                repeticiones: {{ $ejercicio->pivot->repeticiones }}
-                            },
-                        @endforeach
-                    @endif
-                ],
-            @endforeach
-        };
-        
-        // Manejo del selector de día
-        const diaSelector = document.getElementById('dia_seleccionado');
-        
-        // Función para actualizar los ejercicios según el día seleccionado
-        function actualizarEjercicios() {
-            const diaSeleccionado = diaSelector.value;
-            const ejerciciosDelDia = ejerciciosAsignados[diaSeleccionado] || [];
-            
-            // Resetear todos los checkboxes y campos
-            document.querySelectorAll('.ejercicio-row').forEach(row => {
-                const ejercicioId = row.dataset.id;
-                const checkbox = row.querySelector('.ejercicio-checkbox');
-                const ejercicioInput = row.querySelector('.ejercicio-input');
-                const diaInput = row.querySelector('.dia-input');
-                const seriesInput = row.querySelector('.series-input');
-                const repeticionesInput = row.querySelector('.repeticiones-input');
-                
-                // Desmarcar checkbox y deshabilitar campos
-                checkbox.checked = false;
-                ejercicioInput.disabled = true;
-                diaInput.disabled = true;
-                seriesInput.disabled = true;
-                repeticionesInput.disabled = true;
-                
-                // Limpiar valores
-                seriesInput.value = '';
-                repeticionesInput.value = '';
-                
-                // Actualizar el valor del día
-                diaInput.value = diaSeleccionado;
-                
-                // Buscar si este ejercicio está asignado al día seleccionado
-                const ejercicioAsignado = ejerciciosDelDia.find(e => e.id == ejercicioId);
-                if (ejercicioAsignado) {
-                    checkbox.checked = true;
-                    ejercicioInput.disabled = false;
-                    diaInput.disabled = false;
-                    seriesInput.disabled = false;
-                    repeticionesInput.disabled = false;
-                    seriesInput.value = ejercicioAsignado.series;
-                    repeticionesInput.value = ejercicioAsignado.repeticiones;
-                }
-            });
-        }
-        
-        // Evento para cambio de día
-        diaSelector.addEventListener('change', actualizarEjercicios);
-        
         // Manejo de acordeón para zonas
         document.querySelectorAll('.zona-toggle').forEach(toggle => {
             toggle.addEventListener('click', function(e) {
@@ -216,25 +176,53 @@
         document.querySelectorAll('.ejercicio-checkbox').forEach(checkbox => {
             checkbox.addEventListener('change', function() {
                 const row = this.closest('tr');
-                const inputs = [
-                    row.querySelector('.ejercicio-input'),
-                    row.querySelector('.dia-input'),
-                    row.querySelector('.series-input'),
-                    row.querySelector('.repeticiones-input')
-                ];
+                const ejercicioInput = row.querySelector('.ejercicio-input');
+                const seriesInput = row.querySelector('.series-input');
+                const repeticionesInput = row.querySelector('.repeticiones-input');
                 
-                inputs.forEach(input => {
+                // Habilitar o deshabilitar los inputs según el estado del checkbox
+                [ejercicioInput, seriesInput, repeticionesInput].forEach(input => {
                     input.disabled = !this.checked;
                 });
+                
+                // Si el checkbox está marcado
+                if (this.checked) {
+                    row.classList.add('bg-blue-50');
+                    
+                    // Establecer automáticamente 3 series y 12 repeticiones si están vacíos
+                    if (!seriesInput.value || seriesInput.disabled) {
+                        seriesInput.value = 3;
+                    }
+                    
+                    if (!repeticionesInput.value || repeticionesInput.disabled) {
+                        repeticionesInput.value = 12;
+                    }
+                } 
+                // Si el checkbox está desmarcado
+                else {
+                    row.classList.remove('bg-blue-50');
+                    
+                    // NUEVO: Limpiar los valores de series y repeticiones
+                    seriesInput.value = '';
+                    repeticionesInput.value = '';
+                }
             });
         });
         
-        // Inicializar la vista
-        actualizarEjercicios();
+        // Abrir acordeones que contienen ejercicios seleccionados
+        const zonasConEjerciciosSeleccionados = new Set();
+        document.querySelectorAll('.ejercicio-checkbox:checked').forEach(checkbox => {
+            const zonaContainer = checkbox.closest('.zona-container');
+            if (zonaContainer) {
+                zonasConEjerciciosSeleccionados.add(zonaContainer);
+            }
+        });
         
-        // Abrir el primer acordeón por defecto
-        const primerToggle = document.querySelector('.zona-toggle');
-        if (primerToggle) primerToggle.click();
+        // Abrir los acordeones con ejercicios seleccionados
+        zonasConEjerciciosSeleccionados.forEach(zona => {
+            const toggle = zona.querySelector('.zona-toggle');
+            if (toggle) toggle.click();
+        });
     });
 </script>
 @endsection

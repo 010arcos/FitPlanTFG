@@ -19,7 +19,6 @@
 
         <form action="{{ route('administracion.rutinas.guardar.usuario', $usuario->id) }}" method="POST">
             @csrf
-
             <!-- Formulario de selección por día -->
             <div class="space-y-6">
                 <!-- Lunes -->
@@ -117,24 +116,7 @@
                     </select>
                 </div>
 
-                <!-- Sábado -->
-                <div class="form-group">
-                    <label for="rutina-sabado" class="block text-sm font-medium text-gray-700 mb-2">
-                        <span
-                            class="bg-pink-100 text-pink-800 text-xs font-medium px-2.5 py-0.5 rounded mr-2">Sábado</span>
-                        Rutina para el sábado
-                    </label>
-                    <select id="rutina-sabado" name="rutina_sabado"
-                        class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-teal-500 focus:border-teal-500 sm:text-sm rounded-md">
-                        <option value="">Selecciona una rutina</option>
-                        @foreach($rutinasPorDia['sabado'] as $rutina)
-                        <option value="{{ $rutina->id_rutina }}" {{ in_array($rutina->id_rutina, $rutinasAsignadas) ?
-                            'selected' : '' }}>
-                            {{ $rutina->nombre }} ({{ $rutina->ejercicios->count() }} ejercicios)
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
+               
             </div>
 
             <!-- Botones de acción -->

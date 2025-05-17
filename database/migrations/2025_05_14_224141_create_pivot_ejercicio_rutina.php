@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('id_ejercicio');
             $table->unsignedBigInteger('id_rutina');
-            $table->enum('dia', ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo']);
             $table->integer('repeticiones')->nullable();
             $table->integer('series')->nullable();
             $table->timestamps();
@@ -23,7 +22,7 @@ return new class extends Migration
 
             $table->foreign('id_ejercicio')->references('id_ejercicio')->on('ejercicios')->onDelete('cascade');
             $table->foreign('id_rutina')->references('id_rutina')->on('rutinas')->onDelete('cascade');
-            $table->unique(['id_ejercicio', 'id_rutina', 'dia']);
+            $table->unique(['id_ejercicio', 'id_rutina']);
             $table->softDeletes();
           
         });

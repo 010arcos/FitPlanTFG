@@ -124,7 +124,7 @@ class EjerciciosController extends Controller
     public function validateEjercicio(Request $request)
     {
         return $request->validate([
-            'nombre' => 'required|string|max:255|unique:ejercicios,nombre,' . ($request->id ?? ''),
+            'nombre' => 'required|string|max:255|unique:ejercicios,nombre,' . ($request->id_ejercicio ?? '') . ',id_ejercicio',
             'descripcion' => 'required|string|max:500',
             'zona' => [
                 'required',
@@ -150,6 +150,7 @@ class EjerciciosController extends Controller
             'tipo.in' => 'El tipo seleccionado no es válido. Opciones: fuerza, resistencia, cardio, flexibilidad.',
         ]);
     }
+
 
 }
 
