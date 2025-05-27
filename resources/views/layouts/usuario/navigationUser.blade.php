@@ -4,7 +4,7 @@
         <div class="flex justify-between h-16">
             <!-- Logo -->
             <div class="flex items-center">
-                <a href="{{ route('administracion') }}">
+                <a href="{{ route('usuario.index') }}">
                     <x-application-logo class="block h-9 w-auto fill-current text-gray-200" />
                 </a>
             </div>
@@ -12,22 +12,25 @@
             <!-- Links in primary menu (including usuarios link and Videojuegos link) -->
             <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-4">
                 <!-- usuarios link -->
-                <x-nav-link :href="route('usuario.index')"
-                    :active="request()->routeIs('usuario.index')"
+                <x-nav-link :href="route('usuario.index')" :active="request()->routeIs('usuario.index')"
                     class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
-                    {{ __('Rutinas') }}
-                </x-nav-link>
-                <x-nav-link :href="route('usuario.index')"
-                    :active="request()->routeIs('usuario.index')"
-                    class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
-                    {{ __('Dietas') }}
+                    {{ __('Inicio') }}
                 </x-nav-link>
 
-                {{-- <x-nav-link :href="route('administracion.comidas.index')"
-                    :active="request()->routeIs('administracion.comidas.index')"
+
+                <x-nav-link :href="route('usuario.rutina')" :active="request()->routeIs('usuario.rutina')"
                     class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
-                    {{ __('Comidas') }}
-                </x-nav-link> --}}
+                    {{ __('Rutina') }}
+                </x-nav-link>
+                <x-nav-link :href="route('usuario.dieta')" :active="request()->routeIs('usuario.dieta')"
+                    class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
+                    {{ __('Dieta') }}
+                </x-nav-link>
+
+                <x-nav-link :href="route('usuario.progreso')" :active="request()->routeIs('usuario.progreso')"
+                    class="text-white hover:text-white hover:scale-105 transition-transform duration-200 hover:border-b-2 hover:border-purple-500">
+                    {{ __('Mi progreso') }}
+                </x-nav-link>
 
 
 

@@ -50,6 +50,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
+        $user;
 
         // Cambiar esta línea para redirigir según el rol
         if ($user->hasRole('admin')) {

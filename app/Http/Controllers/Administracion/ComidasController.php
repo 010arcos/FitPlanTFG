@@ -74,7 +74,7 @@ class ComidasController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        $request->merge(['id_comida' => $id]); // lo añado a la request para la validacion 
         $this->validateComida($request);
 
 
@@ -143,8 +143,9 @@ class ComidasController extends Controller
 
     private function validateComida(Request $request)
     {
+        //con esta validacion le estamos diciendo q evite evaluar el nombre de la comida que estamos editando con el id_de comida correspondiente
         return $request->validate([
-            'nombre' => 'required|string|max:255|unique:comidas,nombre,' . ($request->id_comida ?? ''),
+            'nombre' => 'required|string|max:255|unique:comidas,nombre,' . ($request->id_comida ?? '') . ',id_comida',
             'calorias' => 'required|integer',
             'proteinas' => 'required|numeric',
             'grasas' => 'required|numeric',

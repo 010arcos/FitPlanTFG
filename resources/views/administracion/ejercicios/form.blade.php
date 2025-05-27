@@ -52,17 +52,9 @@
             </option>
             <option value="cardio" {{ old('tipo', $ejercicio->tipo ?? '') == 'cardio' ? 'selected' : '' }}>Cardio
             </option>
-            <option value="flexibilidad" {{ old('tipo', $ejercicio->tipo ?? '') == 'flexibilidad' ? 'selected' : ''
-                }}>Flexibilidad</option>
-            <option value="equilibrio" {{ old('tipo', $ejercicio->tipo ?? '') == 'equilibrio' ? 'selected' : ''
-                }}>Equilibrio</option>
             <option value="resistencia" {{ old('tipo', $ejercicio->tipo ?? '') == 'resistencia' ? 'selected' : ''
                 }}>Resistencia</option>
-            <option value="hipertrofia" {{ old('tipo', $ejercicio->tipo ?? '') == 'hipertrofia' ? 'selected' : ''
-                }}>Hipertrofia</option>
-            <option value="funcional" {{ old('tipo', $ejercicio->tipo ?? '') == 'funcional' ? 'selected' : ''
-                }}>Funcional
-            </option>
+           
         </select>
         {!! $errors->first('tipo', '<div class="invalid-feedback text-red-500 text-sm mt-1">:message</div>') !!}
     </div>

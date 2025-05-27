@@ -12,6 +12,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Zataca\Foundation\Base\Http\ApiResponse;
 use Zataca\Trazer\Bus\CommandBus\Infrastructure\CommandBusFacade;
@@ -157,9 +158,7 @@ class DietasController extends Controller
         $comidas = collect($request->input('comidas'));
 
         // Validar que no se repitan IDs de comidas
-        if ($comidas->keys()->duplicates()->isNotEmpty()) {
-            return redirect()->back()->withErrors(['comidas' => 'No se pueden repetir los IDs de las comidas.'])->withInput();
-        }
+       
 
         // Preparar los datos para sincronizar
         $comidasPreparadas = $comidas->mapWithKeys(function ($idComida, $tipo) {
@@ -200,7 +199,7 @@ class DietasController extends Controller
         // Validar que no haya valores vacíos o nulos
         foreach ($ids as $id) {
             if (empty($id)) {
-                throw \Illuminate\Validation\ValidationException::withMessages([
+                throw ValidationException::withMessages([
                     'comidas' => 'Todos los IDs de las comidas deben estar completos.'
                 ]);
             }
@@ -208,7 +207,7 @@ class DietasController extends Controller
 
         // Validar que no haya IDs duplicados
         if (count($ids) !== count(array_unique($ids))) {
-            throw \Illuminate\Validation\ValidationException::withMessages([
+            throw ValidationException::withMessages([
                 'comidas' => 'No se pueden repetir los IDs de las comidas.'
             ]);
         }

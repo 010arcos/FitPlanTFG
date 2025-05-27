@@ -8,11 +8,14 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB; // Importar DB para consultas directas
+use Spatie\Permission\Models\Role;
 
 
 class UsuariosController
 {
 
+
+    //muestra los usuarios
     public function index()
     {
         $datos['usuarios'] = User::where('id', '!=', 1)->paginate(5);
@@ -21,42 +24,47 @@ class UsuariosController
     }
 
 
-    public function indexUsuario()
-    {
+    //datos de usuario
 
-        $usuario = Auth::user();
-        $idUsuario = $usuario->id;
-        $user = User::findOrFail($idUsuario);
-        // Obtener las rutinas del usuario
-        $rutinas = $user->rutinas()->with('ejercicios')->get();
+    // public function indexUsuario()
+    // {
 
-        
-        $dietas = $user->dietas()->with('comidas')->get();
+    //     $usuario = Auth::user();
+    //     $idUsuario = $usuario->id;
+    //     $user = User::findOrFail($idUsuario);
+    //     // Obtener las rutinas del usuario
+    //     $rutinas = $user->rutinas()->with('ejercicios')->get();
+
+    //     $dietas = $user->dietas()->with('comidas')->get();
+
+    //     // Organizar las dietas para mostrarlas en la vista
+    //     $dietasOrganizadas = [];
+
+    //     foreach ($dietas as $dieta) {
+    //         $dietasOrganizadas[$dieta->id_dieta] = [
+    //             'info' => $dieta,
+    //             'comidas' => []
+    //         ];
+
+    //         foreach ($dieta->comidas as $comida) {
+    //             $tipoComida = $comida->pivot->tipo_comida;
+
+    //             if (!isset($dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida])) {
+    //                 $dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida] = [];
+    //             }
+
+    //             $dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida][] = $comida;
+    //         }
+    //     }
+
+    //     if ($user->hasRole('admin')) {
+    //         return redirect()->route('administracion');
+    //     } else {
+    //         return view('usuario.index', compact('dietas', 'rutinas', 'dietasOrganizadas'));
+    //     }
 
 
-
-        // Organizar las dietas para mostrarlas en la vista
-        $dietasOrganizadas = [];
-
-        foreach ($dietas as $dieta) {
-            $dietasOrganizadas[$dieta->id_dieta] = [
-                'info' => $dieta,
-                'comidas' => []
-            ];
-
-            foreach ($dieta->comidas as $comida) {
-                $tipoComida = $comida->pivot->tipo_comida;
-
-                if (!isset($dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida])) {
-                    $dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida] = [];
-                }
-
-                $dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida][] = $comida;
-            }
-        }
-
-        return view('usuario.index', compact('dietas', 'rutinas', 'dietasOrganizadas'));
-    }
+    // }
 
 
 
@@ -69,16 +77,16 @@ class UsuariosController
 
     public function store(Request $request)
     {
-        // Validar los datos del usuario usando el método común
+     
         $this->validateUser($request);
 
-        // // Validar si la dieta seleccionada ya está asignada al usuario
-        // $this->validateDieta($request);
+        $userRole = Role::findByName('user');
 
         $dietas = $request->input('dietas');
         $datosUsuarios = $request->except(['_token', 'dietas']);
 
         $usuario = User::create($datosUsuarios);
+        $usuario->assignRole($userRole);
         // Asignar la dieta al usuario en la tabla pivote
         $usuario->dietas()->attach($dietas);
 
@@ -89,9 +97,7 @@ class UsuariosController
 
 
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+   
     public function edit($id)
     {
         $usuario = User::findOrFail($id);
@@ -99,19 +105,14 @@ class UsuariosController
         $dietas = Dieta::all();
         return view('administracion.usuarios.edit', compact('usuario', 'dietas', 'dietasAsociadas'));
 
-        // compact-> array asociativo de variables y sus valores
+       
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+   
     public function update(Request $request, $id)
     {
 
         $this->validateUser($request, $id);
-
-        // // Validar si la dieta seleccionada ya está asignada al usuario
-        // $this->validateDieta($request);
 
         $datosUsuarios = $request->only([
             'name',
@@ -135,9 +136,7 @@ class UsuariosController
         return redirect('administracion/usuarios')->with('Mensaje', 'Usuario actualizado con éxito');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy($id)
     {
 
@@ -167,13 +166,8 @@ class UsuariosController
 
     public function report()
     {
-        // Obtener todos los usuarios, por ejemplo con sus roles
         $usuarios = User::where('id', '!=', 1)->get();
-
-        // Generar el PDF con la vista 'usuarios.report' y pasarle los datos
         $pdf = Pdf::loadView('administracion.usuarios.report', compact('usuarios'));
-
-        // Devolver el PDF al navegador
         return $pdf->stream('usuarios.pdf');
     }
 
@@ -184,9 +178,9 @@ class UsuariosController
     private function validateUser(Request $request, $id = null)
     {
         $rules = [
-            "name" => "required|regex:/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/", // Permite letras, números y espacios.
-            "email" => "required|email|unique:users,email,{$id}", // Valida correo único (excluye el actual en el update)
-            "password" => "required", // Requiere confirmación de contraseña
+            "name" => "required|regex:/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/", 
+            "email" => "required|email|unique:users,email,{$id}", 
+            "password" => "required", 
             "apellido" => "required|string|max:255",
             "edad" => "required|integer|min:0",
             "altura" => "required|numeric|min:0",
@@ -210,38 +204,6 @@ class UsuariosController
     }
 
 
-    // public function mostrarDietaSemanal($id)
-    // {
-    //     $usuario = User::find($id);
-    //     $dietas = $usuario->dietas; // Obtener las dietas del usuario con sus comidas asociadas
 
-    //     $comidasPorDieta = $usuario->dietas->mapWithKeys(function ($dieta) {
-    //         return [$dieta->id_dieta => $dieta->comidas]; // Asociar cada dieta con sus comidas
-    //     });
-
-    //     return view('administracion.usuarios.tablaSemanal', compact('comidasPorDieta'));
-    // }
-
-    // private function validateDieta(Request $request)
-    // {
-    //     $request->validate([
-    //         'dieta_id' => [
-    //             'nullable',
-    //             function ($attribute, $value, $fail) use ($request) {
-    //                 $usuarioId = $request->id;
-
-    //                 // Verificar en la tabla pivote si la dieta ya está asignada al usuario
-    //                 $dietaAsignada = DB::table('pivot_usuario_dieta')
-    //                     ->where('user_id', $usuarioId)
-    //                     ->where('dieta_id', $value)
-    //                     ->exists();
-
-    //                 if ($dietaAsignada) {
-    //                     $fail('La dieta seleccionada ya está asignada a este usuario.');
-    //                 }
-    //             },
-    //         ],
-    //     ]);
-    // }
 
 }

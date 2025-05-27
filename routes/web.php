@@ -5,6 +5,7 @@ use App\Http\Controllers\Administracion\DietasController;
 use App\Http\Controllers\Administracion\EjerciciosController;
 use App\Http\Controllers\Administracion\RutinasController;
 use App\Http\Controllers\Administracion\UsuariosController;
+use App\Http\Controllers\Usuarios\UsuarioController;
 use App\Models\Dieta;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -24,12 +25,17 @@ Route::get('/administracion', function () {
 })->middleware(['auth', 'verified', 'admin'])->name('administracion');
 
 
-// Rutas Usuario
-Route::get('/', [UsuariosController::class, 'indexUsuario'])
-    ->name('usuario.index')
-    ->middleware(['auth', 'verified']);
+// Rutas Usuario (verificar esta ruta entra en conflicto con la de welcome)
+// Route::get('/usuario/index', [UsuarioController::class, 'indexUsuario'])
+//     ->name('usuario.index')
+//     ->middleware(['auth', 'verified']);
 
-
+Route::middleware(['auth', 'verified'])->prefix('usuario')->name('usuario.')->group(function () {
+    Route::get('/index', [UsuarioController::class, 'indexUsuario'])->name('index');
+    Route::get('/dieta', [UsuarioController::class, 'indexDieta'])->name('dieta');
+    Route::get('/progreso', [UsuarioController::class, 'indexProgreso'])->name('progreso');
+    Route::get('/rutina', [UsuarioController::class, 'indexRutina'])->name('rutina');
+});
 
 Route::middleware(['auth', 'verified', 'admin'])->prefix('administracion')->name('administracion.')->group(function () {
 

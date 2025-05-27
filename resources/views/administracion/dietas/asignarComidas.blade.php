@@ -30,8 +30,9 @@
                         return $comida->pivot && $comida->pivot->tipo_comida === $tipo;
                         });
                         @endphp
-                       {{ $comidaAsignada ? $comidaAsignada->nombre . ' ID: ' . $comidaAsignada->id_comida . '' : 'Selecciona una comida para
-                    ' . ucfirst($tipo) }}
+                        {{ $comidaAsignada ? $comidaAsignada->nombre . ' ID: ' . $comidaAsignada->id_comida . '' :
+                        'Selecciona una comida para
+                        ' . ucfirst($tipo) }}
                     </span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20"
                         fill="currentColor">
@@ -45,7 +46,8 @@
                     <ul class="list-disc list-inside text-gray-600">
                         @foreach ($comidas as $comida)
                         <li class="flex justify-between items-center py-1 hover:bg-gray-50">
-                            <span>{{ $comida->nombre }} ({{ $comida->calorias }} Calorías)</span>
+                            <span>ID: {{ $comida->id_comida }} - {{ $comida->nombre }} ({{ $comida->calorias }} kcal)
+                            </span>
                             <input type="radio" name="comidas[{{ $tipo }}]" value="{{ $comida->id_comida }}"
                                 class="ml-4" @php $comidaAsignada=$comidasDieta->first(function($c) use ($tipo, $comida)
                             {

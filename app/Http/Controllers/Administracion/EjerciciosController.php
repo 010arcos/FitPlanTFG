@@ -61,6 +61,7 @@ class EjerciciosController extends Controller
     public function update(Request $request, $id)
     {
 
+        $request->merge(['id_ejercicio' => $id]);
 
         $this->validateEjercicio($request);
 
@@ -78,9 +79,7 @@ class EjerciciosController extends Controller
         return redirect('administracion/ejercicios')->with('Mensaje', 'Ejercicio actualizado con éxito');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy($id)
     {
 
