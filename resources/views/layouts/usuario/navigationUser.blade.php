@@ -110,7 +110,7 @@
 
             <div class="mt-3 space-y-1">
                 <!-- usuarios link for small screens -->
-                <x-responsive-nav-link :href="route('administracion.usuarios.index')"
+                {{-- <x-responsive-nav-link :href="route('administracion.usuarios.index')"
                     :active="request()->routeIs('administracion.usuarios.index')"
                     class="text-gray-300 text-center hover:text-white hover:bg-gray-700 hover:scale-105 transition-transform duration-200 bg-transparent focus:bg-transparent active:bg-transparent border-l-0 hover:border-l-0">
                     {{ __('Usuarios') }}
@@ -119,6 +119,26 @@
                     :active="request()->routeIs('administracion.dietas.index')"
                     class="text-gray-300 text-center hover:text-white hover:bg-gray-700 hover:scale-105 transition-transform duration-200 bg-transparent focus:bg-transparent active:bg-transparent border-l-0 hover:border-l-0">
                     {{ __('Dietas') }}
+                </x-responsive-nav-link> --}}
+                <x-responsive-nav-link :href="route('usuario.index')" :active="request()->routeIs('usuario.index')"
+                    class="text-gray-300 text-center hover:text-white hover:bg-gray-700 hover:scale-105 transition-transform duration-200 bg-transparent focus:bg-transparent active:bg-transparent border-l-0 hover:border-l-0">
+                    {{ __('Inicio') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('usuario.rutina')" :active="request()->routeIs('usuario.rutina')"
+                    class="text-gray-300 text-center hover:text-white hover:bg-gray-700 hover:scale-105 transition-transform duration-200 bg-transparent focus:bg-transparent active:bg-transparent border-l-0 hover:border-l-0">
+                    {{ __('Rutina') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('usuario.dieta')" :active="request()->routeIs('usuario.dieta')"
+                    class="text-gray-300 text-center hover:text-white hover:bg-gray-700 hover:scale-105 transition-transform duration-200 bg-transparent focus:bg-transparent active:bg-transparent border-l-0 hover:border-l-0">
+                    {{ __('Dieta') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('usuario.progreso')"
+                    :active="request()->routeIs('usuario.progreso')"
+                    class="text-gray-300 text-center hover:text-white hover:bg-gray-700 hover:scale-105 transition-transform duration-200 bg-transparent focus:bg-transparent active:bg-transparent border-l-0 hover:border-l-0">
+                    {{ __('Mi progreso') }}
                 </x-responsive-nav-link>
 
             </div>
