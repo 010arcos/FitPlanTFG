@@ -45,7 +45,7 @@
             position: relative;
             text-align: center;
             padding: 6rem 2rem;
-            background: url('/Img/dieta1.jpg') no-repeat center center/cover;
+            background: url('/img/dieta1.jpg') no-repeat center center/cover;
             color: white;
             height: 100vh;
             display: flex;
@@ -222,7 +222,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-   
+
 </body>
 
 </html>
