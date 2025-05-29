@@ -45,7 +45,7 @@
             position: relative;
             text-align: center;
             padding: 6rem 2rem;
-            background: url('/img/dieta1.jpg') no-repeat center center/cover;
+            background: url("{{ asset('img/dieta1.jpg') }}") no-repeat center center/cover;
             color: white;
             height: 100vh;
             display: flex;

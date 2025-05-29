@@ -51,7 +51,7 @@
             position: relative;
             text-align: center;
             padding: 6rem 2rem;
-            background: url('/img/dieta1.jpg') no-repeat center center/cover;
+            background: url("{{ asset('img/dieta1.jpg') }}") no-repeat center center/cover;
             color: white;
             height: 100vh;
             display: flex;
@@ -150,7 +150,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
-            background: url('/img/carta1.png') no-repeat center center/cover;
+            background: url("{{ asset('img/carta1.png') }}") no-repeat center center/cover;
             color: white;
             background-color: rgba(0, 0, 0, 0.6);
             background-blend-mode: darken;
