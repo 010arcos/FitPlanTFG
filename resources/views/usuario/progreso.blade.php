@@ -1,96 +1,89 @@
 @extends('layouts.usuario.appUser')
 
 @section('content')
-<div class="py-12">
-    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <!-- Contenedor principal con el mensaje de bienvenida -->
-        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-2xl sm:rounded-3xl p-8">
-            <div class="text-center">
-                <!-- Título -->
-                <h2 class="text-4xl font-extrabold text-teal-600 mb-6">
-                    ¡Bienvenido {{ Auth::user()->name }}!
-                </h2>
-
-                <!-- Mensaje breve -->
-                <p class="text-lg text-gray-600 dark:text-gray-300 mb-10">
-                    Progreso
+<div class="dashboard-wrapper">
+    <div class="dashboard-container">
+        <!-- Header de la página -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <h1 class="page-title">
+                    <span class="page-icon">📊</span>
+                    Mi Progreso
+                </h1>
+                <p class="page-subtitle">
+                    Bienvenido {{ Auth::user()->name }} - {{ date('l, d \d\e F \d\e Y') }}
                 </p>
             </div>
+        </div>
 
-            <!-- Dashboard de fitness con Alpine.js -->
-            <div class="fitness-dashboard" x-data="{ active: 'progreso_peso' }">
-                <!-- Menú lateral -->
-                <nav class="fitness-menu">
-                    <ul>
+        <!-- Dashboard de progreso -->
+        <div class="progress-dashboard" x-data="{ activeSection: 'peso' }">
 
+            <!-- Navegación lateral -->
+            <aside class="progress-sidebar">
+                <div class="sidebar-header">
+                    <h3>Mi Progreso</h3>
+                </div>
 
-                        <!-- Progreso -->
-                        <li>
-                            <details class="menu-item" :open="active.startsWith('progreso')">
-                                <summary class="menu-header" @click.prevent="active = 'progreso_peso'">
-                                    Mi Progreso
-                                    <span class="chevron">▾</span>
-                                </summary>
-                                <ul class="submenu">
-                                    <li>
-                                        <button class="submenu-link" :class="{ 'active': active==='progreso_peso' }"
-                                            @click.prevent="active='progreso_peso'">
-                                            Peso
-                                        </button>
-                                    </li>
-                                    <li>
-                                        <button class="submenu-link" :class="{ 'active': active==='progreso_medidas' }"
-                                            @click.prevent="active='progreso_medidas'">
-                                            Medidas
-                                        </button>
-                                    </li>
-                                </ul>
-                            </details>
-                        </li>
-                    </ul>
+                <nav class="progress-navigation">
+                    <button class="nav-item" :class="{ 'nav-item-active': activeSection === 'peso' }"
+                        @click="activeSection = 'peso'">
+                        <span class="nav-icon">⚖️</span>
+                        <span class="nav-label">Peso</span>
+                    </button>
+                    
+                    <button class="nav-item" :class="{ 'nav-item-active': activeSection === 'medidas' }"
+                        @click="activeSection = 'medidas'">
+                        <span class="nav-icon">📏</span>
+                        <span class="nav-label">Medidas</span>
+                    </button>
                 </nav>
+            </aside>
 
-                <!-- Contenido dinámico -->
-                <div class="fitness-content">
+            <!-- Contenido principal -->
+            <main class="progress-content">
+                
+                <!-- Sección Peso -->
+                <section x-show="activeSection === 'peso'" x-cloak class="progress-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            ⚖️ Seguimiento de Peso
+                        </h2>
+                        <p class="section-date">Actualizado: {{ date('d/m/Y') }}</p>
+                    </div>
 
-                    <!-- Secciones de progreso -->
-                    <section x-show="active==='progreso_peso'" x-cloak class="content-section">
-                        <div class="section-header">
-                            <h2>Seguimiento de Peso</h2>
-                            <p class="section-date">Actualizado: {{ date('d/m/Y') }}</p>
-                        </div>
-
-                        <div class="progress-chart">
-                            <div class="chart-placeholder">
-                                <div class="empty-icon">📊</div>
-                                <p>Gráfico de progreso de peso</p>
-                                <p class="empty-subtitle">Próximamente</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section x-show="active==='progreso_medidas'" x-cloak class="content-section">
-                        <div class="section-header">
-                            <h2>Medidas Corporales</h2>
-                            <p class="section-date">Actualizado: {{ date('d/m/Y') }}</p>
-                        </div>
-
-                        <div class="empty-state">
-                            <div class="empty-icon">📏</div>
-                            <p>Seguimiento de medidas corporales</p>
+                    <div class="progress-chart">
+                        <div class="chart-placeholder">
+                            <div class="empty-icon">📊</div>
+                            <p>Gráfico de progreso de peso</p>
                             <p class="empty-subtitle">Próximamente</p>
                         </div>
-                    </section>
-                </div>
-            </div>
+                    </div>
+                </section>
+
+                <!-- Sección Medidas -->
+                <section x-show="activeSection === 'medidas'" x-cloak class="progress-section">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            📏 Medidas Corporales
+                        </h2>
+                        <p class="section-date">Actualizado: {{ date('d/m/Y') }}</p>
+                    </div>
+
+                    <div class="empty-state">
+                        <div class="empty-icon">📏</div>
+                        <p>Seguimiento de medidas corporales</p>
+                        <p class="empty-subtitle">Próximamente</p>
+                    </div>
+                </section>
+            </main>
         </div>
     </div>
 </div>
 
 <script>
-    // Asegúrate de que Alpine.js esté cargado
-    document.addEventListener('alpine:init', () => {
-        // Inicialización de componentes Alpine si es necesario
-    });
+document.addEventListener('alpine:init', () => {
+    console.log('Progress dashboard initialized');
+});
 </script>
 @endsection

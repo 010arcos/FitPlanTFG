@@ -50,7 +50,7 @@ class UsuarioController extends Controller
         if ($user->hasRole('admin')) {
             return redirect()->route('administracion');
         } else {
-            return view('usuario.index', compact('dietas', 'rutinas', 'dietasOrganizadas'));
+            return view('usuario.index', compact('dietas', 'rutinas', 'dietasOrganizadas', 'user'));
         }
 
 
