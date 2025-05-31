@@ -74,6 +74,25 @@ class User extends Authenticatable //implements MustVerifyEmail
             ->withTimestamps();
     }
 
+    public function historialPesos(){
+        return $this->hasMany(HistorialPeso::class, 'id_usuario', 'id');
+    }
 
+    public function ultimoPeso(){
+        return $this->hasOne(HistorialPeso::class, 'id_usuario', 'id')->latest('fecha_registro');
+    }
 
+    public function obtenerDatosGraficos()
+    {
+        $historial = $this->historialPesos()
+            ->orderBy('fecha_registro', 'asc')
+            ->get(['fecha_registro', 'peso', 'imc']);
+
+        return [
+            'fechas' => $historial->pluck('fecha_registro')->map(fn($fecha) => $fecha->format('d/m/Y')),
+            'pesos' => $historial->pluck('peso'),
+            'imcs' => $historial->pluck('imc'),
+            'total' => $historial->count()
+        ];
+    }
 }

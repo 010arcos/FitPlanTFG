@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('edad')->nullable();      // Edad del usuario
             $table->float('altura')->nullable();      // Altura del usuario
             $table->float('peso')->nullable();        // Peso del usuario
+            $table->float('imc')->nullable();         // Índice de Masa Corporal del usuario
             $table->boolean('activo')->default(false); // Estado de activación del usuario
             $table->timestamps();
             $table->softDeletes(); 

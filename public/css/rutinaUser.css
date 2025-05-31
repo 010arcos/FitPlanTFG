@@ -15,7 +15,8 @@
 .routine-wrapper {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
-    padding: 1rem 0;
+    padding-top: 1.5rem;
+    /* Espacio del navbar */
 }
 
 .routine-container {
@@ -136,34 +137,41 @@
 /* Colores específicos para cada icono de día */
 .nav-icon .fa-fire,
 .nav-icon .fa-flame {
-    color: #ef4444; /* Rojo fuego para lunes */
+    color: #ef4444;
+    /* Rojo fuego para lunes */
 }
 
 .nav-icon .fa-dumbbell {
-    color: #8b5cf6; /* Púrpura para martes */
+    color: #8b5cf6;
+    /* Púrpura para martes */
 }
 
 .nav-icon .fa-bolt,
 .nav-icon .fa-lightning-bolt {
-    color: #f59e0b; /* Amarillo rayo para miércoles */
+    color: #f59e0b;
+    /* Amarillo rayo para miércoles */
 }
 
 .nav-icon .fa-weight-hanging {
-    color: #10b981; /* Verde para jueves */
+    color: #10b981;
+    /* Verde para jueves */
 }
 
 .nav-icon .fa-bullseye,
 .nav-icon .fa-target {
-    color: #3b82f6; /* Azul para viernes */
+    color: #3b82f6;
+    /* Azul para viernes */
 }
 
 .nav-icon .fa-rocket {
-    color: #ec4899; /* Rosa para sábado */
+    color: #ec4899;
+    /* Rosa para sábado */
 }
 
 .nav-icon .fa-bed,
 .nav-icon .fa-moon {
-    color: #6366f1; /* Azul suave para domingo */
+    color: #6366f1;
+    /* Azul suave para domingo */
 }
 
 /* Para los títulos de día también */
@@ -215,8 +223,6 @@
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: 1.5rem;
-    overflow-y: auto;
-    max-height: 80vh;
 }
 
 .day-section {

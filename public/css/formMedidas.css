@@ -1,0 +1,388 @@
+/* Variables */
+:root {
+    --primary: #1e40af;
+    --accent: #06b6d4;
+    --gray-50: #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-600: #475569;
+    --gray-800: #1e293b;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --radius: 16px;
+    --transition: all 0.3s ease;
+}
+
+
+
+/* === ESTILOS DEL FORMULARIO === */
+
+/* Layout compacto */
+.measures-form-container {
+    background: var(--gray-50);
+    border-radius: 12px;
+    padding: 1rem;
+    border: 1px solid var(--gray-100);
+    overflow: visible;
+}
+
+/* Header compacto horizontal */
+.compact-header {
+    background: white;
+    border-radius: 8px;
+    padding: 0.75rem;
+    border-left: 4px solid var(--accent);
+}
+
+.form-compact h3 {
+    color: var(--primary);
+    margin: 0 0 1rem 0;
+    /* Cambiar de 0.75rem a 1rem */
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Header con espacio para ambos IMC */
+.current-stats {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.stats-left {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+/* CONTENEDOR DE 2 COLUMNAS */
+.data-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    /* Mantener 50%-50% */
+    gap: 2rem;
+    /* Aumentar de 1rem a 2rem */
+    margin-bottom: 0.75rem;
+}
+
+/* COLUMNA IZQUIERDA: Datos actuales con iconos */
+.current-data {
+    background: white;
+    border-radius: 8px;
+    padding: 0.75rem;
+    border-left: 4px solid var(--accent);
+}
+
+.current-data h3 {
+    color: var(--primary);
+    margin-bottom: 0.75rem;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.data-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.data-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0.6rem;
+    background: var(--gray-50);
+    border-radius: 6px;
+}
+
+.data-label {
+    font-weight: 600;
+    color: var(--gray-600);
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.data-label i {
+    color: var(--primary);
+    width: 14px;
+}
+
+.data-value {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 0.8rem;
+}
+
+/* COLUMNA DERECHA: IMC Nuevo más ancho */
+.imc-preview-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imc-result-large {
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    color: white;
+    padding: 1.2rem;
+    border-radius: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    min-width: 140px;
+    /* Más ancho */
+    box-shadow: var(--shadow);
+    animation: slideInRight 0.4s ease;
+}
+
+.imc-number-large {
+    display: block;
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1;
+}
+
+.imc-status-large {
+    font-size: 0.85rem;
+    opacity: 0.95;
+    margin-top: 0.4rem;
+    font-weight: 600;
+}
+
+.imc-label {
+    font-size: 0.7rem;
+    opacity: 0.8;
+    margin-top: 0.3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Placeholder cuando no hay cálculo */
+.imc-placeholder {
+    background: var(--gray-100);
+    color: var(--gray-600);
+    padding: 1.2rem;
+    border-radius: 12px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+    min-width: 140px;
+    border: 2px dashed var(--gray-100);
+}
+
+.imc-placeholder i {
+    font-size: 1.5rem;
+    opacity: 0.5;
+}
+
+.imc-placeholder span {
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Grid simple sin IMC */
+.inputs-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.input-group label {
+    font-weight: 600;
+    color: var(--gray-800);
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.input-group input {
+    padding: 0.5rem;
+    border: 1px solid var(--gray-100);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    transition: var(--transition);
+    width: 100%;
+    /* Usar todo el ancho asignado */
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.1);
+}
+
+/* IMC inline compacto */
+.imc-inline {
+    min-width: 120px;
+    /* Más ancho */
+}
+
+.imc-result {
+    background: linear-gradient(135deg, var(--accent), var(--primary));
+    color: white;
+    padding: 0.75rem;
+    /* Más padding */
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 60px;
+    /* Altura mínima */
+}
+
+.imc-number {
+    display: block;
+    font-weight: 700;
+    font-size: 1.2rem;
+    /* Más grande */
+    line-height: 1;
+}
+
+.imc-status {
+    font-size: 0.8rem;
+    /* Más grande */
+    opacity: 0.95;
+    margin-top: 0.25rem;
+}
+
+/* Notas compactas */
+.notes-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.notes-row label {
+    font-weight: 600;
+    color: var(--gray-800);
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.notes-row textarea {
+    padding: 0.5rem;
+    border: 1px solid var(--gray-100);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    resize: none;
+    transition: var(--transition);
+}
+
+.notes-row textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(30, 64, 175, 0.1);
+}
+
+/* Botones compactos */
+.actions-row {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
+
+.btn-primary,
+.btn-secondary {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1e3a8a;
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: var(--gray-100);
+    color: var(--gray-600);
+}
+
+.btn-secondary:hover {
+    background: var(--gray-600);
+    color: white;
+}
+
+/* Errores */
+.field-error {
+    color: #dc2626;
+    font-size: 0.65rem;
+    margin-top: 0.1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .inputs-row {
+        grid-template-columns: 1fr 1fr;
+        /* 2 columnas en móvil */
+        grid-template-rows: auto auto;
+    }
+
+    .imc-inline {
+        grid-column: 1 / -1;
+        /* IMC ocupa toda la fila */
+    }
+
+    .current-stats {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .actions-row {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .inputs-row {
+        grid-template-columns: 1fr;
+        /* 1 columna en móvil pequeño */
+    }
+}

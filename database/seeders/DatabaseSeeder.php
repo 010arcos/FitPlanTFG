@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 
+use Database\Seeders\HistorialPesoSeeder;
 use Database\Seeders\UsersTableSeeder;
 use Illuminate\Database\Seeder;
 
@@ -26,6 +27,7 @@ class DatabaseSeeder extends Seeder
             RutinaTableSeeder::class,
             PivotRutinaUsuarioSeeder::class,
             PivotRutinaEjerciciosSeeder::class,
+            HistorialPesoSeeder::class,
 
 
 

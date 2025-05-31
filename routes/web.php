@@ -35,6 +35,8 @@ Route::middleware(['auth', 'verified'])->prefix('usuario')->name('usuario.')->gr
     Route::get('/dieta', [UsuarioController::class, 'indexDieta'])->name('dieta');
     Route::get('/progreso', [UsuarioController::class, 'indexProgreso'])->name('progreso');
     Route::get('/rutina', [UsuarioController::class, 'indexRutina'])->name('rutina');
+    Route::get('/historial-peso', [UsuarioController::class, 'indexHistorialPeso'])->name('historial.peso');
+    Route::post('/progreso-store', [UsuarioController::class, 'storeProgreso'])->name('progreso.store');
 });
 
 Route::middleware(['auth', 'verified', 'admin'])->prefix('administracion')->name('administracion.')->group(function () {

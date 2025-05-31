@@ -11,34 +11,23 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    
-
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
+    <!-- CSS específicos -->
     <link href="{{ asset('css/indexFitness.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dashboardUser.css') }}" rel="stylesheet">
     <link href="{{ asset('css/dietaUser.css') }}" rel="stylesheet">
     <link href="{{ asset('css/rutinaUser.css') }}" rel="stylesheet">
     <link href="{{ asset('css/progresoUser.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/graficasUser.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/formMedidas.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Scripts -->
+    <!-- Scripts (Chart.js ya incluido en app.js) -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <!-- Bootstrap 5.3 CDN -->
-
-    {{--
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.2/dist/tailwind.min.css" rel="stylesheet">
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script> --}}
 </head>
-
-
-
-
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
@@ -54,10 +43,12 @@
         @endisset
 
         <!-- Page Content -->
-        <main class="py-4">
+        <main class="">
             @yield('content')
         </main>
     </div>
+
+    @stack('scripts')
 </body>
 
 </html>
