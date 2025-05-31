@@ -38,3 +38,41 @@
     </div>
 </div>
 @endif
+
+
+
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+    @if(isset($datosGraficos) && count($datosGraficos['pesos']) > 0)
+        const datosGraficos = @json($datosGraficos);
+        
+        // Gráfico de peso
+        const ctxPeso = document.getElementById('pesoChart');
+        if (ctxPeso && typeof Chart !== 'undefined') {
+            new Chart(ctxPeso, {
+                type: 'line',
+                data: {
+                    labels: datosGraficos.fechas,
+                    datasets: [{
+                        label: 'Peso (kg)',
+                        data: datosGraficos.pesos,
+                        borderColor: '#1e40af',
+                        backgroundColor: 'rgba(30, 64, 175, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+    @endif
+});
+</script>
+@endpush

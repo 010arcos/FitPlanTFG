@@ -42,3 +42,40 @@
     </div>
 </div>
 @endif
+
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+    @if(isset($datosGraficos) )
+        const datosGraficos = @json($datosGraficos);
+        
+
+        // Gráfico de IMC
+        const ctxIMC = document.getElementById('imcChart');
+        if (ctxIMC && typeof Chart !== 'undefined') {
+            new Chart(ctxIMC, {
+                type: 'line',
+                data: {
+                    labels: datosGraficos.fechas,
+                    datasets: [{
+                        label: 'IMC',
+                        data: datosGraficos.imcs,
+                        borderColor: '#06b6d4',
+                        backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false
+                }
+            });
+        }
+    @endif
+});
+</script>
+@endpush

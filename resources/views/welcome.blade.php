@@ -9,6 +9,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/guest.css') }}">
 
     <!-- Custom Styles -->
     <style>
@@ -329,6 +330,7 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+   
     <script>
         // Solución completa para forzar recarga al navegar hacia atrás
         window.addEventListener('pageshow', function(event) {

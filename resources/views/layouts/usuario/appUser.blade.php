@@ -21,7 +21,8 @@
     <link href="{{ asset('css/dietaUser.css') }}" rel="stylesheet">
     <link href="{{ asset('css/rutinaUser.css') }}" rel="stylesheet">
     <link href="{{ asset('css/progresoUser.css') }}" rel="stylesheet">
-  <link href="{{ asset('css/graficasUser.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/graficasUser.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/formMedidas.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Scripts (Chart.js ya incluido en app.js) -->
@@ -42,7 +43,7 @@
         @endisset
 
         <!-- Page Content -->
-        <main class="py-4">
+        <main class="">
             @yield('content')
         </main>
     </div>

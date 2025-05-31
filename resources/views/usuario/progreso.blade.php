@@ -4,7 +4,7 @@
 <div class="progress-wrapper">
     <div class="progress-container">
         <!-- Header compacto -->
-        <div class="compact-header">
+        <!-- <div class="compact-header">
             <div class="header-content">
                 <i class="fas fa-chart-line"></i>
                 <h1>Mi Progreso</h1>
@@ -12,11 +12,11 @@
             <div class="current-date">
                 {{ date('l, d \d\e F \d\e Y') }}
             </div>
-        </div>
+        </div> -->
 
         <!-- Dashboard de progreso -->
         <div class="progress-dashboard" x-data="{ 
-            activeSection: 'peso',
+            activeSection: 'peso', 
             formData: {
                 peso: '{{ Auth::user()->peso ?? '' }}',
                 altura: '{{ Auth::user()->altura ?? '' }}',
@@ -36,26 +36,29 @@
             <!-- Navegación lateral -->
             <aside class="progress-sidebar">
                 <div class="sidebar-header">
-                    <h3>Mi Progreso</h3>
+                    <h3><i class="fas fa-chart-line"></i> Mi Progreso</h3>
                 </div>
 
                 <nav class="progress-navigation">
+                    <!-- MEDIDAS PRIMERO -->
+                    <button class="nav-item" :class="{ 'nav-item-active': activeSection === 'medidas' }"
+                        @click="activeSection = 'medidas'; calculateIMC()">
+                        <span class="nav-icon"><i class="fas fa-ruler"></i></span>
+                        <span class="nav-label">Medidas</span>
+                    </button>
+
+                    <!-- PESO SEGUNDO -->
                     <button class="nav-item" :class="{ 'nav-item-active': activeSection === 'peso' }"
                         @click="activeSection = 'peso'">
                         <span class="nav-icon"><i class="fas fa-weight"></i></span>
                         <span class="nav-label">Peso</span>
                     </button>
 
+                    <!-- IMC TERCERO -->
                     <button class="nav-item" :class="{ 'nav-item-active': activeSection === 'imc' }"
                         @click="activeSection = 'imc'">
                         <span class="nav-icon"><i class="fas fa-chart-line"></i></span>
                         <span class="nav-label">IMC</span>
-                    </button>
-
-                    <button class="nav-item" :class="{ 'nav-item-active': activeSection === 'medidas' }"
-                        @click="activeSection = 'medidas'; calculateIMC()">
-                        <span class="nav-icon"><i class="fas fa-ruler"></i></span>
-                        <span class="nav-label">Medidas</span>
                     </button>
                 </nav>
             </aside>
@@ -94,9 +97,9 @@
                     <div class="section-header">
                         <h2 class="section-title">
                             <i class="fas fa-ruler"></i>
-                            Mis Medidas Actuales
+                            Mis Medidas
                         </h2>
-                        <p class="section-date">Bienvenido {{ Auth::user()->name }}</p>
+
                     </div>
 
                     @include('usuario.partials.formMedidas')
@@ -112,64 +115,3 @@
 });
 </script>
 @endsection
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Script cargado');
-    console.log('📊 Chart disponible:', typeof Chart);
-    
-    @if(isset($datosGraficos) && count($datosGraficos['pesos']) > 0)
-        const datosGraficos = @json($datosGraficos);
-        
-        // Gráfico de peso
-        const ctxPeso = document.getElementById('pesoChart');
-        if (ctxPeso && typeof Chart !== 'undefined') {
-            new Chart(ctxPeso, {
-                type: 'line',
-                data: {
-                    labels: datosGraficos.fechas,
-                    datasets: [{
-                        label: 'Peso (kg)',
-                        data: datosGraficos.pesos,
-                        borderColor: '#1e40af',
-                        backgroundColor: 'rgba(30, 64, 175, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        }
-        
-        // Gráfico de IMC
-        const ctxIMC = document.getElementById('imcChart');
-        if (ctxIMC && typeof Chart !== 'undefined') {
-            new Chart(ctxIMC, {
-                type: 'line',
-                data: {
-                    labels: datosGraficos.fechas,
-                    datasets: [{
-                        label: 'IMC',
-                        data: datosGraficos.imcs,
-                        borderColor: '#06b6d4',
-                        backgroundColor: 'rgba(6, 182, 212, 0.1)',
-                        borderWidth: 3,
-                        fill: true,
-                        tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false
-                }
-            });
-        }
-    @endif
-});
-</script>
-@endpush

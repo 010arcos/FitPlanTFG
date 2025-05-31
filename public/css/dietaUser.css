@@ -17,7 +17,8 @@
 .diet-wrapper {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
-    padding: 0.5rem 0;
+    padding-top: 1.5rem;
+    /* Espacio del navbar */
 }
 
 .diet-container {
@@ -143,23 +144,28 @@
 
 /* Colores específicos para cada icono */
 .nav-icon .fa-sun {
-    color: #f59e0b; /* Amarillo sol */
+    color: #f59e0b;
+    /* Amarillo sol */
 }
 
 .nav-icon .fa-coffee {
-    color: #8b4513; /* Marrón café */
+    color: #8b4513;
+    /* Marrón café */
 }
 
 .nav-icon .fa-utensils {
-    color: #ef4444; /* Rojo comida */
+    color: #ef4444;
+    /* Rojo comida */
 }
 
 .nav-icon .fa-apple-alt {
-    color: #10b981; /* Verde manzana */
+    color: #10b981;
+    /* Verde manzana */
 }
 
 .nav-icon .fa-moon {
-    color: #6366f1; /* Azul luna */
+    color: #6366f1;
+    /* Azul luna */
 }
 
 /* Para los títulos también */
@@ -200,8 +206,6 @@
     box-shadow: var(--shadow);
     padding: 1.5rem;
     border: 1px solid rgba(107, 33, 168, 0.1);
-    overflow-y: auto;
-    max-height: 80vh;
 }
 
 /* Diet Selector compacto */
