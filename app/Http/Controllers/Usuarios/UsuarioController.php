@@ -114,13 +114,28 @@ class UsuarioController extends Controller
     public function indexProgreso()
     {
         $usuario = Auth::user();
-        $idUsuario = $usuario->id;
-        $user = User::findOrFail($idUsuario);
+        $user = User::findOrFail($usuario->id);
+        
         if ($user->hasRole('admin')) {
             return redirect()->route('administracion');
-        } else {
-            return view('usuario.progreso');
         }
+        
+        // Cargar TODOS los datos aquí
+        $datosGraficos = $user->obtenerDatosGraficos();
+        $historialPesos = $user->historialPesos()
+            ->orderBy('fecha_registro', 'desc')
+            ->get();
+        
+        return view('usuario.progreso', compact('datosGraficos', 'historialPesos'));
+    }
+
+
+   
+    
+
+
+    public function storeProgreso(){
+        
     }
 
 }
