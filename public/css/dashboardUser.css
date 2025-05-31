@@ -107,6 +107,33 @@ header * {
     z-index: 1;
 }
 
+/* === DASHBOARD USER: ESTILOS PARA INDEX PRINCIPAL === */
+.welcome-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.welcome-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 0;
+}
+
+.welcome-date {
+    font-size: 1.1rem;
+    color: var(--gray-600);
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 0;
+}
+
 /* Header con saludo - MEJORADO */
 .welcome-header {
     display: flex;
@@ -173,7 +200,7 @@ header * {
     backdrop-filter: blur(10px);
 }
 
-/* Info personal - MEJORADO */
+/* Info personal - MEJORADA */
 .personal-info {
     margin-top: 1rem;
     position: relative;
@@ -526,53 +553,115 @@ header * {
     transform: scale(1.1);
 }
 
-/* Colores específicos para iconos */
-i.fa-weight {
-    color: #ef4444;
+/* === ACCESO RÁPIDO DASHBOARD NUEVO === */
+.quick-access-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto 2.5rem auto;
 }
 
-i.fa-ruler-vertical {
-    color: #06b6d4;
+.access-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 220px;
+    transition: box-shadow 0.2s, transform 0.2s;
+    position: relative;
+    overflow: hidden;
+    border: 1.5px solid #f1f5f9;
 }
 
-i.fa-birthday-cake {
-    color: #f59e0b;
+.access-card i {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.95;
 }
 
-i.fa-envelope {
-    color: #8b5cf6;
+.access-card h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 1.5rem 0 0.5rem 0;
+    color: var(--primary);
+    text-align: center;
 }
 
-i.fa-clock {
-    color: #06b6d4;
+.access-card p {
+    color: var(--gray-600);
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-i.fa-tint {
-    color: #06b6d4;
+.access-btn {
+    margin-top: auto;
+    border-radius: 999px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 1rem;
+    display: inline-block;
+    box-shadow: 0 2px 8px rgba(30, 64, 175, 0.08);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
 
-i.fa-bed {
-    color: #6366f1;
+/* Colores diferenciados para cada botón */
+.access-card:nth-child(1) .access-btn {
+    background: var(--primary);
+    color: #fff;
 }
 
-i.fa-apple-alt {
-    color: #10b981;
+.access-card:nth-child(2) .access-btn {
+    background: var(--accent);
+    color: #fff;
 }
 
-i.fa-running {
-    color: #f59e0b;
+.access-card:nth-child(3) .access-btn {
+    background: var(--success);
+    color: #fff;
 }
 
-i.fa-utensils {
-    color: #10b981;
+.access-card:nth-child(4) .access-btn {
+    background: var(--warning);
+    color: #fff;
 }
 
-i.fa-dumbbell {
-    color: #8b5cf6;
+.access-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 4px 16px rgba(30, 64, 175, 0.15);
 }
 
-i.fa-chart-line {
-    color: #3b82f6;
+.access-card:hover {
+    box-shadow: 0 16px 40px rgba(30, 64, 175, 0.18);
+    transform: translateY(-4px) scale(1.025);
+}
+
+@media (max-width: 900px) {
+    .quick-access-cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.25rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .quick-access-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .access-card {
+        padding: 1.5rem 0.75rem 1rem 0.75rem;
+    }
 }
 
 /* Efectos adicionales para mejor apariencia */
@@ -811,3 +900,9 @@ textarea {
     position: relative;
     z-index: 100 !important;
 }
+
+/* Colores de iconos de las access-card */
+.access-card .fa-dumbbell { color: var(--primary); }
+.access-card .fa-utensils { color: var(--accent); }
+.access-card .fa-chart-line { color: var(--success); }
+.access-card .fa-user-check { color: var(--warning); }

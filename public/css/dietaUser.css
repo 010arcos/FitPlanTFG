@@ -17,7 +17,7 @@
 .diet-wrapper {
     background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
-    padding-top: 1.5rem;
+    padding-top: 4rem;
     /* Espacio del navbar */
 }
 
@@ -205,6 +205,12 @@
     border-radius: var(--radius);
     box-shadow: var(--shadow);
     padding: 1.5rem;
+    min-height: auto;
+    /* Cambiar de altura fija a automática */
+    height: auto;
+    /* Asegurar altura automática */
+    overflow: visible;
+    /* Permitir que el contenido se expanda */
     border: 1px solid rgba(107, 33, 168, 0.1);
 }
 
@@ -238,6 +244,10 @@
 /* Meal Section */
 .meal-section {
     animation: fadeIn 0.3s ease-in-out;
+    min-height: auto;
+    /* Altura automática */
+    height: auto;
+    /* Altura automática */
 }
 
 @keyframes fadeIn {

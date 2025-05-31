@@ -1,17 +1,12 @@
 @extends('layouts.usuario.appUser')
 
 @section('content')
+
+
 <div class="routine-wrapper">
     <div class="routine-container">
 
-        <!-- Header súper compacto -->
-        <div class="compact-header">
-            <div class="header-content">
-                <i class="fas fa-dumbbell"></i>
-                <h1>Mi Entrenamiento</h1>
-            </div>
-            <span class="current-date">{{ \Carbon\Carbon::now()->format('d/m/Y') }}</span>
-        </div>
+
 
         <!-- Dashboard de rutinas -->
         <div class="routine-dashboard" x-data="{ activeDay: 'lunes' }">
@@ -19,7 +14,7 @@
             <!-- Navegación lateral -->
             <aside class="routine-sidebar">
                 <div class="sidebar-header">
-                    <h3>Días</h3>
+                    <h3> <i class="fas fa-dumbbell"></i> Días</h3>
                 </div>
 
                 <nav class="routine-navigation">

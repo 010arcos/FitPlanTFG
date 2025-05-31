@@ -21,7 +21,7 @@
 .progress-container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 4rem;
 }
 
 /* Header compacto */
@@ -60,12 +60,14 @@
     font-weight: 600;
 }
 
-/* Dashboard grid */
 .progress-dashboard {
     display: grid;
     grid-template-columns: 250px 1fr;
     gap: 1.5rem;
     min-height: 600px;
+    /* Solo altura mínima, no fija */
+    align-items: start;
+    /* Alinear al inicio en lugar de stretch */
 }
 
 /* Sidebar */
@@ -148,10 +150,21 @@
     box-shadow: var(--shadow);
     padding: 1.5rem;
     border: 1px solid rgba(107, 33, 168, 0.1);
+    min-height: auto;
+    /* Cambiar de altura fija a automática */
+    height: auto;
+    /* Asegurar altura automática */
+    overflow: visible;
+    /* Permitir que el contenido se expanda */
 }
 
+/* Secciones de progreso */
 .progress-section {
     animation: slideIn 0.3s ease-out;
+    min-height: auto;
+    /* Altura automática */
+    height: auto;
+    /* Altura automática */
 }
 
 @keyframes slideIn {
@@ -229,169 +242,6 @@
     font-style: italic;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* Responsive */
 @media (max-width: 1024px) {
     .progress-dashboard {
@@ -430,14 +280,6 @@
     .empty-icon {
         font-size: 3rem;
     }
-
-
-
-
-
-
-
-
 }
 
 

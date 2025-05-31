@@ -1,16 +1,10 @@
 @extends('layouts.usuario.appUser')
 
 @section('content')
+
+
 <div class="diet-wrapper">
     <div class="diet-container">
-        <!-- Header compacto -->
-        <div class="compact-header">
-            <div class="header-content">
-                <i class="fas fa-utensils"></i>
-                <h1>Plan Alimentario</h1>
-            </div>
-            <span class="current-date">{{ \Carbon\Carbon::now()->format('d/m/Y') }}</span>
-        </div>
 
         <!-- Dashboard de dietas -->
         <div class="diet-dashboard" x-data="{ 
@@ -21,23 +15,21 @@
             <!-- Navegación lateral -->
             <aside class="diet-sidebar">
                 <div class="sidebar-header">
-                    <h3>Comidas</h3>
+
+                    <h3> <i class="fas fa-utensils"></i> Comidas</h3>
                 </div>
 
                 <nav class="diet-navigation">
                     @foreach(['desayuno', 'almuerzo', 'comida', 'merienda', 'cena'] as $comida)
-                    <button 
-                        class="nav-item"
-                        :class="{ 'nav-item-active': activeSection === '{{ $comida }}' }"
-                        @click="activeSection = '{{ $comida }}'"
-                    >
+                    <button class="nav-item" :class="{ 'nav-item-active': activeSection === '{{ $comida }}' }"
+                        @click="activeSection = '{{ $comida }}'">
                         <span class="nav-icon">
                             @switch($comida)
-                                @case('desayuno') <i class="fas fa-sun"></i> @break
-                                @case('almuerzo') <i class="fas fa-coffee"></i> @break
-                                @case('comida') <i class="fas fa-utensils"></i> @break
-                                @case('merienda') <i class="fas fa-apple-alt"></i> @break
-                                @case('cena') <i class="fas fa-moon"></i> @break
+                            @case('desayuno') <i class="fas fa-sun"></i> @break
+                            @case('almuerzo') <i class="fas fa-coffee"></i> @break
+                            @case('comida') <i class="fas fa-utensils"></i> @break
+                            @case('merienda') <i class="fas fa-apple-alt"></i> @break
+                            @case('cena') <i class="fas fa-moon"></i> @break
                             @endswitch
                         </span>
                         <span class="nav-label">{{ ucfirst($comida) }}</span>
@@ -64,11 +56,11 @@
                     <div class="meal-section-header">
                         <h2 class="meal-title">
                             @switch($tipoComida)
-                                @case('desayuno') <i class="fas fa-sun"></i> @break
-                                @case('almuerzo') <i class="fas fa-coffee"></i> @break
-                                @case('comida') <i class="fas fa-utensils"></i> @break
-                                @case('merienda') <i class="fas fa-apple-alt"></i> @break
-                                @case('cena') <i class="fas fa-moon"></i> @break
+                            @case('desayuno') <i class="fas fa-sun"></i> @break
+                            @case('almuerzo') <i class="fas fa-coffee"></i> @break
+                            @case('comida') <i class="fas fa-utensils"></i> @break
+                            @case('merienda') <i class="fas fa-apple-alt"></i> @break
+                            @case('cena') <i class="fas fa-moon"></i> @break
                             @endswitch
                             {{ ucfirst($tipoComida) }}
                         </h2>

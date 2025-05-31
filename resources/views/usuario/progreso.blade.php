@@ -1,6 +1,8 @@
 @extends('layouts.usuario.appUser')
 
 @section('content')
+
+
 <div class="progress-wrapper">
     <div class="progress-container">
         <!-- Header compacto -->
@@ -16,7 +18,7 @@
 
         <!-- Dashboard de progreso -->
         <div class="progress-dashboard" x-data="{ 
-            activeSection: 'peso', 
+            activeSection: 'medidas', 
             formData: {
                 peso: '{{ Auth::user()->peso ?? '' }}',
                 altura: '{{ Auth::user()->altura ?? '' }}',
