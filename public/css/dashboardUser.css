@@ -1,312 +1,222 @@
 /* Variables */
 :root {
-    --primary: #667eea;
-    --secondary: #764ba2;
-    --white: #ffffff;
+    --primary: #1e40af;
+    --primary-light: #3b82f6;
+    --secondary: #0f172a;
+    --accent: #06b6d4;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --gray-50: #f8fafc;
     --gray-100: #f1f5f9;
     --gray-600: #475569;
     --gray-800: #1e293b;
-    --gray-900: #0f172a;
+    --white: #ffffff;
     --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --radius: 20px;
-    --transition: all 0.3s ease;
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --radius: 16px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Reset */
 * {
     box-sizing: border-box;
+}
+
+/* FONDO GLOBAL PARA TODO */
+html,
+body {
     margin: 0;
     padding: 0;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
+    height: 100%;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
     color: var(--gray-800);
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
+        url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
-/* Layout principal */
+/* Wrapper principal que cubre todo - SIN OVERLAY EXTRA */
+.min-h-screen {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
+        url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* NAVEGACIÓN CON Z-INDEX ALTO */
+nav,
+.navbar,
+header {
+    position: relative;
+    z-index: 1000 !important;
+}
+
+nav *,
+.navbar *,
+header * {
+    position: relative;
+    z-index: 1001 !important;
+}
+
+/* Layout principal - SIN OVERLAY EXTRA */
 .modern-dashboard {
     min-height: 100vh;
     padding: 2rem 0;
+    position: relative;
+    z-index: 2;
 }
 
 .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1rem;
+    position: relative;
+    z-index: 3;
 }
 
-/* Welcome */
-.welcome-section {
-    text-align: center;
+/* Sección de información del usuario - MEJORADA CON CRISTAL */
+.user-info-section {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    padding: 3rem 2rem;
     margin-bottom: 3rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    z-index: 4;
+}
+
+.user-info-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--success));
+    z-index: 1;
+}
+
+/* Header con saludo - MEJORADO */
+.welcome-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+    position: relative;
+    z-index: 5;
+}
+
+.welcome-content {
+    flex: 1;
 }
 
 .welcome-title {
     font-size: 2.5rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 0.5rem;
+    margin: 0 0 0.5rem 0;
 }
 
-.welcome-subtitle {
+.welcome-date {
     font-size: 1.1rem;
     color: var(--gray-600);
+    margin: 0;
+    font-weight: 500;
 }
 
-/* Status */
+/* Estado de cuenta - MEJORADO */
+.account-status {
+    flex-shrink: 0;
+    margin-top: 0.5rem;
+}
+
 .status-alert {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    background: #fee2e2;
+    gap: 0.75rem;
+    background: rgba(239, 68, 68, 0.1);
     color: #dc2626;
     padding: 0.75rem 1.5rem;
-    border-radius: 50px;
+    border-radius: 25px;
     font-size: 0.9rem;
     font-weight: 600;
-    margin-top: 1rem;
+    border: 2px solid rgba(239, 68, 68, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 .status-active {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    background: #d1fae5;
+    gap: 0.75rem;
+    background: rgba(16, 185, 129, 0.1);
     color: #059669;
     padding: 0.75rem 1.5rem;
-    border-radius: 50px;
+    border-radius: 25px;
     font-size: 0.9rem;
     font-weight: 600;
+    border: 2px solid rgba(16, 185, 129, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+/* Info personal - MEJORADO */
+.personal-info {
     margin-top: 1rem;
+    position: relative;
+    z-index: 5;
 }
 
-/* Layout 2 columnas */
-.main-layout {
-    display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: 3rem;
-}
-
-.left-column {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-}
-
-.right-column {
-    position: sticky;
-    top: 2rem;
-}
-
-/* Títulos */
-.section-title {
+.info-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--gray-900);
+    color: var(--gray-800);
     margin-bottom: 1.5rem;
+    text-align: center;
 }
 
-/* Stats grid más grande */
-.stats-grid-large {
+.info-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.5rem;
-    margin-bottom: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
-.stat-card {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    box-shadow: var(--shadow);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: var(--transition);
-}
-
-.stat-card:hover {
-    transform: translateY(-4px);
-}
-
-.stat-content h3 {
-    font-size: 0.875rem;
-    font-weight: 600;
-    color: var(--gray-600);
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-}
-
-.stat-value {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--gray-900);
-}
-
-.stat-value span {
-    font-size: 1rem;
-    color: var(--gray-600);
-}
-
-.stat-email {
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--gray-700);
-}
-
-.stat-icon {
-    font-size: 2rem;
-    color: var(--primary);
-    opacity: 0.7;
-}
-
-/* Colores específicos para iconos del dashboard */
-
-/* Iconos de estadísticas personales */
-.stat-icon .fa-weight {
-    color: #ef4444;
-    /* Rojo para peso */
-}
-
-.stat-icon .fa-ruler-vertical {
-    color: #06b6d4;
-    /* Cian para altura */
-}
-
-.stat-icon .fa-birthday-cake {
-    color: #f59e0b;
-    /* Naranja para edad */
-}
-
-.stat-icon .fa-envelope {
-    color: #8b5cf6;
-    /* Púrpura para email */
-}
-
-/* Iconos de secciones principales */
-.section-title .fa-user {
-    color: #3b82f6;
-    /* Azul para usuario */
-}
-
-.section-title .fa-clock {
-    color: #06b6d4;
-    /* Cian para reloj */
-}
-
-.section-title .fa-bullseye {
-    color: #10b981;
-    /* Verde para objetivos */
-}
-
-.section-title .fa-book {
-    color: #8b5cf6;
-    /* Púrpura para consejos */
-}
-
-/* Iconos de consejos específicos */
-.tip-icon .fa-tint {
-    color: #06b6d4;
-    /* Azul agua */
-}
-
-.tip-icon .fa-bed {
-    color: #6366f1;
-    /* Azul suave */
-}
-
-.tip-icon .fa-apple-alt {
-    color: #10b981;
-    /* Verde manzana */
-}
-
-.tip-icon .fa-running {
-    color: #f59e0b;
-    /* Naranja actividad */
-}
-
-.tip-icon .fa-drumstick-bite {
-    color: #ef4444;
-    /* Rojo proteínas */
-}
-
-.tip-icon .fa-mug-hot {
-    color: #8b4513;
-    /* Marrón bebidas */
-}
-
-/* Iconos de accesos rápidos */
-.quick-link .fa-utensils {
-    color: #10b981;
-    /* Verde dieta */
-}
-
-.quick-link .fa-dumbbell {
-    color: #8b5cf6;
-    /* Púrpura rutina */
-}
-
-.quick-link .fa-chart-line {
-    color: #3b82f6;
-    /* Azul progreso */
-}
-
-/* Iconos de estado */
-.status-active .fa-check-circle {
-    color: #10b981;
-    /* Verde activo */
-}
-
-.status-alert .fa-exclamation-triangle {
-    color: #ef4444;
-    /* Rojo alerta */
-}
-
-/* Iconos de widgets */
-.card-icon .fa-clock {
-    color: #06b6d4;
-    /* Cian reloj */
-}
-
-.motivation-icon {
-    color: #fbbf24;
-    /* Amarillo motivación */
-}
-
-/* Hover effects */
-.stat-icon i:hover,
-.section-title i:hover,
-.tip-icon i:hover,
-.quick-link i:hover,
-.card-icon i:hover {
-    filter: brightness(1.2);
-    transition: filter 0.3s ease;
-}
-
-/* Info cards */
-.info-card {
-    background: var(--white);
-    border-radius: var(--radius);
-    padding: 1.5rem;
-    box-shadow: var(--shadow);
+.info-item {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
-}
-
-.card-header {
-    display: flex;
     align-items: center;
-    gap: 1rem;
+    text-align: center;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-.card-icon {
+.info-item:hover {
+    background: rgba(255, 255, 255, 0.95);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.info-icon {
     width: 50px;
     height: 50px;
     border-radius: 12px;
@@ -316,32 +226,98 @@ body {
     font-size: 1.25rem;
     color: var(--white);
     background: var(--primary);
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
 }
 
-.card-header h3 {
-    font-size: 1.25rem;
-    font-weight: 700;
-}
-
-.time-display {
-    font-size: 2rem;
-    font-weight: 700;
+.info-content {
     text-align: center;
-    font-family: 'Courier New', monospace;
 }
 
-/* Tip section más prominente */
+.info-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gray-600);
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.info-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+/* Layout principal - MEJORADO */
+.main-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+    align-items: start;
+    position: relative;
+    z-index: 4;
+}
+
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: sticky;
+    top: 2rem;
+}
+
+/* Cards con efecto cristal */
+.tip-section-large,
+.info-card,
+.motivation-card,
+.quick-links {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: var(--transition);
+    position: relative;
+    z-index: 4;
+}
+
+.tip-section-large:hover,
+.info-card:hover,
+.quick-links:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Sección de consejos - MEJORADA */
 .tip-section-large {
-    margin-bottom: 2rem;
+    padding: 2rem;
+}
+
+.section-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 1.5rem;
+    text-align: center;
 }
 
 .tip-card {
-    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    background: linear-gradient(135deg, rgba(30, 64, 175, 0.9), rgba(15, 23, 42, 0.9));
     color: var(--white);
     border-radius: var(--radius);
     padding: 2.5rem;
-    box-shadow: var(--shadow);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     font-size: 1.1rem;
+    backdrop-filter: blur(20px);
 }
 
 .tip-header {
@@ -385,10 +361,13 @@ body {
     justify-content: center;
     cursor: pointer;
     transition: var(--transition);
+    position: relative;
+    z-index: 10;
 }
 
 .tip-nav-btn:hover {
     background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
 }
 
 .tip-counter {
@@ -421,13 +400,53 @@ body {
     transition: width 0.3s ease;
 }
 
-/* Motivación card */
-.motivation-card {
-    background: linear-gradient(135deg, #f093fb, #f5576c);
-    color: var(--white);
-    border-radius: var(--radius);
+/* Info cards - MEJORADAS */
+.info-card {
     padding: 1.5rem;
-    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.card-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    color: var(--white);
+    background: var(--primary);
+    box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
+}
+
+.card-header h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gray-800);
+}
+
+.time-display {
+    font-size: 2rem;
+    font-weight: 700;
+    text-align: center;
+    font-family: 'Courier New', monospace;
+    color: var(--primary);
+}
+
+/* Motivación card - ESPECIAL */
+.motivation-card {
+    background: linear-gradient(135deg, rgba(240, 147, 251, 0.9), rgba(245, 87, 108, 0.9));
+    color: var(--white);
+    padding: 1.5rem;
     margin-bottom: 1.5rem;
 }
 
@@ -447,6 +466,7 @@ body {
     font-weight: 700;
 }
 
+
 .motivation-card p {
     font-style: italic;
     opacity: 0.95;
@@ -454,18 +474,15 @@ body {
     line-height: 1.5;
 }
 
-/* Quick links más discretos */
+/* Quick links - MEJORADOS */
 .quick-links {
-    background: var(--white);
-    border-radius: var(--radius);
     padding: 1.5rem;
-    box-shadow: var(--shadow);
 }
 
 .quick-links h3 {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--gray-800);
+    color: var(--gray-600);
     margin-bottom: 1rem;
     text-align: center;
 }
@@ -487,20 +504,146 @@ body {
     border-radius: 12px;
     transition: var(--transition);
     font-size: 0.875rem;
+    background: rgba(255, 255, 255, 0.5);
+    position: relative;
+    z-index: 10;
 }
 
 .quick-link:hover {
-    background: var(--gray-100);
-    color: var(--primary);
+    background: var(--primary);
+    color: var(--white);
     text-decoration: none;
     transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(30, 64, 175, 0.3);
 }
 
 .quick-link i {
     font-size: 1.25rem;
+    transition: var(--transition);
 }
 
-/* Responsive */
+.quick-link:hover i {
+    transform: scale(1.1);
+}
+
+/* Colores específicos para iconos */
+i.fa-weight {
+    color: #ef4444;
+}
+
+i.fa-ruler-vertical {
+    color: #06b6d4;
+}
+
+i.fa-birthday-cake {
+    color: #f59e0b;
+}
+
+i.fa-envelope {
+    color: #8b5cf6;
+}
+
+i.fa-clock {
+    color: #06b6d4;
+}
+
+i.fa-tint {
+    color: #06b6d4;
+}
+
+i.fa-bed {
+    color: #6366f1;
+}
+
+i.fa-apple-alt {
+    color: #10b981;
+}
+
+i.fa-running {
+    color: #f59e0b;
+}
+
+i.fa-utensils {
+    color: #10b981;
+}
+
+i.fa-dumbbell {
+    color: #8b5cf6;
+}
+
+i.fa-chart-line {
+    color: #3b82f6;
+}
+
+/* Efectos adicionales para mejor apariencia */
+.user-info-section,
+.tip-section-large,
+.info-card,
+.quick-links {
+    position: relative;
+    overflow: hidden;
+}
+
+.user-info-section::after,
+.tip-section-large::after,
+.info-card::after,
+.quick-links::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.user-info-section:hover::after,
+.tip-section-large:hover::after,
+.info-card:hover::after,
+.quick-links:hover::after {
+    opacity: 1;
+}
+
+/* Asegurar que el main también tenga el fondo - SIN OVERLAY EXTRA */
+main {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
+        url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    position: relative;
+}
+
+main>* {
+    position: relative;
+    z-index: 2;
+}
+
+/* Asegurar que todos los elementos clickeables tengan z-index alto */
+a,
+button,
+input,
+select,
+textarea {
+    position: relative;
+    z-index: 100 !important;
+}
+
+/* Específicamente para los enlaces de navegación */
+.navbar a,
+.navbar button,
+.navbar-brand {
+    position: relative;
+    z-index: 1002 !important;
+}
+
+/* Responsive mejorado */
 @media (max-width: 1024px) {
     .main-layout {
         grid-template-columns: 1fr;
@@ -509,38 +652,162 @@ body {
 
     .right-column {
         position: static;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
     }
 
-    .stats-grid-large {
+    .info-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
-    .quick-links-grid {
-        grid-template-columns: repeat(3, 1fr);
+    html,
+    body,
+    .min-h-screen,
+    main {
+        background-attachment: scroll;
     }
 }
 
 @media (max-width: 768px) {
+    .welcome-header {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+        align-items: center;
+    }
+
     .welcome-title {
         font-size: 2rem;
     }
 
-    .stats-grid-large {
+    .account-status {
+        margin-top: 0;
+    }
+
+    .info-grid {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
-    .quick-links-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.5rem;
-    }
-
-    .quick-link {
-        padding: 0.75rem 0.25rem;
-        font-size: 0.8rem;
+    .user-info-section {
+        padding: 2rem 1rem;
     }
 
     .tip-header {
         flex-direction: column;
         text-align: center;
+        gap: 1rem;
     }
+
+    .quick-links-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .right-column {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-container {
+        padding: 0 0.5rem;
+    }
+
+    .modern-dashboard {
+        padding: 1rem 0;
+    }
+
+    .user-info-section {
+        margin-bottom: 2rem;
+        padding: 1.5rem 1rem;
+    }
+
+    .welcome-title {
+        font-size: 1.75rem;
+    }
+
+    .info-item {
+        padding: 1rem;
+    }
+
+    .tip-card {
+        padding: 1.5rem;
+    }
+}
+
+/* Animaciones adicionales */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-info-section,
+.tip-section-large,
+.info-card,
+.motivation-card,
+.quick-links {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.info-item {
+    animation: fadeInUp 0.6s ease-out;
+    animation-delay: calc(var(--i, 0) * 0.1s);
+}
+
+/* Scrollbar personalizada para webkit */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(30, 64, 175, 0.6);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(30, 64, 175, 0.8);
+}
+
+/* Asegurar que no haya espacios blancos */
+.bg-gray-100 {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
+        url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') !important;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
+    background-repeat: no-repeat !important;
+}
+
+.py-4 {
+    position: relative;
+    z-index: 2;
+}
+
+/* Asegurar que los dropdowns funcionen */
+.dropdown-menu,
+.dropdown-toggle {
+    position: relative;
+    z-index: 1050 !important;
+}
+
+/* Para elementos de Bootstrap que puedan tener problemas */
+.btn,
+.form-control,
+.nav-link {
+    position: relative;
+    z-index: 100 !important;
 }

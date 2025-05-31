@@ -4,78 +4,82 @@
 <div class="modern-dashboard">
     <div class="dashboard-container">
 
-        <!-- Header minimalista -->
-        <div class="welcome-section">
-            <h1 class="welcome-title">Hola, {{ $user->name }}</h1>
-
-            <p class="welcome-subtitle">{{ \Carbon\Carbon::now()->locale('es')->isoFormat('dddd, D [de] MMMM [de] YYYY') }}</p>
-
-            @if(!$user->activo)
-            <div class="status-alert">
-                <i class="fas fa-exclamation-triangle"></i>
-                <span>Tu cuenta está inactiva. Contacta con el administrador.</span>
+        <!-- Header con información personal integrada -->
+        <div class="user-info-section">
+            <!-- Saludo principal -->
+            <div class="welcome-header">
+                <h1 class="welcome-title">Hola, {{ $user->name }}</h1>
+                <p class="welcome-date">{{ \Carbon\Carbon::now()->locale('es')->isoFormat('dddd, D [de] MMMM [de] YYYY') }}</p>
             </div>
-            @else
-            <div class="status-active">
-                <i class="fas fa-check-circle"></i>
-                <span>Cuenta activa</span>
+
+            <!-- Estado de cuenta -->
+            <div class="account-status">
+                @if(!$user->activo)
+                <div class="status-alert">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span>Tu cuenta está inactiva. Contacta con el administrador.</span>
+                </div>
+                @else
+                <div class="status-active">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Cuenta activa</span>
+                </div>
+                @endif
             </div>
-            @endif
+
+            <!-- Información personal -->
+            <div class="personal-info">
+                <h3 class="info-title">Mi Información Personal</h3>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-weight"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Peso Actual</span>
+                            <span class="info-value">{{ $user->peso }} kg</span>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-ruler-vertical"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Altura</span>
+                            <span class="info-value">{{ $user->altura }} cm</span>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-birthday-cake"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Edad</span>
+                            <span class="info-value">{{ $user->edad }} años</span>
+                        </div>
+                    </div>
+
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Email</span>
+                            <span class="info-value">{{ $user->email }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Layout principal en 2 columnas -->
         <div class="main-layout">
 
-            <!-- Columna izquierda: Stats principales -->
+            <!-- Columna izquierda: Consejos -->
             <div class="left-column">
-
-                <!-- Stats cards más grandes -->
-                <div class="stats-section">
-                    <h2 class="section-title">Mi Información Personal</h2>
-                    <div class="stats-grid-large">
-                        <div class="stat-card weight-card">
-                            <div class="stat-content">
-                                <h3>Peso Actual</h3>
-                                <p class="stat-value">{{ $user->peso }} <span>kg</span></p>
-                            </div>
-                            <div class="stat-icon">
-                                <i class="fas fa-weight"></i>
-                            </div>
-                        </div>
-
-                        <div class="stat-card height-card">
-                            <div class="stat-content">
-                                <h3>Altura</h3>
-                                <p class="stat-value">{{ $user->altura }} <span>cm</span></p>
-                            </div>
-                            <div class="stat-icon">
-                                <i class="fas fa-ruler-vertical"></i>
-                            </div>
-                        </div>
-
-                        <div class="stat-card age-card">
-                            <div class="stat-content">
-                                <h3>Edad</h3>
-                                <p class="stat-value">{{ $user->edad }} <span>años</span></p>
-                            </div>
-                            <div class="stat-icon">
-                                <i class="fas fa-birthday-cake"></i>
-                            </div>
-                        </div>
-
-                        <div class="stat-card email-card">
-                            <div class="stat-content">
-                                <h3>Email</h3>
-                                <p class="stat-email">{{ $user->email }}</p>
-                            </div>
-                            <div class="stat-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Consejos con navegación - MÁS PROMINENTE -->
+                <!-- Consejos con navegación -->
                 <div class="tip-section-large">
                     <h2 class="section-title">Consejos de Salud</h2>
                     <div class="tip-card" x-data="{ 
@@ -143,12 +147,10 @@
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            <!-- Columna derecha: Info secundaria -->
+            <!-- Columna derecha: Widgets -->
             <div class="right-column">
-
                 <!-- Reloj -->
                 <div class="info-card time-card">
                     <div class="card-header">
@@ -160,16 +162,7 @@
                     <div class="time-display" id="current-time"></div>
                 </div>
 
-                <!-- Motivación del día -->
-                <div class="motivation-card">
-                    <div class="motivation-header">
-                        <div class="motivation-icon">💪</div>
-                        <h3>Motivación del Día</h3>
-                    </div>
-                    <p>"El éxito es la suma de pequeños esfuerzos repetidos día tras día."</p>
-                </div>
-
-                <!-- Acceso rápido MÁS PEQUEÑO -->
+                <!-- Acceso rápido -->
                 <div class="quick-links">
                     <h3>Enlaces Rápidos</h3>
                     <div class="quick-links-grid">
@@ -187,7 +180,6 @@
                         </a>
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -196,7 +188,7 @@
 </div>
 
 <script>
-    // Reloj en tiempo real
+// Reloj en tiempo real
 function updateTime() {
     const now = new Date();
     const timeString = now.toLocaleTimeString('es-ES', { 
