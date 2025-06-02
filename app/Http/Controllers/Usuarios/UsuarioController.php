@@ -25,35 +25,20 @@ class UsuarioController extends Controller
         $usuario = Auth::user();
         $idUsuario = $usuario->id;
         $user = User::findOrFail($idUsuario);
-        // Obtener las rutinas del usuario
-        $rutinas = $user->rutinas()->with('ejercicios')->get();
 
-        $dietas = $user->dietas()->with('comidas')->get();
 
-        // Organizar las dietas para mostrarlas en la vista
-        $dietasOrganizadas = [];
+        $datosGraficos = $user->obtenerDatosGraficos();
+        $historialPesos = $user->historialPesos()
+            ->orderBy('fecha_registro', 'desc')
+            ->get();
 
-        foreach ($dietas as $dieta) {
-            $dietasOrganizadas[$dieta->id_dieta] = [
-                'info' => $dieta,
-                'comidas' => []
-            ];
 
-            foreach ($dieta->comidas as $comida) {
-                $tipoComida = $comida->pivot->tipo_comida;
 
-                if (!isset($dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida])) {
-                    $dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida] = [];
-                }
-
-                $dietasOrganizadas[$dieta->id_dieta]['comidas'][$tipoComida][] = $comida;
-            }
-        }
 
         if ($user->hasRole('admin')) {
             return redirect()->route('administracion');
         } else {
-            return view('usuario.index', compact('dietas', 'rutinas', 'dietasOrganizadas', 'user'));
+            return view('usuario.index', compact('datosGraficos', 'user'));
         }
 
 
@@ -118,43 +103,43 @@ class UsuarioController extends Controller
     {
         $usuario = Auth::user();
         $user = User::findOrFail($usuario->id);
-        
+
         if ($user->hasRole('admin')) {
             return redirect()->route('administracion');
         }
-        
+
         // Cargar TODOS los datos aquí
         $datosGraficos = $user->obtenerDatosGraficos();
         $historialPesos = $user->historialPesos()
             ->orderBy('fecha_registro', 'desc')
             ->get();
-        
+
         return view('usuario.progreso', compact('datosGraficos', 'historialPesos'));
     }
 
 
-   
-    
+
+
 
 
     public function storeProgreso(Request $request)
     {
         $validated = $this->validarDatosProgreso($request);
         $usuario = Auth::user();
-        
-        
+
+
         if ($this->verificarRegistroExistente($usuario->id, $validated['fecha_registro'])) {
             return redirect()->back()
                 ->withErrors(['fecha_registro' => 'Ya existe un registro para esta fecha.'])
                 ->withInput();
         }
-        
+
         // Crear el nuevo registro
         $historial = $this->crearRegistroHistorial($usuario, $validated);
-        
+
         // Actualizar el peso del usuario si es el registro más reciente
         $this->actualizarPesoUsuarioSiEsReciente($usuario, $historial, $validated);
-        
+
         return redirect()->route('usuario.progreso', ['section' => 'medidas'])
             ->with('success', 'Registro guardado correctamente');
     }
@@ -204,7 +189,7 @@ class UsuarioController extends Controller
         $ultimoRegistro = $usuario->historialPesos()
             ->orderBy('fecha_registro', 'desc')
             ->first();
-            
+
         if ($ultimoRegistro && $ultimoRegistro->id_historial === $historial->id_historial) {
             $usuario->update([
                 'peso' => $validated['peso'],
