@@ -4,8 +4,9 @@
         <div class="flex justify-between h-16">
             <!-- Logo -->
             <div class="flex items-center">
-                <a href="{{ route('administracion') }}">
-                    <x-application-logo class="block h-9 w-auto fill-current text-gray-200" />
+                <a href="{{ route('administracion') }}" class="flex items-center">
+                    <img src="{{ asset('img/logo.png') }}" alt="Logo" class="block h-12 w-auto" />
+                    <span class="text-white font-bold ml-2">FitPlan</span>
                 </a>
             </div>
 

@@ -38,7 +38,7 @@
             </option>
             <option value="jueves" {{ old('dia', $rutina->dia ?? '') == 'jueves' ? 'selected' : '' }}>Jueves</option>
             <option value="viernes" {{ old('dia', $rutina->dia ?? '') == 'viernes' ? 'selected' : '' }}>Viernes</option>
-          
+
         </select>
         {!! $errors->first('dia', '<div class="invalid-feedback text-red-500 text-sm mt-1">:message</div>') !!}
     </div>

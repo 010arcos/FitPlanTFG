@@ -67,7 +67,23 @@
             </div>
             <!-- Asignar Dietas -->
             <div class="col-span-full mb-8">
-                <label class="block text-lg font-medium text-gray-800 mb-3">Asignar Dietas</label>
+                <h2
+                    class="text-xl font-bold text-red-700 bg-red-200 px-4 py-2 rounded-lg mb-5 flex items-center gap-3 border-l-4 border-red-600">
+                    Datos Personales
+                </h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
                 <div id="dietas-container" class="space-y-6">
                     @if(isset($dietasAsociadas) && count($dietasAsociadas) > 0)
                     @foreach($dietasAsociadas as $dietaId)
@@ -84,8 +100,14 @@
                     </div>
                     @endforeach
                     @endif
-                    <!-- Se eliminó el campo vacío que aparecía por defecto -->
                 </div>
+
+                @if ($errors->has('dietas'))
+                <div class="alert alert-danger mt-2">
+                    {{ $errors->first('dietas') }}
+                </div>
+                @endif
+
                 <button type="button" onclick="agregarDieta()"
                     class="mt-6 bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition">
                     + Agregar dieta

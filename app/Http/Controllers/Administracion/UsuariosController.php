@@ -77,8 +77,12 @@ class UsuariosController
 
     public function store(Request $request)
     {
-     
+
         $this->validateUser($request);
+        $response = $this->validateDietas($request);
+        if ($response) {
+            return $response;
+        }
 
         $userRole = Role::findByName('user');
 
@@ -97,7 +101,7 @@ class UsuariosController
 
 
 
-   
+
     public function edit($id)
     {
         $usuario = User::findOrFail($id);
@@ -105,14 +109,18 @@ class UsuariosController
         $dietas = Dieta::all();
         return view('administracion.usuarios.edit', compact('usuario', 'dietas', 'dietasAsociadas'));
 
-       
+
     }
 
-   
+
     public function update(Request $request, $id)
     {
 
         $this->validateUser($request, $id);
+        $response = $this->validateDietas($request);
+        if ($response) {
+            return $response; 
+        }
 
         $datosUsuarios = $request->only([
             'name',
@@ -136,7 +144,7 @@ class UsuariosController
         return redirect('administracion/usuarios')->with('Mensaje', 'Usuario actualizado con éxito');
     }
 
-    
+
     public function destroy($id)
     {
 
@@ -178,9 +186,9 @@ class UsuariosController
     private function validateUser(Request $request, $id = null)
     {
         $rules = [
-            "name" => "required|regex:/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/", 
-            "email" => "required|email|unique:users,email,{$id}", 
-            "password" => "required", 
+            "name" => "required|regex:/^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]+$/",
+            "email" => "required|email|unique:users,email,{$id}",
+            "password" => "required",
             "apellido" => "required|string|max:255",
             "edad" => "required|integer|min:0",
             "altura" => "required|numeric|min:0",
@@ -202,6 +210,30 @@ class UsuariosController
 
         $request->validate($rules, $messages);
     }
+
+    private function validateDietas(Request $request)
+    {
+        $dietas = $request->input('dietas', []);
+
+        // Verificar si hay duplicados
+        if (count($dietas) !== count(array_unique($dietas))) {
+            return redirect()->back()
+                ->with('error', 'Las dietas seleccionadas deben ser únicas.')
+                ->withInput();
+        }
+
+        // Verificar si hay valores nulos o vacíos
+        foreach ($dietas as $dieta) {
+            if (is_null($dieta) || $dieta === '') {
+                return redirect()->back()
+                    ->with('error', 'Las dietas no pueden contener valores vacíos o nulos.')
+                    ->withInput();
+            }
+        }
+    }
+
+
+
 
 
 

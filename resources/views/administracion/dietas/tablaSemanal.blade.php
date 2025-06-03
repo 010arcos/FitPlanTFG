@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto p-6 bg-gray-50 shadow-lg rounded-lg">
-    <h1 class="text-3xl font-bold mb-8 text-gray-800 text-center">Plan Semanal de Comidas de {{ $usuario->name }}</h1>
+<div class="container mx-auto p-6 bg-gray-50 shadow-lg rounded-lg max-w-4xl">
+    <h1 class="text-2xl font-bold mb-6 text-gray-800 text-center">Plan Semanal de Comidas de {{ $usuario->name }}</h1>
 
     <!-- Mensajes de éxito o error -->
     @if(Session::has('Mensaje'))
@@ -11,45 +11,47 @@
     </div>
     @endif
 
-    <!-- Selector de Dieta y Botón de Eliminar -->
-    <div class="mb-4 flex flex-wrap items-end gap-4">
-        <div class="flex-grow">
+    <!-- Selector de Dieta y Botones -->
+    <div class="mb-4 flex items-center justify-between gap-4">
+        <div class="w-2/3">
             <label for="dietaSelector" class="block text-gray-700 font-medium mb-2">Selecciona una Dieta:</label>
             <select id="dietaSelector"
-                class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300">
+                class="w-full px-3 py-1 border border-gray-300 rounded-lg shadow-sm focus:ring focus:ring-blue-300">
                 <option value="">Selecciona una dieta</option>
                 @foreach ($dietas as $dieta)
                 <option value="{{ $dieta->id_dieta }}" data-nombre="{{ $dieta->nombre }}">
-                   Id {{ $dieta->id_dieta }} - {{ $dieta->nombre }} 
+                    Id {{ $dieta->id_dieta }} - {{ $dieta->nombre }}
                 </option>
                 @endforeach
             </select>
         </div>
 
-        <!-- Formulario para eliminar la dieta seleccionada -->
-        <form id="eliminarDietaForm" method="POST" class="inline-block">
-            @csrf
-            @method('DELETE')
-            <button type="button" id="btnEliminarDieta"
-                class="px-4 py-2 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 disabled:opacity-50 disabled:cursor-not-allowed"
-                disabled onclick="confirmarEliminacion()">
-                Eliminar Dieta
-            </button>
-        </form>
+        <div class="flex gap-4"> <!-- Añadido un contenedor flex para los botones -->
+            <!-- Botón Asignar Dieta -->
+            <a href="{{ route('administracion.usuarios.edit', $usuario->id) }}"
+                class="px-4 py-2 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition duration-300 ease-in-out text-xs text-center">
+                Asignar
+            </a>
+
+            <!-- Botón Eliminar Dieta -->
+            <form id="eliminarDietaForm" method="POST" class="inline-block">
+                @csrf
+                @method('DELETE')
+                <button type="button" id="btnEliminarDieta"
+                    class="px-4 py-2 bg-red-500 text-white font-bold rounded-lg hover:bg-red-600 transition duration-300 ease-in-out text-xs text-center"
+                    disabled onclick="confirmarEliminacion()">
+                    Eliminar
+                </button>
+            </form>
+        </div>
     </div>
 
     <!-- Tabla de Comidas -->
     <table class="w-full table-auto border-collapse bg-white shadow-md rounded-lg overflow-hidden">
         <thead class="bg-blue-500 text-white">
             <tr>
-                <th class="px-6 py-3 text-left">Comida</th>
-                <th class="px-6 py-3">Lunes</th>
-                <th class="px-6 py-3">Martes</th>
-                <th class="px-6 py-3">Miércoles</th>
-                <th class="px-6 py-3">Jueves</th>
-                <th class="px-6 py-3">Viernes</th>
-                <th class="px-6 py-3">Sábado</th>
-                <th class="px-6 py-3">Domingo</th>
+                <th class="px-3 py-2 text-left">Comida</th>
+                <th class="px-3 py-2 text-left">Detalles</th>
             </tr>
         </thead>
         <tbody id="tablaComidas" class="text-gray-700">
@@ -96,7 +98,7 @@
         } else {
             // Si no hay dietas disponibles, mostrar mensaje en la tabla
             const filaVacia = document.createElement('tr');
-            filaVacia.innerHTML = '<td colspan="8" class="text-center text-gray-500 py-4">No hay dietas disponibles.</td>';
+            filaVacia.innerHTML = '<td colspan="2" class="text-center text-gray-500 py-4">No hay dietas disponibles.</td>';
             tablaComidas.appendChild(filaVacia);
         }
     });
@@ -112,9 +114,8 @@
             const comidas = @json($comidasPorDieta);
             const comidasDieta = comidas[dietaId] || [];
             
-            // Tipos de comida y días de la semana
+            // Tipos de comida
             const tiposComida = ['desayuno', 'almuerzo', 'comida', 'merienda', 'cena'];
-            const diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
             
             // Generar filas dinámicamente
             tiposComida.forEach(tipoComida => {
@@ -123,34 +124,32 @@
                 
                 // Celda del tipo de comida
                 const celdaTipo = document.createElement('td');
-                celdaTipo.classList.add('px-6', 'py-4', 'font-semibold', 'text-gray-800');
+                celdaTipo.classList.add('px-3', 'py-2', 'font-semibold', 'text-gray-800');
                 celdaTipo.textContent = tipoComida.charAt(0).toUpperCase() + tipoComida.slice(1);
                 fila.appendChild(celdaTipo);
                 
-                // Celdas de los días de la semana
-                diasSemana.forEach(dia => {
-                    const celdaDia = document.createElement('td');
-                    celdaDia.classList.add('px-6', 'py-4', 'text-center');
+                // Celda de detalles
+                const celdaDetalles = document.createElement('td');
+                celdaDetalles.classList.add('px-3', 'py-2', 'text-left');
+                
+                const comida = comidasDieta.find(c => c.pivot.tipo_comida === tipoComida);
+                if (comida) {
+                    const alimentos = JSON.parse(comida.alimentos || '{}');
                     
-                    const comida = comidasDieta.find(c => c.pivot.tipo_comida === tipoComida);
-                    if (comida) {
-                        const alimentos = JSON.parse(comida.alimentos || '{}');
-                        
-                        // Modificar el contenido de las celdas para mostrar solo el nombre y los alimentos
-                        celdaDia.innerHTML = `
-                            <div>
-                                <strong>${comida.nombre}</strong>
-                                <ul class="text-sm text-gray-600">
-                                    ${alimentos.ingredientes.map(ing => `<li>${ing.nombre}: ${ing.cantidad}</li>`).join('')}
-                                </ul>
-                            </div>
-                        `;
-                    } else {
-                        celdaDia.textContent = '-';
-                    }
-                    
-                    fila.appendChild(celdaDia);
-                });
+                    // Modificar el contenido de las celdas para mostrar solo el nombre y los alimentos
+                    celdaDetalles.innerHTML = `
+                        <div>
+                            <strong>${comida.nombre}</strong>
+                            <ul class="text-sm text-gray-600">
+                                ${alimentos.ingredientes.map(ing => `<li>${ing.nombre}: ${ing.cantidad}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    celdaDetalles.textContent = '-';
+                }
+                
+                fila.appendChild(celdaDetalles);
                 
                 tablaComidas.appendChild(fila);
             });

@@ -33,7 +33,7 @@
             </section>
         </div>
 
-        <footer class="footer">
+    <footer class="footer">
             <p>© 2023 Fit Plan. Todos los derechos reservados.</p>
         </footer>
     </div>
