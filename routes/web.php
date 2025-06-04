@@ -30,7 +30,7 @@ Route::get('/administracion', function () {
 //     ->name('usuario.index')
 //     ->middleware(['auth', 'verified']);
 
-Route::middleware(['auth', 'verified'])->prefix('usuario')->name('usuario.')->group(function () {
+Route::middleware(['auth', 'verified', 'check.active'])->prefix('usuario')->name('usuario.')->group(function () {
     Route::get('/index', [UsuarioController::class, 'indexUsuario'])->name('index');
     Route::get('/dieta', [UsuarioController::class, 'indexDieta'])->name('dieta');
     Route::get('/progreso', [UsuarioController::class, 'indexProgreso'])->name('progreso');
@@ -38,6 +38,10 @@ Route::middleware(['auth', 'verified'])->prefix('usuario')->name('usuario.')->gr
     Route::get('/historial-peso', [UsuarioController::class, 'indexHistorialPeso'])->name('historial.peso');
     Route::post('/progreso-store', [UsuarioController::class, 'storeProgreso'])->name('progreso.store');
 });
+
+// Route::get('/inactive', function () {
+//     return view('inactive');
+// })->name('inactive');
 
 Route::middleware(['auth', 'verified', 'admin'])->prefix('administracion')->name('administracion.')->group(function () {
 

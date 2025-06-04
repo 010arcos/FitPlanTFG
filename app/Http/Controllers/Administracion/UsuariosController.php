@@ -134,7 +134,7 @@ class UsuariosController
             'activo'
         ]);
 
-        $datosUsuarios['activo'] = $request->has('activo');
+        // $datosUsuarios['activo'] = $request->has('activo');
         $usuario = User::findOrFail($id);
         $usuario->update($datosUsuarios);
 

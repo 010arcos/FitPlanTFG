@@ -3,8 +3,17 @@
 @section('content')
 <div class="modern-dashboard">
     <div class="dashboard-container">
+
+
         <header class="main-header">
             <div class="header-content">
+               @if(session('error'))
+                <div class="alert alert-danger"
+                    style="max-width: 350px; margin: 20px auto; padding: 15px; border-radius: 8px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+                    <i class="fas fa-exclamation-circle" style="margin-right: 10px; font-size: 20px;"></i>
+                    <span>{{ session('error') }}</span>
+                </div>
+                @endif
                 <h1 class="welcome-text">¡Bienvenido, {{ $user->name }}!</h1>
                 <p class="user-info">Peso: {{ $user->peso }} kg | Edad: {{ $user->edad }} años</p>
             </div>
@@ -33,7 +42,7 @@
             </section>
         </div>
 
-    <footer class="footer">
+        <footer class="footer">
             <p>© 2023 Fit Plan. Todos los derechos reservados.</p>
         </footer>
     </div>
