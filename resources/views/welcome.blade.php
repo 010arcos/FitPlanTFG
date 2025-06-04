@@ -233,7 +233,6 @@
             <div class="d-flex">
 
                 @auth
-                <!-- Si el usuario está autenticado -->
                 @if(Auth::user()->roles->contains('name', 'admin'))
                 <a href="{{ route('administracion') }}" class="btn btn-outline-light">Panel de Administración</a>
                 @elseif(Auth::user()->roles->contains('name', 'user'))

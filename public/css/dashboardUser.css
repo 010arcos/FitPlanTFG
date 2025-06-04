@@ -36,9 +36,10 @@ body {
     /* Asegura que el contenido y el footer estén separados */
 }
 
-.main-header {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/img/indexUser.jpg');
-    background-position: center 20%; /* Ajusta el valor para mover la imagen hacia abajo */
+/* .main-header {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("{{ asset('img/indexUser.jpg') }}");
+    background-position: center 20%;
     background-size: cover;
     color: var(--white);
     padding: 8rem 2rem;
@@ -47,7 +48,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
+} */
 
 .header-content {
     display: flex;
@@ -148,24 +149,28 @@ body {
 }
 
 .spotify-container {
-    margin-right: 2rem; /* Espacio a la derecha del icono de Spotify */
+    margin-right: 2rem;
+    /* Espacio a la derecha del icono de Spotify */
 }
 
 .spotify-link {
     display: flex;
     align-items: center;
-    color: #1DB954; /* Color verde de Spotify */
+    color: #1DB954;
+    /* Color verde de Spotify */
     font-weight: bold;
     transition: color 0.3s ease;
 }
 
 .spotify-link i {
     font-size: 1.5rem;
-    margin-right: 0.5rem; /* Espacio entre el icono y el texto */
+    margin-right: 0.5rem;
+    /* Espacio entre el icono y el texto */
 }
 
 .spotify-link:hover {
-    color: #1ED760; /* Color más claro al pasar el ratón */
+    color: #1ED760;
+    /* Color más claro al pasar el ratón */
 }
 
 @keyframes fadeIn {

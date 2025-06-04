@@ -1,13 +1,29 @@
 @extends('layouts.usuario.appUser')
 
 @section('content')
+<style>
+    .main-header {
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("{{ asset('img/indexUser.jpg') }}");
+        background-position: center 20%;
+        background-size: cover;
+        color: var(--white);
+        padding: 8rem 2rem;
+        min-height: 50vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
 <div class="modern-dashboard">
     <div class="dashboard-container">
 
 
         <header class="main-header">
             <div class="header-content">
-               @if(session('error'))
+                @if(session('error'))
                 <div class="alert alert-danger"
                     style="max-width: 350px; margin: 20px auto; padding: 15px; border-radius: 8px; background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; display: flex; align-items: center; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
                     <i class="fas fa-exclamation-circle" style="margin-right: 10px; font-size: 20px;"></i>
