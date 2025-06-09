@@ -35,7 +35,7 @@
             <div>
                 <label for="proteinas" class="block text-gray-700 text-sm font-medium">Proteínas (g)</label>
                 <input type="number" name="proteinas" id="proteinas"
-                    value="{{ old('proteinas', $macros['proteinas'] ?? '') }}"
+                    value="{{ old('proteinas', $macros['proteinas'] ?? '') }}" min="0"
                     class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm {{ $errors->has('proteinas') ? 'is-invalid' : '' }}">
                 {!! $errors->first('proteinas', '<div class="invalid-feedback text-red-500 text-sm mt-1">:message</div>
                 ') !!}
@@ -44,7 +44,7 @@
             <div>
                 <label for="carbohidratos" class="block text-gray-700 text-sm font-medium">Carbohidratos (g)</label>
                 <input type="number" name="carbohidratos" id="carbohidratos"
-                    value="{{ old('carbohidratos', $macros['carbohidratos'] ?? '') }}"
+                    value="{{ old('carbohidratos', $macros['carbohidratos'] ?? '') }}" min="0"
                     class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm {{ $errors->has('carbohidratos') ? 'is-invalid' : '' }}">
                 {!! $errors->first('carbohidratos', '<div class="invalid-feedback text-red-500 text-sm mt-1">:message
                 </div>') !!}
@@ -53,6 +53,7 @@
             <div>
                 <label for="grasas" class="block text-gray-700 text-sm font-medium">Grasas (g)</label>
                 <input type="number" name="grasas" id="grasas" value="{{ old('grasas', $macros['grasas'] ?? '') }}"
+                    min="0"
                     class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm {{ $errors->has('grasas') ? 'is-invalid' : '' }}">
                 {!! $errors->first('grasas', '<div class="invalid-feedback text-red-500 text-sm mt-1">:message</div>')
                 !!}

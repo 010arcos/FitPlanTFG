@@ -18,7 +18,7 @@ class EjerciciosController extends Controller
 
     public function index()
     {
-        $datos['ejercicios'] = Ejercicio::paginate(10);
+        $datos['ejercicios'] = Ejercicio::paginate(6);
         return view('administracion.ejercicios.index', $datos);
 
     }

@@ -23,7 +23,7 @@ class ComidasController extends Controller
 
     public function index()
     {
-        $datos['comidas'] = Comida::paginate(10);
+        $datos['comidas'] = Comida::paginate(6);
         return view('administracion.comidas.index', $datos);
 
     }
@@ -167,7 +167,7 @@ class ComidasController extends Controller
             'ingredientes.*.nombre.string' => 'Nombre inválido.',
             'ingredientes.*.nombre.max' => 'Nombre muy largo.',
             'ingredientes.*.cantidad.required' => 'Falta cantidad.',
-            'ingredientes.*.cantidad.regex' => 'Usá formato tipo "100g".',
+            'ingredientes.*.cantidad.regex' => 'Usa formato tipo "100g" y e introduce valores positivos.',
         ]);
     }
 
