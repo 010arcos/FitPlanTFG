@@ -21,7 +21,7 @@
     <!-- Calorias -->
     <div class="mb-6">
         <label for="calorias" class="block text-gray-700 text-sm font-medium">Calorías</label>
-        <input type="number" name="calorias" id="calorias" step="1"
+        <input type="number" name="calorias" id="calorias" step="1" min="0"
             class="form-control mt-2 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm {{ $errors->has('calorias') ? 'is-invalid' : '' }}"
             value="{{ old('calorias', $comida->calorias ?? '') }}">
         {!! $errors->first('calorias', '<div class="invalid-feedback text-red-500 text-sm mt-1">:message</div>') !!}
